@@ -1,6 +1,4 @@
-Here is the English version of the provided content:
 [日本語はこちら](README.md)
-
 ## App Name
 
 GourmetSearcher
