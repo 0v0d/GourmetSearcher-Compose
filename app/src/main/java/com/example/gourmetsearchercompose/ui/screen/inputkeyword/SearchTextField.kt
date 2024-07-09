@@ -70,9 +70,7 @@ fun SearchTextField(
         }
     }
 
-    LaunchedEffect(Unit){
-        focusRequester.requestFocus()
-    }
+    LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
     Row(
         modifier = modifier
@@ -95,7 +93,6 @@ fun SearchTextField(
                 onQueryChange(it.text)
                 showClearButton = it.text.isNotBlank()
             },
-
             showClearButton = showClearButton,
             onClearClick = { onQueryChange("") }
         )
@@ -137,7 +134,7 @@ private fun CustomTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .focusRequester(focusRequester)
-            .padding(horizontal = 8.dp)
+            .fillMaxWidth()
             .testTag("textField"),
         colors = TextFieldDefaults.colors(
             cursorColor = Blue,
