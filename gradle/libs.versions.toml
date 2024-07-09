@@ -5,12 +5,12 @@ coil = "2.6.0"
 coreTesting = "2.2.0"
 datastorePreferences = "1.1.1"
 detektFormatting = "1.23.1"
-detektVersion = "0.3.3"
+detektVersion = "0.4.5"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinxCollectionsImmutable = "0.3.5"
+immutable = "0.3.7"
 kotlinxCoroutinesTest = "1.8.1"
 kotlinxSerializationJson = "1.7.1"
 mockitoCore = "5.12.0"
@@ -45,7 +45,7 @@ coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 detekt-rules-twitter = { module = "com.twitter.compose.rules:detekt", version.ref = "twitterDetekt" }
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektFormatting" }
 detekt-rules = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektVersion" }
-kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "immutable" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
