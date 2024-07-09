@@ -1,6 +1,5 @@
 package com.example.gourmetsearchercompose.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gourmetsearchercompose.model.api.RestaurantList
@@ -45,7 +44,6 @@ constructor(
      * @param terms 検索条件
      */
     fun searchRestaurants(terms: SearchTerms) {
-        Log.d("RestaurantListViewModel", "searchRestaurants: $terms")
         _searchState.value = SearchState.Loading
         viewModelScope.launch {
             try {
