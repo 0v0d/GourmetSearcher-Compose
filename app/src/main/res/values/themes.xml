@@ -1,0 +1,3 @@
+<resources>
+	<style name="Theme.GourmetSearcherCompose" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
