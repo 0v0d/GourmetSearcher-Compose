@@ -30,7 +30,7 @@ fun InputKeyWordScreen(
         onInputTextChange = { viewModel.updateInputText(it) },
         onHistoryItemClick = { onNavigateToSearchLocation(it, 0) },
         onClearHistory = { viewModel.clearHistory() },
-        onRangeSelected = {
+        onRangeSelect = {
             onNavigateToSearchLocation(inputText, it)
             viewModel.saveHistoryItem(inputText)
             viewModel.updateInputText("")

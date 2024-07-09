@@ -27,7 +27,7 @@ import kotlinx.collections.immutable.ImmutableList
  * @param onInputTextChange 入力テキスト変更時のコールバック
  * @param onHistoryItemClick 履歴アイテムクリック時のコールバック
  * @param onClearHistory 履歴クリアボタンクリック時のコールバック
- * @param onRangeSelected 範囲選択時のコールバック
+ * @param onRangeSelect 範囲選択時のコールバック
  */
 @Composable
 fun InputKeyWordContent(
@@ -39,7 +39,7 @@ fun InputKeyWordContent(
     onHistoryItemClick: (String) -> Unit,
     onClearHistory: () -> Unit,
     modifier: Modifier = Modifier,
-    onRangeSelected: (Int) -> Unit
+    onRangeSelect: (Int) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -69,7 +69,7 @@ fun InputKeyWordContent(
             } else {
                 RangeList(
                     ranges = stringArrayResource(R.array.input_keyword_range_array),
-                    onRangeSelected = onRangeSelected,
+                    onRangeSelect = onRangeSelect,
                 )
             }
         }

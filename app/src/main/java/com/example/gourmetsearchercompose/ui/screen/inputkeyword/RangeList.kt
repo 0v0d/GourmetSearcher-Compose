@@ -20,13 +20,13 @@ import com.example.gourmetsearchercompose.R
 /**
  * 範囲リスト
  * @param ranges 範囲リスト
- * @param onRangeSelected 範囲選択時のコールバック
+ * @param onRangeSelect 範囲選択時のコールバック
  * @param modifier Modifier
  */
 @Composable
 fun RangeList(
     ranges: Array<String>,
-    onRangeSelected: (Int) -> Unit,
+    onRangeSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -49,7 +49,7 @@ fun RangeList(
                     modifier =
                     Modifier
                         .fillMaxWidth()
-                        .clickable { onRangeSelected(index) }
+                        .clickable { onRangeSelect(index) }
                         .padding(8.dp)
                 )
                 HorizontalDivider(
