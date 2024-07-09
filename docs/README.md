@@ -1,3 +1,4 @@
+[English README is here](README-en.md)
 ## アプリ名
 
 GourmetSearcher
@@ -6,7 +7,7 @@ GourmetSearcher
 
 現在位置付近のレストランをキーワードで検索できるAndroidアプリのCompose版です。
 
-<img src="docs/app.gif" width="314" alt="アプリのデモ動画">
+<img src="app.gif" width="314" alt="アプリのデモ動画">
 
 ### APIKeyについて
 
