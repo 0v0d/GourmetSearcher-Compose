@@ -4,6 +4,7 @@ import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,16 +46,18 @@ fun SearchLocationScreen(
 
     HandlePermissionEffects(
         locationPermissionsState = locationPermissionsState,
-        onPermissionGranted = viewModel::handlePermissionGranted,
-        onRationaleRequired = viewModel::handleRationaleRequired,
-        onPermissionDenied = viewModel::handlePermissionDenied
+        onPermissionGrant = viewModel::handlePermissionGranted,
+        onRationaleRequire = viewModel::handleRationaleRequired,
+        onPermissionDeny = viewModel::handlePermissionDenied
     )
 
     HandleLocationDataEffect(locationData, inputText, range, onNavigateToResultList)
 
+    val rememberedOnNavigateToResultList by rememberUpdatedState(onNavigateToResultList)
+
     LaunchedEffect(locationData) {
         locationData?.let { location ->
-            onNavigateToResultList(SearchTerms(inputText, location, range))
+            rememberedOnNavigateToResultList(SearchTerms(inputText, location, range))
         }
     }
 
@@ -73,26 +76,31 @@ fun SearchLocationScreen(
 /**
  * 位置情報検索画面コンテンツ
  * @param locationPermissionsState 位置情報パーミッション状態
- * @param onPermissionGranted 位置情報パーミッション許可時のコールバック
- * @param onRationaleRequired 位置情報パーミッション許可が必要な旨のコールバック
- * @param onPermissionDenied 位置情報パーミッション拒否時のコールバック
+ * @param onPermissionGrant 位置情報パーミッション許可時のコールバック
+ * @param onRationaleRequire 位置情報パーミッション許可が必要な旨のコールバック
+ * @param onPermissionDeny 位置情報パーミッション拒否時のコールバック
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun HandlePermissionEffects(
     locationPermissionsState: PermissionState,
-    onPermissionGranted: () -> Unit,
-    onRationaleRequired: () -> Unit,
-    onPermissionDenied: () -> Unit
+    onPermissionGrant: () -> Unit,
+    onRationaleRequire: () -> Unit,
+    onPermissionDeny: () -> Unit
 ) {
+    val rememberedOnPermissionGranted by rememberUpdatedState(onPermissionGrant)
+    val rememberedOnRationaleRequired by rememberUpdatedState(onRationaleRequire)
+    val rememberedOnPermissionDenied by rememberUpdatedState(onPermissionDeny)
+
     LaunchedEffect(Unit) {
         locationPermissionsState.launchPermissionRequest()
     }
+
     LaunchedEffect(locationPermissionsState.status) {
         when {
-            locationPermissionsState.status.isGranted -> onPermissionGranted()
-            locationPermissionsState.status.shouldShowRationale -> onRationaleRequired()
-            else -> onPermissionDenied()
+            locationPermissionsState.status.isGranted -> rememberedOnPermissionGranted()
+            locationPermissionsState.status.shouldShowRationale -> rememberedOnRationaleRequired()
+            else -> rememberedOnPermissionDenied()
         }
     }
 }
@@ -104,9 +112,11 @@ private fun HandleLocationDataEffect(
     range: Int,
     onNavigateToResultList: (SearchTerms) -> Unit
 ) {
-    LaunchedEffect(locationData) {
+    val rememberedOnNavigateToResultList by rememberUpdatedState(onNavigateToResultList)
+
+    LaunchedEffect(locationData, inputText, range) {
         locationData?.let { location ->
-            onNavigateToResultList(SearchTerms(inputText, location, range))
+            rememberedOnNavigateToResultList(SearchTerms(inputText, location, range))
         }
     }
 }
