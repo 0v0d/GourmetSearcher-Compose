@@ -26,7 +26,7 @@
     <string name="search_location_permission_required_message">このアプリでは、位置情報を取得するために位置情報パーミッションが必要です</string>
     <string name="search_location_error_message">位置情報を取得できませんでした</string>
     <string name="search_location_permission_denied_message">位置情報が許可されていません</string>
-    <string name="search_location_setting">設定</string>
+    <string name="search_location_setting">設定を開く</string>
 
     <!-- Restaurant List -->
     <string name="restaurant_list_search_result_top_bar_title">検索結果</string>

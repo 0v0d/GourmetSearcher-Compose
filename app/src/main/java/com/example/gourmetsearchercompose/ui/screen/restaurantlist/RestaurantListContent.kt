@@ -31,7 +31,6 @@ import coil.request.ImageRequest
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.state.SearchState
-import com.example.gourmetsearchercompose.ui.screen.common.AppBarContent
 import com.example.gourmetsearchercompose.ui.screen.common.ErrorContent
 import com.example.gourmetsearchercompose.ui.screen.common.LoadingContent
 import kotlinx.collections.immutable.ImmutableList
@@ -217,18 +216,4 @@ fun RestaurantInfo(
             )
         }
     }
-}
-
-/**
- * トップバー
- * @param onClick 戻るボタンクリック時のコールバック
- */
-@Composable
-fun RestaurantListTopAppBar(
-    onClick: () -> Unit,
-) {
-    AppBarContent(
-        onClick = onClick,
-        title = stringResource(id = R.string.restaurant_list_search_result_top_bar_title),
-    )
 }
