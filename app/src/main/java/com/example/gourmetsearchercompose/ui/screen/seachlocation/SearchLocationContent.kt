@@ -9,11 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.common.AppBarContent
 import com.example.gourmetsearchercompose.ui.screen.common.Dialog
 import com.example.gourmetsearchercompose.ui.screen.common.ErrorContent
 import com.example.gourmetsearchercompose.ui.screen.common.LoadingContent
@@ -79,16 +77,4 @@ fun SearchLocationContent(
             }
         }
     }
-}
-
-/**
- * トップバー
- * @param onClick 戻るボタンクリック時のコールバック
- */
-@Composable
-private fun SearchLocationTopBar(onClick: () -> Unit) {
-    AppBarContent(
-        onClick = onClick,
-        title = stringResource(id = R.string.search_location_top_bar_title),
-    )
 }

@@ -19,7 +19,7 @@ fun RestaurantDetailTopBar(
     )
 }
 
-private const val TITLE_LENGTH_LIMIT = 15
+private const val TITLE_LENGTH_LIMIT = 12
 
 /**
  * タイトルバーの文字数制限を超えた場合に短縮する

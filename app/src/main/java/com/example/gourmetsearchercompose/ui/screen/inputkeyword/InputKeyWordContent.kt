@@ -5,15 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
 import kotlinx.collections.immutable.ImmutableList
@@ -74,18 +71,4 @@ fun InputKeyWordContent(
             }
         }
     }
-}
-
-/**
- * トップバー
- * @param modifier Modifier
- */
-@Composable
-fun InputKeyWordTopAppBar(
-    modifier: Modifier = Modifier
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = { Text(text = stringResource(R.string.input_keyword_top_bar_title)) }
-    )
 }
