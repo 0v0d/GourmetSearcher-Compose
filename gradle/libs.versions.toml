@@ -32,7 +32,7 @@ composeBom = "2024.09.00"
 navigationCompose = "2.7.7"
 uiTestJunit4Android = "1.7.0"
 uiTestManifest = "1.6.8"
-uiTooling = "1.6.8"
+uiTooling = "1.7.0"
 hiltNavigationCompose = "1.2.0"
 lifecycleRuntimeComposeAndroid = "2.8.5"
 
