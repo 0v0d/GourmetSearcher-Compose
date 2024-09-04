@@ -34,7 +34,7 @@ uiTestJunit4Android = "1.6.8"
 uiTestManifest = "1.6.8"
 uiTooling = "1.6.8"
 hiltNavigationCompose = "1.2.0"
-lifecycleRuntimeComposeAndroid = "2.8.4"
+lifecycleRuntimeComposeAndroid = "2.8.5"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
