@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     // APIキーを隠すためのプラグイン
     alias(libs.plugins.secrets.gradle.plugin)
-    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.detekt)
@@ -81,8 +80,6 @@ android {
     }
 }
 composeCompiler {
-    enableStrongSkippingMode = true
-
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 dependencies {
