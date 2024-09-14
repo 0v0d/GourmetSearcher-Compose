@@ -43,7 +43,7 @@ data class ShopsDomain(
     val photo: PhotoDomain,
     val open: String,
     val close: String,
-) : java.io.Serializable
+)
 
 /**
  * 大エリアデータクラス
@@ -52,7 +52,7 @@ data class ShopsDomain(
 @Serializable
 data class LargeAreaDomain(
     val name: String,
-) : java.io.Serializable
+)
 
 /**
  * 小エリアデータクラス
@@ -61,7 +61,7 @@ data class LargeAreaDomain(
 @Serializable
 data class SmallAreaDomain(
     val name: String,
-) : java.io.Serializable
+)
 
 /**
  * ジャンルデータクラス
@@ -70,7 +70,7 @@ data class SmallAreaDomain(
 @Serializable
 data class GenreDomain(
     val name: String,
-) : java.io.Serializable
+)
 
 /**
  *  予算データクラス
@@ -79,7 +79,7 @@ data class GenreDomain(
 @Serializable
 data class BudgetDomain(
     val name: String,
-) : java.io.Serializable
+)
 
 /**
  *  URLデータクラス
@@ -88,7 +88,7 @@ data class BudgetDomain(
 @Serializable
 data class UrlDomain(
     val pc: String,
-) : java.io.Serializable
+)
 
 /**
  * 写真クラス
@@ -97,7 +97,7 @@ data class UrlDomain(
 @Serializable
 data class PhotoDomain(
     val pc: PCDomain,
-) : java.io.Serializable
+)
 
 /**
  * 写真データクラス
@@ -106,7 +106,7 @@ data class PhotoDomain(
 @Serializable
 data class PCDomain(
     val l: String,
-) : java.io.Serializable
+)
 
 /**
  * APIレスポンスデータからドメインモデルへの変換関数
