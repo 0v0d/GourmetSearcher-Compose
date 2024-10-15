@@ -37,27 +37,22 @@ import kotlinx.collections.immutable.ImmutableList
 
 /**
  * レストランリスト画面コンテンツ
- * @param onClick 戻るボタンクリック時のコールバック
  * @param onRetry リトライボタンクリック時のコールバック
  * @param searchState 検索状態
  * @param shops レストランリスト
- * @param modifier Modifier
  * @param onNavigateToDetail レストラン詳細画面遷移コールバック
+ * @param modifier Modifier
  */
 @Composable
 fun RestaurantListContent(
-    onClick: () -> Unit,
     onRetry: () -> Unit,
     searchState: SearchState,
     shops: ImmutableList<ShopsDomain>?,
+    onNavigateToDetail: (ShopsDomain) -> Unit,
     modifier: Modifier = Modifier,
-    onNavigateToDetail: (ShopsDomain) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
-        topBar = {
-            RestaurantListTopAppBar(onClick = onClick)
-        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -80,16 +75,16 @@ fun RestaurantListContent(
  * @param searchState 検索状態
  * @param shops レストランリスト
  * @param onNavigateToDetail レストラン詳細画面遷移コールバック
- * @param modifier Modifier
  * @param onRetry リトライボタンクリック時のコールバック
+ * @param modifier Modifier
  */
 @Composable
 fun RestaurantSearchResult(
     searchState: SearchState,
     shops: ImmutableList<ShopsDomain>?,
     onNavigateToDetail: (ShopsDomain) -> Unit,
+    onRetry: () -> Unit,
     modifier: Modifier = Modifier,
-    onRetry: () -> Unit
 ) {
     when (searchState) {
         SearchState.Loading -> LoadingContent()

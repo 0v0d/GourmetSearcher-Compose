@@ -14,7 +14,6 @@ import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantLis
 @Composable
 private fun RestaurantListScreenSuccessPreview() {
     RestaurantListContent(
-        onClick = {},
         onRetry = {},
         searchState = SearchState.Success,
         shops = mockRestaurantList,
@@ -28,7 +27,6 @@ private fun RestaurantListScreenSuccessPreview() {
 @Composable
 private fun RestaurantListScreenErrorPreview() {
     RestaurantListContent(
-        onClick = {},
         onRetry = {},
         searchState = SearchState.NetworkError,
         shops = mockEmptyRestaurantList,
@@ -42,7 +40,6 @@ private fun RestaurantListScreenErrorPreview() {
 @Composable
 private fun RestaurantListScreenLoadingPreview() {
     RestaurantListContent(
-        onClick = {},
         onRetry = {},
         searchState = SearchState.Loading,
         shops = mockEmptyRestaurantList,
@@ -56,7 +53,6 @@ private fun RestaurantListScreenLoadingPreview() {
 @Composable
 private fun RestaurantListScreenEmptyPreview() {
     RestaurantListContent(
-        onClick = {},
         onRetry = {},
         searchState = SearchState.EmptyResult,
         shops = mockEmptyRestaurantList,
@@ -71,7 +67,6 @@ private fun RestaurantListScreenEmptyPreview() {
 private fun RestaurantListScreenSuccessDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantListContent(
-            onClick = {},
             onRetry = {},
             searchState = SearchState.Success,
             shops = mockRestaurantList,
@@ -87,7 +82,6 @@ private fun RestaurantListScreenSuccessDarkPreview() {
 private fun RestaurantListScreenErrorDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantListContent(
-            onClick = {},
             onRetry = {},
             searchState = SearchState.NetworkError,
             shops = mockEmptyRestaurantList,
@@ -103,7 +97,6 @@ private fun RestaurantListScreenErrorDarkPreview() {
 private fun RestaurantListScreenLoadingDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantListContent(
-            onClick = {},
             onRetry = {},
             searchState = SearchState.Loading,
             shops = mockEmptyRestaurantList,
@@ -119,7 +112,6 @@ private fun RestaurantListScreenLoadingDarkPreview() {
 private fun RestaurantListScreenEmptyDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantListContent(
-            onClick = {},
             onRetry = {},
             searchState = SearchState.EmptyResult,
             shops = mockEmptyRestaurantList,

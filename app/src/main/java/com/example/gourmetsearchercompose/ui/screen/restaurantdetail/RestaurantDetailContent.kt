@@ -45,22 +45,19 @@ import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 
 /**
  * レストラン詳細画面コンテンツ
- * @param paddingValues PaddingValues
  * @param restaurantData レストランデータ
- * @param modifier Modifier
  * @param onHotPepperClick ホットペッパーボタンクリック時のコールバック
+ * @param modifier Modifier
  */
 @Composable
 fun RestaurantDetailContent(
-    paddingValues: PaddingValues,
     restaurantData: ShopsDomain,
+    onHotPepperClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onHotPepperClick: () -> Unit
 ) {
     LazyColumn(
         modifier = modifier
-            .fillMaxSize()
-            .padding(paddingValues),
+            .fillMaxSize(),
         contentPadding = PaddingValues(bottom = 80.dp)
     ) {
         item {

@@ -21,22 +21,20 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 /**
  * 位置情報検索画面
- * @param onClick 戻るボタンクリック時のコールバック
  * @param inputText 検索テキスト
  * @param range 検索範囲
- * @param modifier Modifier
  * @param viewModel ViewModel
  * @param onNavigateToResultList 検索結果画面遷移コールバック
+ * @param modifier Modifier
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun SearchLocationScreen(
-    onClick: () -> Unit,
     inputText: String,
     range: Int,
-    modifier: Modifier = Modifier,
-    viewModel: SearchLocationViewModel = hiltViewModel(),
     onNavigateToResultList: (SearchTerms) -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SearchLocationViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val searchState by viewModel.locationSearchState.collectAsStateWithLifecycle()
@@ -63,7 +61,6 @@ fun SearchLocationScreen(
 
     SearchLocationContent(
         modifier = modifier,
-        onClick = onClick,
         searchState = searchState,
         locationPermissionsState = locationPermissionsState,
         onRetry = viewModel::retryLocationRequest,

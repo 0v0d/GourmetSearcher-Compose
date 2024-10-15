@@ -36,6 +36,7 @@
 
 
     <!-- Restaurant Detail -->
+    <string name="restaurant_detail_top_bar_title">店舗詳細</string>
     <string name="restaurant_detail_google_map">com.google.android.apps.maps</string>
     <string name="restaurant_detail_google_map_activity">com.google.android.maps.MapsActivity</string>
 
