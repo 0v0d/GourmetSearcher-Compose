@@ -7,7 +7,7 @@ GourmetSearcher
 
 This is a Compose version of an Android app that allows you to search for restaurants near your current location using keywords.
 
-<img src="app.gif" width="314" alt="App demo video">
+<img src="app.gif" width="320" alt="App demo video">
 
 ### About the API Key
 
