@@ -21,7 +21,6 @@ private fun InputKeyWordContentKeyWordListPreview() {
         isInputEmpty = true,
         historyList = testHistory,
         onInputTextChange = {},
-        onHistoryItemClick = {},
         onClearHistory = {},
         onRangeSelect = {}
     )
@@ -39,7 +38,6 @@ private fun InputKeyWordContentKeyWordListDarkPreview() {
             isInputEmpty = true,
             historyList = testHistory,
             onInputTextChange = {},
-            onHistoryItemClick = {},
             onClearHistory = {},
             onRangeSelect = {}
         )
@@ -57,7 +55,6 @@ private fun InputKeyWordContentRangeListPreview() {
         isInputEmpty = false,
         historyList = testHistory,
         onInputTextChange = {},
-        onHistoryItemClick = {},
         onClearHistory = {},
         onRangeSelect = {}
     )
@@ -75,7 +72,6 @@ private fun InputKeyWordContentRangeListDarkPreview() {
             isInputEmpty = false,
             historyList = testHistory,
             onInputTextChange = {},
-            onHistoryItemClick = {},
             onClearHistory = {},
             onRangeSelect = {}
         )

@@ -12,7 +12,6 @@ import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantD
 @Composable
 private fun RestaurantDetailContentPreview() {
     RestaurantDetailScreen(
-        onClick = {},
         restaurantData = mockRestaurantData
     )
 }
@@ -24,7 +23,6 @@ private fun RestaurantDetailContentPreview() {
 private fun RestaurantDetailContentDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantDetailScreen(
-            onClick = {},
             restaurantData = mockRestaurantData
         )
     }

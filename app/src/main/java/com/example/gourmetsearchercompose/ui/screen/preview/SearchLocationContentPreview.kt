@@ -1,6 +1,7 @@
 package com.example.gourmetsearchercompose.ui.screen.preview
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gourmetsearchercompose.state.LocationSearchState
 import com.example.gourmetsearchercompose.theme.AppTheme
@@ -15,7 +16,7 @@ import com.google.accompanist.permissions.PermissionStatus
 @Composable
 private fun SearchLocationContentLoadingPreview() {
     SearchLocationContent(
-        onClick = {},
+        modifier = Modifier,
         searchState = LocationSearchState.Loading,
         locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
         onRetry = {},
@@ -30,7 +31,7 @@ private fun SearchLocationContentLoadingPreview() {
 @Composable
 private fun SearchLocationContentErrorPreview() {
     SearchLocationContent(
-        onClick = {},
+        modifier = Modifier,
         searchState = LocationSearchState.Error,
         locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
         onRetry = {},
@@ -45,7 +46,7 @@ private fun SearchLocationContentErrorPreview() {
 @Composable
 private fun SearchLocationContentDeniedErrorPreview() {
     SearchLocationContent(
-        onClick = {},
+        modifier = Modifier,
         searchState = LocationSearchState.Error,
         locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = false)),
         onRetry = {},
@@ -60,7 +61,7 @@ private fun SearchLocationContentDeniedErrorPreview() {
 @Composable
 private fun SearchLocationContentRationalRequiredPreview() {
     SearchLocationContent(
-        onClick = {},
+        modifier = Modifier,
         searchState = LocationSearchState.RationalRequired,
         locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = true)),
         onRetry = {},
@@ -76,7 +77,7 @@ private fun SearchLocationContentRationalRequiredPreview() {
 private fun SearchLocationContentLoadingDarkPreview() {
     AppTheme(darkTheme = true) {
         SearchLocationContent(
-            onClick = {},
+            modifier = Modifier,
             searchState = LocationSearchState.Loading,
             locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
             onRetry = {},
@@ -93,7 +94,7 @@ private fun SearchLocationContentLoadingDarkPreview() {
 private fun SearchLocationContentErrorDarkPreview() {
     AppTheme(darkTheme = true) {
         SearchLocationContent(
-            onClick = {},
+            modifier = Modifier,
             searchState = LocationSearchState.Error,
             locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
             onRetry = {},
@@ -110,7 +111,7 @@ private fun SearchLocationContentErrorDarkPreview() {
 private fun SearchLocationContentDeniedErrorDarkPreview() {
     AppTheme(darkTheme = true) {
         SearchLocationContent(
-            onClick = {},
+            modifier = Modifier,
             searchState = LocationSearchState.Error,
             locationPermissionsState = FakePermissionState(
                 PermissionStatus.Denied(
@@ -118,7 +119,7 @@ private fun SearchLocationContentDeniedErrorDarkPreview() {
                 )
             ),
             onRetry = {},
-            onOpenSettings = {}
+            onOpenSettings = {},
         )
     }
 }
@@ -131,7 +132,7 @@ private fun SearchLocationContentDeniedErrorDarkPreview() {
 private fun SearchLocationContentRationalRequiredDarkPreview() {
     AppTheme(darkTheme = true) {
         SearchLocationContent(
-            onClick = {},
+            modifier = Modifier,
             searchState = LocationSearchState.RationalRequired,
             locationPermissionsState = FakePermissionState(
                 PermissionStatus.Denied(

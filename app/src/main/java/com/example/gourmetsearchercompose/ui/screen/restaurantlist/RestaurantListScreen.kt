@@ -12,19 +12,17 @@ import com.example.gourmetsearchercompose.viewmodel.RestaurantListViewModel
 
 /**
  * レストランリスト画面
- * @param onClick 戻るボタンクリック時のコールバック
  * @param searchTerms 検索条件
- * @param modifier Modifier
  * @param viewModel ViewModel
  * @param onNavigateToDetail レストラン詳細画面遷移コールバック
+ * @param modifier Modifier
  */
 @Composable
 fun RestaurantListScreen(
-    onClick: () -> Unit,
     searchTerms: SearchTerms,
+    onNavigateToDetail: (ShopsDomain) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RestaurantListViewModel = hiltViewModel(),
-    onNavigateToDetail: (ShopsDomain) -> Unit
+    viewModel: RestaurantListViewModel = hiltViewModel()
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val shops by viewModel.shops.collectAsStateWithLifecycle()
@@ -35,7 +33,6 @@ fun RestaurantListScreen(
 
     RestaurantListContent(
         modifier = modifier,
-        onClick = onClick,
         onRetry = { viewModel.searchRestaurants(searchTerms) },
         searchState = searchState,
         shops = shops,

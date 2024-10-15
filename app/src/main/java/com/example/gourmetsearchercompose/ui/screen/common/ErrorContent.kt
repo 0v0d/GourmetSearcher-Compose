@@ -24,15 +24,15 @@ import com.example.gourmetsearchercompose.theme.Blue
  * エラーコンテンツ
  * @param errorMessage エラーメッセージ
  * @param onRetry リトライボタンクリック時のコールバック
- * @param modifier Modifier
  * @param onOpenSettings 設定画面遷移コールバック
+ * @param modifier Modifier
  */
 @Composable
 fun ErrorContent(
     @StringRes errorMessage: Int,
     onRetry: () -> Unit,
+    onOpenSettings: () -> Unit,
     modifier: Modifier = Modifier,
-    onOpenSettings: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
