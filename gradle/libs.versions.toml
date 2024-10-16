@@ -31,7 +31,7 @@ composeBom = "2024.09.03"
 navigationCompose = "2.8.2"
 uiTestJunit4Android = "1.7.3"
 uiTestManifest = "1.7.3"
-uiTooling = "1.7.3"
+uiTooling = "1.7.4"
 hiltNavigationCompose = "1.2.0"
 lifecycleRuntimeComposeAndroid = "2.8.6"
 
