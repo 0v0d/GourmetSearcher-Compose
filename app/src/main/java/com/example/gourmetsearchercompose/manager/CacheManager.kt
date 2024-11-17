@@ -4,13 +4,11 @@ import android.util.LruCache
 import com.example.gourmetsearchercompose.model.api.RestaurantList
 import com.example.gourmetsearchercompose.model.data.SearchTerms
 import retrofit2.Response
-import javax.inject.Singleton
 
 /**
  * キャッシュマネージャ
  * @param cache キャッシュ
  */
-@Singleton
 class CacheManager(
     private val cache: LruCache<SearchTerms, Response<RestaurantList>?>,
 ) {

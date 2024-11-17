@@ -8,13 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * 検索履歴のPreferencesを管理する
  * @param dataStore DataStore<Preferences>
  */
-@Singleton
 class PreferencesManager
 @Inject
 constructor(

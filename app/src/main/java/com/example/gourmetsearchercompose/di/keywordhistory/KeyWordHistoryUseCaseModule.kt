@@ -19,8 +19,7 @@ object KeyWordHistoryUseCaseModule {
      * @return 検索履歴を得るためのユースケース
      */
     @Provides
-    fun provideGetKeyWordHistoryUseCase(repository: KeyWordHistoryRepository): GetKeyWordHistoryUseCase =
-        GetKeyWordHistoryUseCase(repository)
+    fun provideGetKeyWordHistoryUseCase(repository: KeyWordHistoryRepository) = GetKeyWordHistoryUseCase(repository)
 
     /**
      * 検索履歴のユースケースを提供する

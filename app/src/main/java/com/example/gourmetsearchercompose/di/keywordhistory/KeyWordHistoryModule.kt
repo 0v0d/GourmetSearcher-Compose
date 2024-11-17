@@ -5,6 +5,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.gourmetsearchercompose.manager.PreferencesManager
+import com.example.gourmetsearchercompose.repository.KeyWordHistoryRepository
+import com.example.gourmetsearchercompose.repository.KeyWordHistoryRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,10 +14,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/** プリファレンスのモジュール */
+/** 　検索履歴のモジュール */
 @Module
 @InstallIn(SingletonComponent::class)
-object PreferencesModule {
+object KeyWordHistoryModule {
     /** データストアを提供する */
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "HistoryPrefs")
 
@@ -25,6 +27,7 @@ object PreferencesModule {
      * @return データストア
      */
     @Provides
+    @Singleton
     fun provideDataStore(
         @ApplicationContext context: Context,
     ): DataStore<Preferences> = context.dataStore
@@ -36,5 +39,16 @@ object PreferencesModule {
      */
     @Provides
     @Singleton
-    fun providePreferencesManger(dataStore: DataStore<Preferences>): PreferencesManager = PreferencesManager(dataStore)
+    fun providePreferencesManger(dataStore: DataStore<Preferences>): PreferencesManager =
+        PreferencesManager(dataStore)
+
+    /**
+     * 検索履歴のリポジトリを提供する
+     * @param preferencesManager プリファレンスマネージャ
+     * @return 検索履歴のリポジトリ
+     */
+    @Provides
+    @Singleton
+    fun provideKeyWordHistory(preferencesManager: PreferencesManager): KeyWordHistoryRepository =
+        KeyWordHistoryRepositoryImpl(preferencesManager)
 }
