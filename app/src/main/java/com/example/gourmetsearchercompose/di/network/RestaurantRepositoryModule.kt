@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /** RestaurantRepositoryのモジュール */
 @Module
@@ -20,6 +21,7 @@ object RestaurantRepositoryModule {
      * @return RestaurantRepository
      */
     @Provides
+    @Singleton
     fun provideGourmetShopRepository(
         service: HotPepperGourmetApiService,
         cacheManager: CacheManager,
