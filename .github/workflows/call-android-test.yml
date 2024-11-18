@@ -37,6 +37,18 @@ jobs:
           echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
           echo "Created local.properties file"
 
+      - name: Accept Android SDK Licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Update SDK Tools
+        run: sdkmanager --update
+
+      - name: Install required SDK packages
+        run: |
+          sdkmanager "platforms;android-34" 
+          sdkmanager "build-tools;34.0.0"
+          sdkmanager "system-images;android-34;google_apis;x86_64"
+
       - name: Run Android test
         uses: reactivecircus/android-emulator-runner@v2
         with:
