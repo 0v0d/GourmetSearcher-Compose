@@ -3,7 +3,6 @@ package com.example.gourmetsearchercompose
 import androidx.compose.ui.focus.FocusRequester
 
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.InputKeyWordContent
@@ -27,7 +26,6 @@ class InputKeyWordContentTest {
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf("History 1", "History 2"),
                 onInputTextChange = {},
-                onHistoryItemClick = {},
                 onClearHistory = {},
                 onRangeSelect = {}
             )
@@ -37,7 +35,6 @@ class InputKeyWordContentTest {
         composeTestRule.onNodeWithText("History 1").assertExists()
         composeTestRule.onNodeWithText("History 2").assertExists()
         composeTestRule.onNodeWithText("キーワードをクリア").assertExists()
-        composeTestRule.onNodeWithText("ホーム").assertExists()
     }
 
     @Test
@@ -49,7 +46,6 @@ class InputKeyWordContentTest {
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf(),
                 onInputTextChange = {},
-                onHistoryItemClick = {},
                 onClearHistory = {},
                 onRangeSelect = {}
             )

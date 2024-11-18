@@ -6,7 +6,6 @@ import androidx.compose.ui.test.onNodeWithText
 import com.example.gourmetsearchercompose.state.LocationSearchState
 import com.example.gourmetsearchercompose.ui.screen.preview.FakePermissionState
 import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationContent
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationTopBar
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import org.junit.Rule
@@ -21,7 +20,6 @@ class SearchLocationContentTest {
     fun testSearchLocationContent_Error_PermissionGranted() {
         composeTestRule.setContent {
             SearchLocationContent(
-                onClick = {},
                 searchState = LocationSearchState.Error,
                 locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
                 onRetry = {},
@@ -39,7 +37,6 @@ class SearchLocationContentTest {
 
         composeTestRule.setContent {
             SearchLocationContent(
-                onClick = {},
                 searchState = LocationSearchState.Error,
                 locationPermissionsState =FakePermissionState(
                     PermissionStatus.Denied(
@@ -60,7 +57,6 @@ class SearchLocationContentTest {
     fun testSearchLocationContent_RationalRequired() {
         composeTestRule.setContent {
             SearchLocationContent(
-                onClick = {},
                 searchState = LocationSearchState.RationalRequired,
                 locationPermissionsState = FakePermissionState(
                     PermissionStatus.Denied(
@@ -74,14 +70,5 @@ class SearchLocationContentTest {
 
         composeTestRule.onNodeWithText("このアプリでは、位置情報を取得するために位置情報パーミッションが必要です").assertIsDisplayed()
         composeTestRule.onNodeWithText("OK").assertIsDisplayed()
-    }
-
-    @Test
-    fun testSearchLocationTopBar() {
-        composeTestRule.setContent {
-            SearchLocationTopBar(onClick = {})
-        }
-
-        composeTestRule.onNodeWithText("現在位置取得").assertIsDisplayed()
     }
 }

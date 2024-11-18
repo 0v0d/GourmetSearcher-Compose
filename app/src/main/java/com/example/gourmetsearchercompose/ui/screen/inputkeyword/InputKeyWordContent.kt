@@ -46,7 +46,10 @@ fun InputKeyWordContent(
             onQueryChange = onInputTextChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+                .padding(
+                    horizontal = 8.dp,
+                    vertical = 8.dp
+                )
                 .testTag("SearchBar"),
         )
         if (isInputEmpty) {
