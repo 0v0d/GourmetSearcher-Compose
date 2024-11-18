@@ -11,25 +11,22 @@ env:
   GRADLE_VERSION: 8.8
 
 jobs:
-  androidTest:
-    runs-on: macOS-latest
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        api-level: [34]
-
+  android-test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: ${{ env.JAVA_VERSION }}
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+      - name: Set up Android SDK
+        run: |
+          sudo mkdir -p /usr/local/lib/android/sdk
+          sudo chown $USER /usr/local/lib/android/sdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+          unzip cmdline-tools.zip -d /usr/local/lib/android/sdk
+          mv /usr/local/lib/android/sdk/cmdline-tools /usr/local/lib/android/sdk/cmdline-tools/latest
+          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "PATH=\$PATH:/usr/local/lib/android/sdk/cmdline-tools/latest/bin:/usr/local/lib/android/sdk/platform-tools" >> $GITHUB_ENV
 
       - name: Prepare Environment
         run: |
@@ -37,49 +34,36 @@ jobs:
           echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
           echo "Created local.properties file"
 
-      - name: Install Android SDK Command-Line Tools
-        run: |
-          sudo mkdir -p /usr/local/lib/android/sdk
-          sudo chmod -R 777 /usr/local/lib/android/sdk
-          curl -Lo sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
-          unzip sdk-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools
-          mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools /usr/local/lib/android/sdk/cmdline-tools/latest
-          rm sdk-tools.zip
-
-      - name: Set Environment Variables
-        run: |
-          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
-          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
-
-      - name: Accept Android SDK Licenses
+      - name: Accept licenses
         run: yes | sdkmanager --licenses
 
-      - name: Update SDK Tools
-        run: sdkmanager --update
-
-      - name: Install required SDK packages
+      - name: Install required packages
         run: |
-          sdkmanager "platforms;android-34" 
-          sdkmanager "build-tools;34.0.0"
-          sdkmanager "system-images;android-34;google_apis;x86_64"
+          sdkmanager --install 'build-tools;35.0.0' platform-tools 'platforms;android-34'
+          sdkmanager --install 'system-images;android-34;google_apis;x86_64'
 
-      - name: Run Android test
+      - name: Clear Android SDK cache
+        run: |
+          rm -rf $ANDROID_HOME/.android/cache
+          rm -rf $ANDROID_HOME/.android/tmp
+
+      - name: Run Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
-          target: 'google_apis'
-          arch: 'x86'
-          profile: 'pixel'
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
+          cores: 2
+          avd-name: test
+          force-avd-creation: true
+          emulator-boot-timeout: 600
+          emulator-port: 5554
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          disable-linux-hw-accel: true
+          enable-hw-keyboard: false
+          channel: stable
           script: ./gradlew connectedAndroidTest
-
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-${{ matrix.api-level }}
-          path: '**/build/reports/androidTests'
