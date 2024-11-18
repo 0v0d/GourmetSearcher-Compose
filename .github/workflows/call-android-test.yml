@@ -53,15 +53,6 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: AVD Cache
-        uses: actions/cache@v4
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ matrix.api-level }}
-
       - name: Clean up disk space
         run: |
           sudo rm -rf /usr/share/dotnet/
@@ -74,7 +65,7 @@ jobs:
         id: avd-cache
         with:
           path: |
-            ~/.android/avd/*.ini
+            ~/.android/avd/*
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}
 
@@ -90,7 +81,7 @@ jobs:
             -gpu swiftshader_indirect
             -memory 2048
           disable-animations: true
-          script: echo "Emulator created successfully
+          script: echo "Emulator created successfully"
 
       # Gradleのメモリ設定
       - name: Configure Gradle Memory
