@@ -11,7 +11,6 @@ import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantInf
 import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantItem
 import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantList
 import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListContent
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListTopAppBar
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,7 +22,6 @@ class RestaurantListContentTest {
     fun testRestaurantListContent_Success() {
         composeTestRule.setContent {
             RestaurantListContent(
-                onClick = {},
                 onRetry = {},
                 searchState = SearchState.Success,
                 shops = mockRestaurantList,
@@ -31,7 +29,6 @@ class RestaurantListContentTest {
             )
         }
 
-        composeTestRule.onNodeWithText("検索結果").assertIsDisplayed()
         composeTestRule.onNodeWithText(mockRestaurantList[0].name).assertIsDisplayed()
         composeTestRule.onNodeWithText(mockRestaurantList[1].name).assertIsDisplayed()
     }
@@ -40,7 +37,6 @@ class RestaurantListContentTest {
     fun testRestaurantListContent_EmptyResult() {
         composeTestRule.setContent {
             RestaurantListContent(
-                onClick = {},
                 onRetry = {},
                 searchState = SearchState.EmptyResult,
                 shops = null,
@@ -55,7 +51,6 @@ class RestaurantListContentTest {
     fun testRestaurantListContent_NetworkError() {
         composeTestRule.setContent {
             RestaurantListContent(
-                onClick = {},
                 onRetry = {},
                 searchState = SearchState.NetworkError,
                 shops = null,
@@ -113,14 +108,5 @@ class RestaurantListContentTest {
         composeTestRule.onNodeWithText(mockRestaurantList[0].genre.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(mockRestaurantList[0].budget.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(mockRestaurantList[0].access).assertIsDisplayed()
-    }
-
-    @Test
-    fun testRestaurantListTopAppBar() {
-        composeTestRule.setContent {
-            RestaurantListTopAppBar(onClick = {})
-        }
-
-        composeTestRule.onNodeWithText("検索結果").assertIsDisplayed()
     }
 }
