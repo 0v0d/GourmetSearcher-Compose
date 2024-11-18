@@ -22,7 +22,7 @@ jobs:
 
   AndroidTest:
     uses: ./.github/workflows/call-android-test.yml
-    secrets: inherit
+    needs: StaticAnalysis
 
   AutoMerge:
     needs: [StaticAnalysis, AndroidTest]
