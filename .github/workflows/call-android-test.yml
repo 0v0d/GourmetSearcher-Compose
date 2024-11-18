@@ -39,4 +39,5 @@ jobs:
           arch: 'x86'
           profile: 'pixel'
           disable-animations: true
-          script: ./gradlew connectedMockDebugAndroidTest
+          emulator-boot-timeout: 600
+          script: ./gradlew connectedMockDebugAndroidTest --info
