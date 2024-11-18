@@ -31,18 +31,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
-      - name: Enable KVM group perms
+      - name: Prepare Environment
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: Create local.properties
-        run: |
-          cat << EOF > local.properties
-          sdk.dir=$ANDROID_HOME
-          API_KEY=${{ secrets.API_KEY }}
-          EOF
+          chmod +x ./gradlew
+          echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
           echo "Created local.properties file"
 
       - name: Run Android test
