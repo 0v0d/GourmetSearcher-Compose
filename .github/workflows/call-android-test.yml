@@ -2,6 +2,9 @@ name: Android Test
 
 on:
   workflow_call:
+    secrets:
+      API_KEY:
+        required: true
 
 env:
   JAVA_VERSION: 17
@@ -30,9 +33,6 @@ jobs:
         with:
           gradle-version: ${{ env.GRADLE_VERSION }}
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
       - name: Install Android SDK Command-Line Tools
         run: |
           sudo mkdir -p /usr/local/lib/android/sdk
@@ -49,6 +49,14 @@ jobs:
           echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
           echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
 
+      - name: Create local.properties
+        run: |
+          cat << EOF > local.properties
+          sdk.dir=$ANDROID_HOME
+          API_KEY=${{ secrets.API_KEY }}
+          EOF
+          echo "Created local.properties file"
+
       - name: Accept Android SDK Licenses
         run: yes | sdkmanager --licenses
 
@@ -59,6 +67,16 @@ jobs:
           sdkmanager "system-images;android-34;google_apis;x86_64"
           sdkmanager "emulator"
           sdkmanager "platform-tools"
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Enable Gradle Build Cache
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.caching=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.parallel=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
 
       - name: Enable KVM and set permissions
         run: |
@@ -80,7 +98,7 @@ jobs:
           adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
 
       - name: Run Android Tests
-        run: ./gradlew connectedMockDebugAndroidTest --info
+        run: ./gradlew connectedMockDebugAndroidTest --info --stacktrace
 
       - name: Stop emulator
         if: always()

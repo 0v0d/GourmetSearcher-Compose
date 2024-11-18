@@ -22,6 +22,8 @@ jobs:
 
   AndroidTest:
     uses: ./.github/workflows/call-android-test.yml
+    secrets:
+      API_KEY: ${{ secrets.API_KEY }}
     needs: StaticAnalysis
 
   AutoMerge:
