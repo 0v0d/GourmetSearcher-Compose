@@ -1,0 +1,148 @@
+name: Android Test
+
+on:
+  workflow_call:
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+env:
+  JAVA_VERSION: 17
+  GRADLE_VERSION: 8.8
+
+jobs:
+  instrumentation-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [34, 35]
+      fail-fast: false
+      max-parallel: 1  # リソース競合を避けるため1つずつ実行
+    timeout-minutes: 30  # タイムアウトを30分に設定
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+
+      # メモリ設定の最適化
+      - name: Configure System Memory
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          echo 'vm.swappiness=80' | sudo tee -a /etc/sysctl.conf
+          sudo sysctl -p
+
+      - name: Enable KVM Group Permissions
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: AVD Cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      # エミュレータ設定の最適化
+      - name: Create AVD and Generate Snapshot
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: 'google_apis'
+          arch: 'x86_64'  # 新しいAPI用にx86_64を使用
+          profile: 'pixel'
+          force-avd-creation: true
+          emulator-options: >-
+            -no-window
+            -gpu swiftshader_indirect
+            -noaudio
+            -no-boot-anim
+            -camera-back none
+            -no-snapshot
+            -memory 2048
+            -no-accel
+          disable-animations: true
+          script: echo "Generated AVD snapshot for API ${{ matrix.api-level }}"
+
+      # Gradleのメモリ設定
+      - name: Configure Gradle Memory
+        run: |
+          echo "org.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError" >> gradle.properties
+          echo "org.gradle.workers.max=2" >> gradle.properties
+
+      - name: Run Android Tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: 'google_apis'
+          arch: 'x86_64'
+          profile: 'pixel'
+          force-avd-creation: false
+          emulator-options: >-
+            -no-snapshot-save
+            -no-window
+            -gpu swiftshader_indirect
+            -noaudio
+            -no-boot-anim
+            -camera-back none
+            -memory 2048
+            -no-accel
+          disable-animations: true
+          script: |
+            ./gradlew connectedMockDebugAndroidTest \
+              --no-daemon \
+              --max-workers=2 \
+              -Pandroid.testInstrumentationRunnerArguments.notAnnotation=org.junit.Ignore
+
+      - name: Publish Test Report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: "Android Test Report (API ${{ matrix.api-level }})"
+          path: '**/build/outputs/androidTest-results/connected/*.xml'
+          reporter: 'java-junit'
+          fail-on-error: false
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-test-results-api-${{ matrix.api-level }}
+          path: |
+            **/build/reports/androidTests/
+            **/build/outputs/androidTest-results/
+            **/build/outputs/code_coverage/
+            **/build/outputs/logging/
+          retention-days: 14
+
+      - name: Upload Failed Test Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-test-screenshots-api-${{ matrix.api-level }}
+          path: |
+            **/build/outputs/androidTest-results/connected/**/failures/
+          retention-days: 14

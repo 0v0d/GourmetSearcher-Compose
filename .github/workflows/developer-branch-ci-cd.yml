@@ -20,8 +20,12 @@ jobs:
     secrets:
       API_KEY: ${{ secrets.API_KEY }}
 
+  AndroidTest:
+    uses: ./.github/workflows/call-android-test.yml
+    secrets: inherit
+
   AutoMerge:
-    needs: StaticAnalysis
+    needs: [StaticAnalysis, AndroidTest]
     runs-on: ubuntu-latest
     permissions:
       contents: write

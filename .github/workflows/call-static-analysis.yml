@@ -23,69 +23,60 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
+          cache-read-only: ${{ github.ref != 'refs/heads/main' }}  # Read-only cache for PR builds
 
       - name: Prepare Environment
         run: |
           chmod +x ./gradlew
           echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
 
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Run Gradle Build
-        run: ./gradlew build --parallel --configure-on-demand
-
-      - name: Run Lint
-        run: ./gradlew app:lintDebug --continue
-        continue-on-error: true
+      - name: Run Parallel Tasks
+        run: |
+          ./gradlew --parallel --configure-on-demand \
+            build \
+            app:lintDebug \
+            testDebugUnitTest \
+            detekt
 
       - name: Setup Reviewdog
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
 
-      - name: Run Reviewdog for Lint
+      - name: Run Reviewdog for Lint and Detekt
+        if: always()
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Lint results
           find . -regex '^.*/build/reports/lint-results.*\.sarif$' -type f | while read file_path; do
-            reviewdog -f=sarif -reporter=github-pr-review < "$file_path"
+            reviewdog -f=sarif -reporter=github-pr-review -name="android-lint" < "$file_path"
           done
-
-      - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest --parallel
+          
+          # Detekt results
+          if [ -f "./build/reports/detekt.sarif" ]; then
+            reviewdog -f=sarif -name="detekt" -reporter="github-pr-review" < ./build/reports/detekt.sarif
+          fi
 
       - name: Publish Test Report
-        if: cancelled() != true || failure()
+        if: always()
         uses: dorny/test-reporter@v1
         with:
           name: "JUnit Test Report"
           path: '**/build/test-results/*/TEST-*.xml'
           reporter: 'java-junit'
           fail-on-error: false
-
-      - name: Run Detekt
-        run: ./gradlew detekt
-
-      - name: Run Reviewdog for Detekt
-        if: failure()
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cat ./build/reports/detekt.xml | reviewdog -f=checkstyle -name="detekt" -reporter="github-pr-review"
