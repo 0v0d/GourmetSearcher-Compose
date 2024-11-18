@@ -62,27 +62,35 @@ jobs:
             ~/.android/adb*
           key: avd-${{ matrix.api-level }}
 
-      # エミュレータ設定の最適化
-      - name: Create AVD and Generate Snapshot
-        if: steps.avd-cache.outputs.cache-hit != 'true'
+      - name: Clean up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet/
+          sudo rm -rf /usr/local/lib/android/
+          sudo rm -rf /opt/ghc/
+          df -h
+
+      - name: AVD Cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*.ini
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
           target: 'google_apis'
           arch: 'x86_64'
           profile: 'pixel'
-          force-avd-creation: true
           emulator-options: >-
             -no-window
             -gpu swiftshader_indirect
-            -noaudio
-            -no-boot-anim
-            -camera-back none
-            -memory 4096
-            -accel on
-            -debug-init
+            -memory 2048
           disable-animations: true
-          script: echo "Generated AVD snapshot for API ${{ matrix.api-level }}"
+          script: echo "Emulator created successfully
 
       # Gradleのメモリ設定
       - name: Configure Gradle Memory
@@ -115,6 +123,11 @@ jobs:
               --max-workers=2 \
               -Pandroid.testInstrumentationRunnerArguments.notAnnotation=org.junit.Ignore
 
+      - name: Clean up AVD and temp files
+        run: |
+          rm -rf ~/.android/avd/*.lock
+          rm -rf ~/.android/avd/*.tmp
+          df -h
 
       - name: Publish Test Report
         if: always()
