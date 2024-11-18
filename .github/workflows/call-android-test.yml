@@ -6,7 +6,6 @@ on:
 env:
   JAVA_VERSION: 17
   GRADLE_VERSION: 8.8
-  ANDROID_SDK_ROOT: ${{ github.workspace }}/android-sdk  # Android SDKのインストール先を変更
 
 jobs:
   instrumentation-test:
@@ -16,19 +15,13 @@ jobs:
         api-level: [35]
       fail-fast: false
       max-parallel: 1
-    timeout-minutes: 20
+    timeout-minutes: 30  # タイムアウトを30分に延長
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-
-      - name: Setup Android SDK directory
-        run: |
-          mkdir -p ${{ env.ANDROID_SDK_ROOT }}
-          echo "ANDROID_SDK_ROOT=${{ env.ANDROID_SDK_ROOT }}" >> $GITHUB_ENV
-          echo "ANDROID_HOME=${{ env.ANDROID_SDK_ROOT }}" >> $GITHUB_ENV
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -72,24 +65,9 @@ jobs:
         id: avd-cache
         with:
           path: |
-            ${{ env.ANDROID_SDK_ROOT }}/avd/*
-            ${{ env.ANDROID_SDK_ROOT }}/adb*
+            ~/.android/avd/*
+            ~/.android/adb*
           key: avd-${{ matrix.api-level }}
-
-      - name: Create AVD
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: 'google_apis'
-          arch: 'x86_64'
-          profile: 'pixel'
-          emulator-options: >-
-            -no-window
-            -gpu swiftshader_indirect
-            -memory 2048
-          disable-animations: true
-          script: echo "Emulator created successfully"
-          sdk-path: ${{ env.ANDROID_SDK_ROOT }}
 
       # Gradleのメモリ設定
       - name: Configure Gradle Memory
@@ -104,20 +82,23 @@ jobs:
           target: 'google_apis'
           arch: 'x86_64'
           profile: 'pixel'
-          force-avd-creation: false
+          force-avd-creation: true
           emulator-options: >-
-            -snapshot default_boot
-            -no-window
-            -gpu swiftshader_indirect
-            -noaudio
-            -no-boot-anim
+            -no-snapshot-save 
+            -no-window 
+            -gpu swiftshader_indirect 
+            -noaudio 
+            -no-boot-anim 
             -camera-back none
             -memory 4096
-            -accel on
-            -debug-init
+          emulator-boot-timeout: 900
           disable-animations: true
-          sdk-path: ${{ env.ANDROID_SDK_ROOT }}
+          disable-linux-hw-accel: false
           script: |
+            adb devices
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
             ./gradlew connectedMockDebugAndroidTest \
               --no-daemon \
               --max-workers=2 \
@@ -125,8 +106,8 @@ jobs:
 
       - name: Clean up AVD and temp files
         run: |
-          rm -rf ${{ env.ANDROID_SDK_ROOT }}/avd/*.lock
-          rm -rf ${{ env.ANDROID_SDK_ROOT }}/avd/*.tmp
+          rm -rf ~/.android/avd/*.lock
+          rm -rf ~/.android/avd/*.tmp
           df -h
 
       - name: Publish Test Report
