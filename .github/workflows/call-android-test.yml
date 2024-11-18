@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        api-level: [34] # Use a stable API level
+        api-level: [34]
       fail-fast: false
     timeout-minutes: 30
     steps:
@@ -24,6 +24,14 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: ${{ env.GRADLE_VERSION }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
 
       - name: Install Android SDK Command-Line Tools
         run: |
@@ -38,25 +46,54 @@ jobs:
         run: |
           echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
           echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "PATH=/usr/local/lib/android/sdk/cmdline-tools/latest/bin:/usr/local/lib/android/sdk/platform-tools:$PATH" >> $GITHUB_ENV
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
 
-      - name: Update SDK Tools
-        run: yes | sdkmanager --update
+      - name: Accept Android SDK Licenses
+        run: yes | sdkmanager --licenses
 
-      - name: Enable KVM group perms
+      - name: Install required SDK packages
         run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", 
-          OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sdkmanager "platforms;android-34" 
+          sdkmanager "build-tools;34.0.0"
+          sdkmanager "system-images;android-34;google_apis;x86_64"
+          sdkmanager "emulator"
+          sdkmanager "platform-tools"
+
+      - name: Enable KVM and set permissions
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+          sudo chmod -R 777 $ANDROID_HOME
+          sudo chown -R $USER:$USER $ANDROID_HOME
+          sudo usermod -aG kvm $USER
 
-      - name: Run Android test
-        uses: reactivecircus/android-emulator-runner@v2
+      - name: Create and start emulator
+        timeout-minutes: 10
+        run: |
+          echo "no" | avdmanager create avd --force \
+            --name test \
+            --package "system-images;android-34;google_apis;x86_64" \
+            --device "pixel"
+          $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
+
+      - name: Run Android Tests
+        run: ./gradlew connectedMockDebugAndroidTest --info
+
+      - name: Stop emulator
+        if: always()
+        run: |
+          adb devices
+          adb -s emulator-5554 emu kill || true
+          sleep 5
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          api-level: ${{ matrix.api-level }}
-          target: 'google_apis'
-          arch: 'x86'
-          profile: 'pixel'
-          disable-animations: true
-          emulator-boot-timeout: 600
-          script: ./gradlew connectedMockDebugAndroidTest --info
+          name: test-results
+          path: |
+            **/build/reports
+            **/build/test-results
