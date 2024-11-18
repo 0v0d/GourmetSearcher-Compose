@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        api-level: [34, 35]
+        api-level: [35]
       fail-fast: false
       max-parallel: 1  # リソース競合を避けるため1つずつ実行
-    timeout-minutes: 30  # タイムアウトを30分に設定
+    timeout-minutes: 20 # タイムアウトを20分に設定
 
     steps:
       - name: Checkout Repository
@@ -40,7 +40,7 @@ jobs:
         run: |
           sudo swapoff -a
           sudo rm -f /swapfile
-          sudo fallocate -l 8G /swapfile
+          sudo fallocate -l 16G /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
@@ -69,7 +69,7 @@ jobs:
         with:
           api-level: ${{ matrix.api-level }}
           target: 'google_apis'
-          arch: 'x86_64'  # 新しいAPI用にx86_64を使用
+          arch: 'x86_64'
           profile: 'pixel'
           force-avd-creation: true
           emulator-options: >-
@@ -78,9 +78,9 @@ jobs:
             -noaudio
             -no-boot-anim
             -camera-back none
-            -no-snapshot
-            -memory 2048
-            -no-accel
+            -memory 4096
+            -accel on
+            -debug-init
           disable-animations: true
           script: echo "Generated AVD snapshot for API ${{ matrix.api-level }}"
 
@@ -99,20 +99,22 @@ jobs:
           profile: 'pixel'
           force-avd-creation: false
           emulator-options: >-
-            -no-snapshot-save
+            -snapshot default_boot
             -no-window
             -gpu swiftshader_indirect
             -noaudio
             -no-boot-anim
             -camera-back none
-            -memory 2048
-            -no-accel
+            -memory 4096
+            -accel on
+            -debug-init
           disable-animations: true
           script: |
             ./gradlew connectedMockDebugAndroidTest \
               --no-daemon \
               --max-workers=2 \
               -Pandroid.testInstrumentationRunnerArguments.notAnnotation=org.junit.Ignore
+
 
       - name: Publish Test Report
         if: always()
