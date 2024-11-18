@@ -2,9 +2,6 @@ name: Android Test
 
 on:
   workflow_call:
-    secrets:
-      API_KEY:
-        required: true
 
 env:
   JAVA_VERSION: 17
@@ -32,6 +29,19 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: ${{ env.GRADLE_VERSION }}
+          cache-read-only: false
+          gradle-home-cache-cleanup: true
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.android/build-cache
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Install Android SDK Command-Line Tools
         run: |
@@ -51,11 +61,22 @@ jobs:
 
       - name: Create local.properties
         run: |
-          cat << EOF > local.properties
-          sdk.dir=$ANDROID_HOME
-          API_KEY=${{ secrets.API_KEY }}
-          EOF
-          echo "Created local.properties file"
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Setup Gradle Properties
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.caching=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.parallel=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.configureondemand=true" >> ~/.gradle/gradle.properties
+          echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
+          echo "android.enableBuildCache=true" >> ~/.gradle/gradle.properties
+          echo "kotlin.incremental=true" >> ~/.gradle/gradle.properties
+          echo "kotlin.incremental.java=true" >> ~/.gradle/gradle.properties
+          echo "kotlin.incremental.js=true" >> ~/.gradle/gradle.properties
+          echo "kotlin.caching.enabled=true" >> ~/.gradle/gradle.properties
+          echo "kapt.incremental.apt=true" >> ~/.gradle/gradle.properties
 
       - name: Accept Android SDK Licenses
         run: yes | sdkmanager --licenses
@@ -71,21 +92,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Enable Gradle Build Cache
-        run: |
-          mkdir -p ~/.gradle
-          echo "org.gradle.caching=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.parallel=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
+      - name: Clean Build
+        run: ./gradlew clean
 
-      - name: Enable KVM and set permissions
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-          sudo chmod -R 777 $ANDROID_HOME
-          sudo chown -R $USER:$USER $ANDROID_HOME
-          sudo usermod -aG kvm $USER
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Create and start emulator
         timeout-minutes: 10
@@ -97,8 +108,13 @@ jobs:
           $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
           adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
 
-      - name: Run Android Tests
-        run: ./gradlew connectedMockDebugAndroidTest --info --stacktrace
+      - name: Run Instrumented Tests
+        run: |
+          ./gradlew connectedCheck --stacktrace
+          # 代替コマンド：
+          # ./gradlew connectedAndroidTest --stacktrace
+          # または
+          # ./gradlew connectedDebugAndroidTest --stacktrace
 
       - name: Stop emulator
         if: always()
