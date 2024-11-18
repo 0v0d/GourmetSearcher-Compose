@@ -2,19 +2,22 @@ name: Android Test
 
 on:
   workflow_call:
+    secrets:
+      API_KEY:
+        required: true
 
 env:
   JAVA_VERSION: 17
   GRADLE_VERSION: 8.8
 
 jobs:
-  android-test:
-    runs-on: ubuntu-latest
+  androidTest:
+    runs-on: macOS-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         api-level: [34]
-      fail-fast: false
-    timeout-minutes: 30
+
     steps:
       - name: Check out
         uses: actions/checkout@v4
@@ -26,108 +29,37 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: ${{ env.GRADLE_VERSION }}
-          cache-read-only: false
-          gradle-home-cache-cleanup: true
+        uses: gradle/gradle-build-action@v3
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.android/build-cache
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Install Android SDK Command-Line Tools
+      - name: Enable KVM group perms
         run: |
-          sudo mkdir -p /usr/local/lib/android/sdk
-          sudo chmod -R 777 /usr/local/lib/android/sdk
-          curl -Lo sdk-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
-          unzip sdk-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools
-          mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools /usr/local/lib/android/sdk/cmdline-tools/latest
-          rm sdk-tools.zip
-
-      - name: Set Environment Variables
-        run: |
-          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
-          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Create local.properties
         run: |
-          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          cat << EOF > local.properties
+          sdk.dir=$ANDROID_HOME
+          API_KEY=${{ secrets.API_KEY }}
+          EOF
+          echo "Created local.properties file"
 
-      - name: Setup Gradle Properties
-        run: |
-          mkdir -p ~/.gradle
-          echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.caching=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.parallel=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.configureondemand=true" >> ~/.gradle/gradle.properties
-          echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError" >> ~/.gradle/gradle.properties
-          echo "android.enableBuildCache=true" >> ~/.gradle/gradle.properties
-          echo "kotlin.incremental=true" >> ~/.gradle/gradle.properties
-          echo "kotlin.incremental.java=true" >> ~/.gradle/gradle.properties
-          echo "kotlin.incremental.js=true" >> ~/.gradle/gradle.properties
-          echo "kotlin.caching.enabled=true" >> ~/.gradle/gradle.properties
-          echo "kapt.incremental.apt=true" >> ~/.gradle/gradle.properties
-
-      - name: Accept Android SDK Licenses
-        run: yes | sdkmanager --licenses
-
-      - name: Install required SDK packages
-        run: |
-          sdkmanager "platforms;android-34" 
-          sdkmanager "build-tools;34.0.0"
-          sdkmanager "system-images;android-34;google_apis;x86_64"
-          sdkmanager "emulator"
-          sdkmanager "platform-tools"
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Clean Build
-        run: ./gradlew clean
-
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
-
-      - name: Create and start emulator
-        timeout-minutes: 10
-        run: |
-          echo "no" | avdmanager create avd --force \
-            --name test \
-            --package "system-images;android-34;google_apis;x86_64" \
-            --device "pixel"
-          $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
-          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
-
-      - name: Run Instrumented Tests
-        run: |
-          ./gradlew connectedCheck --stacktrace
-          # 代替コマンド：
-          # ./gradlew connectedAndroidTest --stacktrace
-          # または
-          # ./gradlew connectedDebugAndroidTest --stacktrace
-
-      - name: Stop emulator
-        if: always()
-        run: |
-          adb devices
-          adb -s emulator-5554 emu kill || true
-          sleep 5
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Run Android test
+        uses: reactivecircus/android-emulator-runner@v2
         with:
-          name: test-results
-          path: |
-            **/build/reports
-            **/build/test-results
+          api-level: ${{ matrix.api-level }}
+          target: 'google_apis'
+          arch: 'x86'
+          profile: 'pixel'
+          disable-animations: true
+          disk-size: 6000M
+          heap-size: 600M
+          script: ./gradlew connectedAndroidTest
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ matrix.api-level }}
+          path: '**/build/reports/androidTests'
