@@ -12,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        api-level: [35]
+        api-level: [34]
       fail-fast: false
     timeout-minutes: 30
     steps:
       - name: Check out
         uses: actions/checkout@v4
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
@@ -30,6 +31,9 @@ jobs:
           OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+
+      - name: Update SDK Tools
+        run: yes | sdkmanager --update
 
       - name: Run Android test
         uses: reactivecircus/android-emulator-runner@v2
