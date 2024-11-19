@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.model
+package com.example.gourmetsearchercompose.mock
 
 import com.example.gourmetsearchercompose.model.api.BudgetData
 import com.example.gourmetsearchercompose.model.api.GenreData
@@ -12,7 +12,13 @@ import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.model.domain.toDomain
 import kotlinx.collections.immutable.toImmutableList
 
-object SampleRestaurantData {
+/**
+ * モックレストランデータ
+ * @property mockRestaurantData モックレストランデータ
+ * @property mockRestaurantList モックレストランリスト
+ * @property mockEmptyRestaurantList 空のモックレストランリスト
+ */
+object MockRestaurantData {
     val mockRestaurantData = Shops(
         "モックレストランデータレストラン1",
         "大阪府大阪市中央区難波１ - 7",
