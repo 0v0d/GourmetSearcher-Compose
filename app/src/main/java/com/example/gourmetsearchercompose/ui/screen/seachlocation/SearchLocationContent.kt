@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.common.Dialog
-import com.example.gourmetsearchercompose.ui.screen.common.ErrorContent
-import com.example.gourmetsearchercompose.ui.screen.common.LoadingContent
+import com.example.gourmetsearchercompose.ui.screen.component.Dialog
+import com.example.gourmetsearchercompose.ui.screen.component.ErrorContent
+import com.example.gourmetsearchercompose.ui.screen.component.LoadingContent
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted

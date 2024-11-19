@@ -3,7 +3,7 @@ package com.example.gourmetsearchercompose
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.gourmetsearchercompose.model.SampleRestaurantData.mockRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantData
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailContent
 import org.junit.Rule
 import org.junit.Test
