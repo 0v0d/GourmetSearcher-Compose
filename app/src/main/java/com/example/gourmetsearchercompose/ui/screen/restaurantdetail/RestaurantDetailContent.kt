@@ -1,10 +1,8 @@
 package com.example.gourmetsearchercompose.ui.screen.restaurantdetail
 
-import androidx.compose.foundation.Image
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
 import androidx.compose.material.icons.filled.AttachMoney
@@ -34,14 +31,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
+import com.example.gourmetsearchercompose.ui.screen.component.IconText
+import com.example.gourmetsearchercompose.ui.screen.component.ImageCard
 
 /**
  * レストラン詳細画面コンテンツ
@@ -55,53 +52,28 @@ fun RestaurantDetailContent(
     onHotPepperClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize(),
-        contentPadding = PaddingValues(bottom = 80.dp)
     ) {
-        item {
-            // レストラン画像
-            RestaurantImage(imageUrl = restaurantData.photo.pc.l)
-        }
-        item {
-            // レストラン名と主要情報
-            RestaurantMainInfo(restaurantData)
-        }
-        item {
-            // 詳細情報
-            RestaurantDetailCard(restaurantData)
-        }
-        item {
-            // ホットペッパーボタン
-            OutlinedButton(
-                onClick = { onHotPepperClick() },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            ) {
-                Icon(Icons.Default.Event, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text(stringResource(R.string.restaurant_detail_hot_pepper))
-            }
+        // レストラン画像
+        ImageCard(imageUrl = restaurantData.photo.pc.l)
+        // レストラン名と主要情報
+        RestaurantMainInfo(restaurantData)
+        // 詳細情報
+        RestaurantDetailCard(restaurantData)
+        // ホットペッパーボタン
+        OutlinedButton(
+            onClick = { onHotPepperClick() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        ) {
+            Icon(Icons.Default.Event, contentDescription = null)
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.restaurant_detail_hot_pepper))
         }
     }
-}
-
-/**
- * レストラン画像
- * @param imageUrl 画像URL
- */
-@Composable
-private fun RestaurantImage(imageUrl: String) {
-    Image(
-        painter = rememberAsyncImagePainter(imageUrl),
-        contentDescription = null,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp),
-        contentScale = ContentScale.Crop
-    )
 }
 
 /**
@@ -161,20 +133,20 @@ private fun RestaurantDetailCard(
         colors = CardDefaults.cardColors(containerColor = colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(6.dp)) {
-            DetailItem(
-                title = stringResource(R.string.restaurant_detail_address),
+            ContentItem(
+                title = R.string.restaurant_detail_address,
                 content = restaurantData.address,
                 icon = Icons.Default.LocationOn
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp))
-            DetailItem(
-                title = stringResource(R.string.restaurant_detail_access),
+            ContentItem(
+                title = R.string.restaurant_detail_access,
                 content = restaurantData.access,
                 icon = Icons.AutoMirrored.Filled.DirectionsWalk
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp))
-            DetailItem(
-                title = stringResource(R.string.restaurant_detail_closed_days),
+            ContentItem(
+                title = R.string.restaurant_detail_closed_days,
                 content = restaurantData.close,
                 icon = Icons.Default.EventBusy
             )
@@ -183,15 +155,15 @@ private fun RestaurantDetailCard(
 }
 
 /**
- * 詳細情報アイテム
+ * コンテンツアイテム
  * @param title タイトル
  * @param content 内容
  * @param icon アイコン
  * @param modifier Modifier
  */
 @Composable
-private fun DetailItem(
-    title: String,
+private fun ContentItem(
+    @StringRes title: Int,
     content: String,
     icon: ImageVector,
     modifier: Modifier = Modifier
@@ -201,11 +173,10 @@ private fun DetailItem(
             Icon(imageVector = icon, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
             Column {
-                Text(text = title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(text = stringResource(title), fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 Text(text = content, fontSize = 14.sp)
             }
         }
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -226,23 +197,10 @@ private fun DetailChip(
         shape = MaterialTheme.shapes.small,
         color = colorScheme.surfaceVariant
     ) {
-        Box(
+        IconText(
+            icon = icon,
+            text = text,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = colorScheme.onSecondaryContainer,
-                modifier = Modifier.align(Alignment.TopStart)
-            )
-
-            Text(
-                text = text,
-                style = MaterialTheme.typography.bodyMedium,
-                color = colorScheme.onSecondaryContainer,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(start = 24.dp, top = 2.dp)
-            )
-        }
+        )
     }
 }

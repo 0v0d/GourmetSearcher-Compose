@@ -3,6 +3,7 @@ package com.example.gourmetsearchercompose.ui.screen.preview
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.gourmetsearchercompose.mock.FakePermissionState
 import com.example.gourmetsearchercompose.state.LocationSearchState
 import com.example.gourmetsearchercompose.theme.AppTheme
 import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationContent

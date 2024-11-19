@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.theme.AppTheme
-import com.example.gourmetsearchercompose.ui.screen.common.Dialog
+import com.example.gourmetsearchercompose.ui.screen.component.Dialog
 
 /** 位置情報検索の許可が必要な旨のダイアログプレビュー */
 @Suppress("UnusedPrivateMember")

@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.model
+package com.example.gourmetsearchercompose.mock
 
 import com.example.gourmetsearchercompose.model.api.BudgetData
 import com.example.gourmetsearchercompose.model.api.GenreData
@@ -12,8 +12,14 @@ import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.model.domain.toDomain
 import kotlinx.collections.immutable.toImmutableList
 
-object SampleRestaurantData {
-    val mockRestaurantData = Shops(
+/**
+ * モックレストランデータ
+ * @property sampleRestaurantData モックレストランデータ
+ * @property sampleRestaurantList モックレストランリスト
+ * @property sampleEmptyRestaurantList 空のモックレストランリスト
+ */
+object MockRestaurantData {
+    val sampleRestaurantData = Shops(
         "モックレストランデータレストラン1",
         "大阪府大阪市中央区難波１ - 7",
         "なんば",
@@ -28,7 +34,7 @@ object SampleRestaurantData {
         "なし"
     ).toDomain()
 
-    val mockRestaurantList = listOf(
+    val sampleRestaurantList = listOf(
         Shops(
             "モックレストランデータレストラン1",
             "大阪府大阪市中央区難波１ - 7",
@@ -59,5 +65,5 @@ object SampleRestaurantData {
         ).toDomain()
     ).toImmutableList()
 
-    val mockEmptyRestaurantList = emptyList<ShopsDomain>().toImmutableList()
+    val sampleEmptyRestaurantList = emptyList<ShopsDomain>().toImmutableList()
 }

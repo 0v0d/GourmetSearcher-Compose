@@ -5,12 +5,12 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.example.gourmetsearchercompose.model.SampleRestaurantData.mockRestaurantList
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.state.SearchState
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantInfo
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantItem
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantList
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListContent
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantInfo
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantItem
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantRow
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,14 +23,15 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.Success,
-                shops = mockRestaurantList,
+                shops = sampleRestaurantList,
                 onNavigateToDetail = {}
             )
         }
 
-        composeTestRule.onNodeWithText(mockRestaurantList[0].name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[1].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[1].name).assertIsDisplayed()
     }
 
     @Test
@@ -38,9 +39,10 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.EmptyResult,
                 shops = null,
-                onNavigateToDetail = {}
+                onNavigateToDetail = {},
             )
         }
 
@@ -52,6 +54,7 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.NetworkError,
                 shops = null,
                 onNavigateToDetail = {}
@@ -65,14 +68,14 @@ class RestaurantListContentTest {
     @Test
     fun testRestaurantList() {
         composeTestRule.setContent {
-            RestaurantList(
-                shops = mockRestaurantList,
+            RestaurantRow(
+                shops = sampleRestaurantList,
                 navigateToDetail = {}
             )
         }
 
-        composeTestRule.onNodeWithText(mockRestaurantList[0].name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[1].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[1].name).assertIsDisplayed()
     }
 
     @Test
@@ -80,33 +83,33 @@ class RestaurantListContentTest {
         val clicked = mutableStateOf(false)
         composeTestRule.setContent {
             RestaurantItem(
-                restaurant = mockRestaurantList[0],
+                restaurant = sampleRestaurantList[0],
                 onClick = { clicked.value = true }
             )
         }
 
-        composeTestRule.onNodeWithText(mockRestaurantList[0].name).assertIsDisplayed()
-        composeTestRule.onNodeWithText("${mockRestaurantList[0].smallArea.name}[${mockRestaurantList[0].largeArea.name}]")
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText("${sampleRestaurantList[0].smallArea.name}[${sampleRestaurantList[0].largeArea.name}]")
             .assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].genre.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].budget.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].access).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].genre.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].budget.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].access).assertIsDisplayed()
 
-        composeTestRule.onNodeWithText(mockRestaurantList[0].name).performClick()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].name).performClick()
         assert(clicked.value)
     }
 
     @Test
     fun testRestaurantInfo() {
         composeTestRule.setContent {
-            RestaurantInfo(restaurant = mockRestaurantList[0])
+            RestaurantInfo(restaurant = sampleRestaurantList[0])
         }
 
-        composeTestRule.onNodeWithText(mockRestaurantList[0].name).assertIsDisplayed()
-        composeTestRule.onNodeWithText("${mockRestaurantList[0].smallArea.name}[${mockRestaurantList[0].largeArea.name}]")
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].name).assertIsDisplayed()
+        composeTestRule.onNodeWithText("${sampleRestaurantList[0].smallArea.name}[${sampleRestaurantList[0].largeArea.name}]")
             .assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].genre.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].budget.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantList[0].access).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].genre.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].budget.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantList[0].access).assertIsDisplayed()
     }
 }

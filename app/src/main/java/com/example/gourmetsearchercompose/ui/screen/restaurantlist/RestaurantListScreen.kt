@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.gourmetsearchercompose.model.data.SearchTerms
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
 import com.example.gourmetsearchercompose.viewmodel.RestaurantListViewModel
 
 /**
@@ -21,6 +22,7 @@ import com.example.gourmetsearchercompose.viewmodel.RestaurantListViewModel
 fun RestaurantListScreen(
     searchTerms: SearchTerms,
     onNavigateToDetail: (ShopsDomain) -> Unit,
+    popBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: RestaurantListViewModel = hiltViewModel()
 ) {
@@ -32,10 +34,11 @@ fun RestaurantListScreen(
     }
 
     RestaurantListContent(
-        modifier = modifier,
         onRetry = { viewModel.searchRestaurants(searchTerms) },
         searchState = searchState,
         shops = shops,
-        onNavigateToDetail = onNavigateToDetail
+        onNavigateToDetail = onNavigateToDetail,
+        popBack = { popBack() },
+        modifier = modifier
     )
 }

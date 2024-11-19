@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.preview
+package com.example.gourmetsearchercompose.mock
 
 import android.Manifest
 import com.google.accompanist.permissions.ExperimentalPermissionsApi

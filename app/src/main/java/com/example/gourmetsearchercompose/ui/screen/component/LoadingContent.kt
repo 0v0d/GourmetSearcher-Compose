@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.common
+package com.example.gourmetsearchercompose.ui.screen.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

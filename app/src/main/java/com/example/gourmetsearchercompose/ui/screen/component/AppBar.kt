@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.common
+package com.example.gourmetsearchercompose.ui.screen.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
