@@ -5,12 +5,12 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.example.gourmetsearchercompose.model.SampleRestaurantData.mockRestaurantList
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantList
 import com.example.gourmetsearchercompose.state.SearchState
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantInfo
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantItem
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantList
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListContent
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantInfo
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantItem
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantRow
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,6 +23,7 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.Success,
                 shops = mockRestaurantList,
                 onNavigateToDetail = {}
@@ -38,9 +39,10 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.EmptyResult,
                 shops = null,
-                onNavigateToDetail = {}
+                onNavigateToDetail = {},
             )
         }
 
@@ -52,6 +54,7 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
+                popBack = {},
                 searchState = SearchState.NetworkError,
                 shops = null,
                 onNavigateToDetail = {}
@@ -65,7 +68,7 @@ class RestaurantListContentTest {
     @Test
     fun testRestaurantList() {
         composeTestRule.setContent {
-            RestaurantList(
+            RestaurantRow(
                 shops = mockRestaurantList,
                 navigateToDetail = {}
             )

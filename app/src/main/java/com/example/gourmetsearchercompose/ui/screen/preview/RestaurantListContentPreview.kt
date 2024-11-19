@@ -2,120 +2,102 @@ package com.example.gourmetsearchercompose.ui.screen.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gourmetsearchercompose.model.SampleRestaurantData.mockEmptyRestaurantList
-import com.example.gourmetsearchercompose.model.SampleRestaurantData.mockRestaurantList
+import com.example.gourmetsearchercompose.model.domain.ShopsDomain
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockEmptyRestaurantList
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantList
 import com.example.gourmetsearchercompose.state.SearchState
-import com.example.gourmetsearchercompose.theme.AppTheme
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListContent
+import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
+import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
+import kotlinx.collections.immutable.ImmutableList
 
-/** レストランリスト画面プレビュー */
-@Suppress("UnusedPrivateMember")
-@Preview
 @Composable
-private fun RestaurantListScreenSuccessPreview() {
+fun RestaurantListContentWrapper(
+    searchState: SearchState,
+    shops: ImmutableList<ShopsDomain> = mockEmptyRestaurantList
+) {
     RestaurantListContent(
         onRetry = {},
-        searchState = SearchState.Success,
-        shops = mockRestaurantList,
+        popBack = {},
+        searchState = searchState,
+        shops = shops,
         onNavigateToDetail = {}
     )
 }
 
 /** レストランリスト画面エラープレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenErrorPreview() {
-    RestaurantListContent(
-        onRetry = {},
-        searchState = SearchState.NetworkError,
-        shops = mockEmptyRestaurantList,
-        onNavigateToDetail = {}
-    )
+    PreviewWrapper {
+        RestaurantListContentWrapper(
+            searchState = SearchState.NetworkError
+        )
+    }
 }
 
 /** レストランリスト画面ローディングプレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenLoadingPreview() {
-    RestaurantListContent(
-        onRetry = {},
-        searchState = SearchState.Loading,
-        shops = mockEmptyRestaurantList,
-        onNavigateToDetail = {}
-    )
+    PreviewWrapper {
+        RestaurantListContentWrapper(
+            searchState = SearchState.Loading
+        )
+    }
 }
 
 /** レストランリスト画面結果がなかった時のプレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenEmptyPreview() {
-    RestaurantListContent(
-        onRetry = {},
-        searchState = SearchState.EmptyResult,
-        shops = mockEmptyRestaurantList,
-        onNavigateToDetail = {}
-    )
+    PreviewWrapper {
+        RestaurantListContentWrapper(
+            searchState = SearchState.EmptyResult
+        )
+    }
 }
 
 /** レストランリスト画面ダークモードプレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenSuccessDarkPreview() {
-    AppTheme(darkTheme = true) {
-        RestaurantListContent(
-            onRetry = {},
+    PreviewWrapper(darkTheme = true) {
+        RestaurantListContentWrapper(
             searchState = SearchState.Success,
-            shops = mockRestaurantList,
-            onNavigateToDetail = {}
+            shops = mockRestaurantList
         )
     }
 }
 
 /** レストランリスト画面エラープレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenErrorDarkPreview() {
-    AppTheme(darkTheme = true) {
-        RestaurantListContent(
-            onRetry = {},
-            searchState = SearchState.NetworkError,
-            shops = mockEmptyRestaurantList,
-            onNavigateToDetail = {}
+    PreviewWrapper(darkTheme = true) {
+        RestaurantListContentWrapper(
+            searchState = SearchState.NetworkError
         )
     }
 }
 
 /** レストランリスト画面ローディングプレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenLoadingDarkPreview() {
-    AppTheme(darkTheme = true) {
-        RestaurantListContent(
-            onRetry = {},
-            searchState = SearchState.Loading,
-            shops = mockEmptyRestaurantList,
-            onNavigateToDetail = {}
+    PreviewWrapper(darkTheme = true) {
+        RestaurantListContentWrapper(
+            searchState = SearchState.Loading
         )
     }
 }
 
 /** レストランリスト画面結果がなかった時のプレビュー */
-@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenEmptyDarkPreview() {
-    AppTheme(darkTheme = true) {
-        RestaurantListContent(
-            onRetry = {},
-            searchState = SearchState.EmptyResult,
-            shops = mockEmptyRestaurantList,
-            onNavigateToDetail = {}
+    PreviewWrapper(darkTheme = true) {
+        RestaurantListContentWrapper(
+            searchState = SearchState.EmptyResult
         )
     }
 }
