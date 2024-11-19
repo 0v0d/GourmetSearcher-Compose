@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun IconText(
     icon: ImageVector,
-    iconSize : Int = 18,
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    iconSize: Int = 18
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,

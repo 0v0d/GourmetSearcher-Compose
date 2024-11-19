@@ -106,7 +106,6 @@ private fun NavGraphBuilder.addRestaurantListScreen(navController: NavHostContro
                 navController.navigateSingleTopTo(
                     "${AppScreens.RestaurantDetail.name}/$encodedRestaurantData"
                 )
-
             },
             popBack = { navController.popBackStack() }
         )

@@ -9,12 +9,13 @@ import com.example.gourmetsearchercompose.theme.AppTheme
 
 @Composable
 fun PreviewWrapper(
+    modifier: Modifier = Modifier,
     darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
     AppTheme(darkTheme = darkTheme) {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
             content()
@@ -24,11 +25,13 @@ fun PreviewWrapper(
 
 @Composable
 fun PreviewComponentWrapper(
+    modifier: Modifier = Modifier,
     darkTheme: Boolean = false,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     AppTheme(darkTheme = darkTheme) {
         Surface(
+            modifier = modifier,
             color = MaterialTheme.colorScheme.background
         ) {
             content()

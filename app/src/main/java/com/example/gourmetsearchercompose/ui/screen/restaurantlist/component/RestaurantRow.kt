@@ -31,11 +31,12 @@ fun RestaurantRow(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantRow() {
     RestaurantRow(
-        shops = MockRestaurantData.mockRestaurantList,
+        shops = MockRestaurantData.sampleRestaurantList,
         navigateToDetail = {}
     )
 }

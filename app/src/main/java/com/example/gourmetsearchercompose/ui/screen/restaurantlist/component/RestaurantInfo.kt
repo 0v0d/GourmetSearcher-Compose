@@ -56,12 +56,13 @@ fun RestaurantInfo(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantInfo() {
     PreviewComponentWrapper {
         RestaurantInfo(
-            restaurant = MockRestaurantData.mockRestaurantData
+            restaurant = MockRestaurantData.sampleRestaurantData
         )
     }
 }

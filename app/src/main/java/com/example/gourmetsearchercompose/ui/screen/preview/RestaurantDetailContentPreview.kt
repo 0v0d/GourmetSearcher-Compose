@@ -2,7 +2,7 @@ package com.example.gourmetsearchercompose.ui.screen.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
 import com.example.gourmetsearchercompose.theme.AppTheme
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailScreen
 
@@ -13,7 +13,7 @@ import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantD
 private fun RestaurantDetailContentPreview() {
     AppTheme {
         RestaurantDetailScreen(
-            restaurantData = mockRestaurantData
+            restaurantData = sampleRestaurantData
         )
     }
 }
@@ -25,7 +25,7 @@ private fun RestaurantDetailContentPreview() {
 private fun RestaurantDetailContentDarkPreview() {
     AppTheme(darkTheme = true) {
         RestaurantDetailScreen(
-            restaurantData = mockRestaurantData
+            restaurantData = sampleRestaurantData
         )
     }
 }

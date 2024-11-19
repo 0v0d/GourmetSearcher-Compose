@@ -3,7 +3,7 @@ package com.example.gourmetsearchercompose
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailContent
 import org.junit.Rule
 import org.junit.Test
@@ -16,31 +16,31 @@ class RestaurantDetailContentTest {
     fun testRestaurantDetailContent() {
         composeTestRule.setContent {
             RestaurantDetailContent(
-                restaurantData = mockRestaurantData,
+                restaurantData = sampleRestaurantData,
                 onHotPepperClick = {}
             )
         }
 
         // レストラン名のテスト
-        composeTestRule.onNodeWithText(mockRestaurantData.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantData.name).assertIsDisplayed()
             .assertIsDisplayed()
 
         // 主要情報のテスト
-        composeTestRule.onNodeWithText(mockRestaurantData.genre.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantData.budget.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantData.open)
+        composeTestRule.onNodeWithText(sampleRestaurantData.genre.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantData.budget.name).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantData.open)
             .assertIsDisplayed()
 
         // 詳細情報のテスト
         composeTestRule.onNodeWithText("住所").assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantData.address)
+        composeTestRule.onNodeWithText(sampleRestaurantData.address)
             .assertIsDisplayed()
         composeTestRule.onNodeWithText("アクセス").assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantData.access)
+        composeTestRule.onNodeWithText(sampleRestaurantData.access)
             .assertIsDisplayed()
         composeTestRule.onNodeWithText("休業日")
             .assertIsDisplayed()
-        composeTestRule.onNodeWithText(mockRestaurantData.close).assertIsDisplayed()
+        composeTestRule.onNodeWithText(sampleRestaurantData.close).assertIsDisplayed()
 
         // ホットペッパーボタンのテスト
         composeTestRule.onNodeWithText("HotPepperへ").assertIsDisplayed()

@@ -2,9 +2,9 @@ package com.example.gourmetsearchercompose.ui.screen.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleEmptyRestaurantList
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockEmptyRestaurantList
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.mockRestaurantList
 import com.example.gourmetsearchercompose.state.SearchState
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
 import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
@@ -13,7 +13,7 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun RestaurantListContentWrapper(
     searchState: SearchState,
-    shops: ImmutableList<ShopsDomain> = mockEmptyRestaurantList
+    shops: ImmutableList<ShopsDomain> = sampleEmptyRestaurantList
 ) {
     RestaurantListContent(
         onRetry = {},
@@ -25,6 +25,7 @@ fun RestaurantListContentWrapper(
 }
 
 /** レストランリスト画面エラープレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenErrorPreview() {
@@ -36,6 +37,7 @@ private fun RestaurantListScreenErrorPreview() {
 }
 
 /** レストランリスト画面ローディングプレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenLoadingPreview() {
@@ -47,6 +49,7 @@ private fun RestaurantListScreenLoadingPreview() {
 }
 
 /** レストランリスト画面結果がなかった時のプレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenEmptyPreview() {
@@ -58,18 +61,20 @@ private fun RestaurantListScreenEmptyPreview() {
 }
 
 /** レストランリスト画面ダークモードプレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenSuccessDarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantListContentWrapper(
             searchState = SearchState.Success,
-            shops = mockRestaurantList
+            shops = sampleRestaurantList
         )
     }
 }
 
 /** レストランリスト画面エラープレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenErrorDarkPreview() {
@@ -81,6 +86,7 @@ private fun RestaurantListScreenErrorDarkPreview() {
 }
 
 /** レストランリスト画面ローディングプレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenLoadingDarkPreview() {
@@ -92,6 +98,7 @@ private fun RestaurantListScreenLoadingDarkPreview() {
 }
 
 /** レストランリスト画面結果がなかった時のプレビュー */
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun RestaurantListScreenEmptyDarkPreview() {

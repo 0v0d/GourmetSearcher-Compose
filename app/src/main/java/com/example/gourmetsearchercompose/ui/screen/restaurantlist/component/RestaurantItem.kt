@@ -54,11 +54,12 @@ fun RestaurantItem(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantItem() {
     RestaurantItem(
-        restaurant = MockRestaurantData.mockRestaurantData,
+        restaurant = MockRestaurantData.sampleRestaurantData,
         onClick = {}
     )
 }

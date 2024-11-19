@@ -60,13 +60,14 @@ fun RestaurantListContent(
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantListContent() {
     PreviewWrapper {
         RestaurantListContentWrapper(
             searchState = SearchState.Success,
-            shops = MockRestaurantData.mockRestaurantList
+            shops = MockRestaurantData.sampleRestaurantList
         )
     }
 }

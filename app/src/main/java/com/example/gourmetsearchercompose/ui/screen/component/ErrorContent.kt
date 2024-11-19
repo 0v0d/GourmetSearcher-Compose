@@ -31,10 +31,10 @@ import com.example.gourmetsearchercompose.theme.Blue
 fun ErrorContent(
     @StringRes errorMessage: Int,
     onRetry: () -> Unit,
-    @StringRes retryButtonText: Int = R.string.common_retry,
-    onOpenSettings: () -> Unit= {},
-    isSettingButtonEnabled: Boolean = true,
     modifier: Modifier = Modifier,
+    @StringRes retryButtonText: Int = R.string.common_retry,
+    onOpenSettings: () -> Unit = {},
+    isSettingButtonEnabled: Boolean = true
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -66,10 +66,10 @@ fun RetryButton(
     @StringRes retryButtonText: Int,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     OutlinedButton(
         onClick = onRetry,
-        modifier =  modifier
+        modifier = modifier
             .padding()
     ) {
         Text(
@@ -81,12 +81,12 @@ fun RetryButton(
 
 @Composable
 fun OpenSettingButton(
-    onOpenSettings: () -> Unit
-){
+    onOpenSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     OutlinedButton(
         onClick = onOpenSettings,
-        modifier = Modifier
-            .padding()
+        modifier = modifier.padding()
     ) {
         Text(
             text = stringResource(R.string.search_location_setting),

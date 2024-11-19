@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
-import com.example.gourmetsearchercompose.ui.screen.component.ImageCard
 import com.example.gourmetsearchercompose.ui.screen.component.IconText
+import com.example.gourmetsearchercompose.ui.screen.component.ImageCard
 
 /**
  * レストラン詳細画面コンテンツ
@@ -140,13 +140,13 @@ private fun RestaurantDetailCard(
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp))
             ContentItem(
-                title =R.string.restaurant_detail_access,
+                title = R.string.restaurant_detail_access,
                 content = restaurantData.access,
                 icon = Icons.AutoMirrored.Filled.DirectionsWalk
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 2.dp))
             ContentItem(
-                title =R.string.restaurant_detail_closed_days,
+                title = R.string.restaurant_detail_closed_days,
                 content = restaurantData.close,
                 icon = Icons.Default.EventBusy
             )

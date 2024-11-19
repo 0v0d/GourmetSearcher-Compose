@@ -14,12 +14,12 @@ import kotlinx.collections.immutable.toImmutableList
 
 /**
  * モックレストランデータ
- * @property mockRestaurantData モックレストランデータ
- * @property mockRestaurantList モックレストランリスト
- * @property mockEmptyRestaurantList 空のモックレストランリスト
+ * @property sampleRestaurantData モックレストランデータ
+ * @property sampleRestaurantList モックレストランリスト
+ * @property sampleEmptyRestaurantList 空のモックレストランリスト
  */
 object MockRestaurantData {
-    val mockRestaurantData = Shops(
+    val sampleRestaurantData = Shops(
         "モックレストランデータレストラン1",
         "大阪府大阪市中央区難波１ - 7",
         "なんば",
@@ -34,7 +34,7 @@ object MockRestaurantData {
         "なし"
     ).toDomain()
 
-    val mockRestaurantList = listOf(
+    val sampleRestaurantList = listOf(
         Shops(
             "モックレストランデータレストラン1",
             "大阪府大阪市中央区難波１ - 7",
@@ -65,5 +65,5 @@ object MockRestaurantData {
         ).toDomain()
     ).toImmutableList()
 
-    val mockEmptyRestaurantList = emptyList<ShopsDomain>().toImmutableList()
+    val sampleEmptyRestaurantList = emptyList<ShopsDomain>().toImmutableList()
 }
