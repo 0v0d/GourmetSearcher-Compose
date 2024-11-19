@@ -32,6 +32,7 @@
     <string name="restaurant_list_search_result_top_bar_title">検索結果</string>
     <string name="restaurant_list_network_error_message">ネットワークエラーが発生しました</string>
     <string name="restaurant_list_empty_result_message">検索結果がありませんでした</string>
+    <string name="restaurant_list_retry_keyword">別のキーワードで検索</string>
     <string name="restaurant_list_hot_pepper_url">https://webservice.recruit.co.jp/hotpepper/</string>
 
 
@@ -54,5 +55,6 @@
     <string name="restaurant_detail_access">アクセス</string>
     <string name="restaurant_detail_map_description">Mapを開く</string>
     <string name="restaurant_detail_hot_pepper">HotPepperへ</string>
+
 
 </resources>
