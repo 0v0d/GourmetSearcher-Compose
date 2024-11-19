@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.common
+package com.example.gourmetsearchercompose.ui.screen.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +31,9 @@ import com.example.gourmetsearchercompose.theme.Blue
 fun ErrorContent(
     @StringRes errorMessage: Int,
     onRetry: () -> Unit,
-    onOpenSettings: () -> Unit,
+    @StringRes retryButtonText: Int = R.string.common_retry,
+    onOpenSettings: () -> Unit= {},
+    isSettingButtonEnabled: Boolean = true,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -45,32 +47,50 @@ fun ErrorContent(
             fontWeight = FontWeight.Bold,
         )
         Spacer(modifier = Modifier.height(15.dp))
-
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            OutlinedButton(
-                onClick = onRetry,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 30.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.common_retry),
-                    color = Blue
-                )
-            }
-            OutlinedButton(
-                onClick = onOpenSettings,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 30.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.search_location_setting),
-                    color = Blue
-                )
+            RetryButton(
+                retryButtonText = retryButtonText,
+                onRetry = onRetry
+            )
+            if (isSettingButtonEnabled) {
+                OpenSettingButton(onOpenSettings)
             }
         }
+    }
+}
+
+@Composable
+fun RetryButton(
+    @StringRes retryButtonText: Int,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    OutlinedButton(
+        onClick = onRetry,
+        modifier =  modifier
+            .padding()
+    ) {
+        Text(
+            text = stringResource(retryButtonText),
+            color = Blue
+        )
+    }
+}
+
+@Composable
+fun OpenSettingButton(
+    onOpenSettings: () -> Unit
+){
+    OutlinedButton(
+        onClick = onOpenSettings,
+        modifier = Modifier
+            .padding()
+    ) {
+        Text(
+            text = stringResource(R.string.search_location_setting),
+            color = Blue
+        )
     }
 }

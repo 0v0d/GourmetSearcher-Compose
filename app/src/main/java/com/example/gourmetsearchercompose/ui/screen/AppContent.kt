@@ -11,7 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.navigation.NavigationGraph
-import com.example.gourmetsearchercompose.ui.screen.common.AppBar
+import com.example.gourmetsearchercompose.ui.screen.component.AppBar
 
 @Composable
 fun AppContent(

@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.common
+package com.example.gourmetsearchercompose.ui.screen.component
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.AlertDialog
@@ -20,8 +20,6 @@ fun Dialog(
     @StringRes errorMessage: Int,
 ) {
     AlertDialog(
-        // OKボタン以外ないので何もしない
-        onDismissRequest = { },
         text = {
             Text(
                 text = stringResource(
@@ -42,6 +40,8 @@ fun Dialog(
                 )
             }
         },
+        // OKボタン以外ないので何もしない
+        onDismissRequest = { },
         dismissButton = null,
     )
 }
