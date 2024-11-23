@@ -31,6 +31,7 @@ fun RestaurantRow(
     }
 }
 
+/** プレビュー */
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable

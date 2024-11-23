@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
 import com.example.gourmetsearchercompose.viewmodel.InputKeyWordViewModel
 
 /**
@@ -20,12 +21,11 @@ fun InputKeyWordScreen(
 ) {
     val inputText = viewModel.inputText.value
     val historyList by viewModel.historyListData.collectAsState()
-    val isInputEmpty = inputText.isEmpty()
     val focusRequester = remember { FocusRequester() }
+
     InputKeyWordContent(
         focusRequester = focusRequester,
         inputText = inputText,
-        isInputEmpty = isInputEmpty,
         historyList = historyList,
         onInputTextChange = { viewModel.updateInputText(it) },
         onClearHistory = { viewModel.clearHistory() },

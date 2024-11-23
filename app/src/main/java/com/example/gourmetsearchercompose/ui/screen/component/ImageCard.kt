@@ -2,8 +2,12 @@ package com.example.gourmetsearchercompose.ui.screen.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BrokenImage
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -25,10 +29,12 @@ fun ImageCard(
             .data(imageUrl)
             .crossfade(true)
             .build(),
+        placeholder = rememberVectorPainter(image = Icons.Default.Image),
+        error = rememberVectorPainter(image = Icons.Default.BrokenImage),
         contentDescription = null,
         modifier = modifier
             .fillMaxWidth()
             .height(180.dp),
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.Crop,
     )
 }

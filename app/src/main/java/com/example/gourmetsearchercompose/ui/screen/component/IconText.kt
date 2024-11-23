@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
  * @param icon アイコン
  * @param text テキスト
  * @param modifier Modifier
+ * @param iconSize アイコンサイズ
  */
 @Composable
 fun IconText(
@@ -38,12 +39,12 @@ fun IconText(
             tint = colorScheme.onSecondaryContainer,
             modifier = Modifier
                 .size(iconSize.dp)
-                .align(Alignment.CenterVertically)
         )
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium,
+            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }

@@ -102,7 +102,7 @@ class RestaurantListViewModelTest {
             val shops = mockResponse.results.shops.map { it.toDomain() }
             assertEquals(shops, viewModel.shops.value)
             assertEquals(
-                SearchState.Success,
+                SearchState.SUCCESS,
                 viewModel.searchState.value
             )
         }
@@ -115,7 +115,7 @@ class RestaurantListViewModelTest {
 
             viewModel.searchRestaurants(mockSearchTerms)
 
-            assertEquals(SearchState.NetworkError, viewModel.searchState.value)
+            assertEquals(SearchState.NETWORK_ERROR, viewModel.searchState.value)
         }
 
     /** ホットペッパーグルメAPIからのレスポンスが空の場合のテスト */
@@ -131,7 +131,7 @@ class RestaurantListViewModelTest {
             viewModel.searchRestaurants(mockSearchTerms)
             val shops = mockEmptyResponse.results.shops.map { it.toDomain() }
             assertEquals(emptyList<Shops>(), shops)
-            assertEquals(SearchState.EmptyResult, viewModel.searchState.value)
+            assertEquals(SearchState.EMPTY_RESULT, viewModel.searchState.value)
         }
 
     /** 検索のリトライテスト */
