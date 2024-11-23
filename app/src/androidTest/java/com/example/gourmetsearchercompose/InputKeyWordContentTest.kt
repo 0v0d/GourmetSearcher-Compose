@@ -22,7 +22,6 @@ class InputKeyWordContentTest {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "",
-                isInputEmpty = true,
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf("History 1", "History 2"),
                 onInputTextChange = {},
@@ -42,7 +41,6 @@ class InputKeyWordContentTest {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "Test",
-                isInputEmpty = false,
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf(),
                 onInputTextChange = {},
