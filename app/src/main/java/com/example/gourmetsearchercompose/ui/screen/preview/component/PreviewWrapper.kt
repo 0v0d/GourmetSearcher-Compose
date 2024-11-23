@@ -7,6 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.gourmetsearchercompose.theme.AppTheme
 
+/**
+ * プレビュー用ラッパー
+ * @param modifier Modifier
+ * @param darkTheme ダークモードかどうか
+ * @param content プレビュー内容
+ */
 @Composable
 fun PreviewWrapper(
     modifier: Modifier = Modifier,
@@ -23,6 +29,12 @@ fun PreviewWrapper(
     }
 }
 
+/**
+ * プレビューコンポーネント用ラッパー
+ * @param modifier Modifier
+ * @param darkTheme ダークモードかどうか
+ * @param content プレビュー内容
+ */
 @Composable
 fun PreviewComponentWrapper(
     modifier: Modifier = Modifier,

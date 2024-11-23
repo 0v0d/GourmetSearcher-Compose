@@ -4,7 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
-import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailContent
+import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.component.RestaurantDetailContent
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,7 +17,8 @@ class RestaurantDetailContentTest {
         composeTestRule.setContent {
             RestaurantDetailContent(
                 restaurantData = sampleRestaurantData,
-                onHotPepperClick = {}
+                onHotPepperClick = {},
+                onMapClick = {}
             )
         }
 

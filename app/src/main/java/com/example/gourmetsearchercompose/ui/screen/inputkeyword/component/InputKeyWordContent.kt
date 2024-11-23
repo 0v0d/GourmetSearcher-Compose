@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.inputkeyword
+package com.example.gourmetsearchercompose.ui.screen.inputkeyword.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,15 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.R
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.range.RangeList
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.textfield.SearchTextField
 import kotlinx.collections.immutable.ImmutableList
 
 /**
  * キーワード入力画面のコンテンツ
  * @param inputText 入力テキスト
- * @param isInputEmpty 入力テキストが空かどうか
  * @param historyList 履歴リスト
  * @param onInputTextChange 入力テキスト変更時のコールバック
  * @param onClearHistory 履歴クリアボタンクリック時のコールバック
@@ -27,7 +27,6 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun InputKeyWordContent(
     inputText: String,
-    isInputEmpty: Boolean,
     focusRequester: FocusRequester,
     historyList: ImmutableList<String>,
     onInputTextChange: (String) -> Unit,
@@ -38,7 +37,7 @@ fun InputKeyWordContent(
     Column(
         modifier = modifier
             .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchTextField(
             focusRequester = focusRequester,
@@ -50,19 +49,16 @@ fun InputKeyWordContent(
                     horizontal = 8.dp,
                     vertical = 8.dp
                 )
-                .testTag("SearchBar"),
+                .testTag("SearchBar")
         )
-        if (isInputEmpty) {
+        if (inputText.isEmpty()) {
             KeyWordHistoryList(
                 historyList = historyList,
                 onItemClick = { onInputTextChange(it) },
-                onClearClick = onClearHistory,
+                onClearClick = onClearHistory
             )
         } else {
-            RangeList(
-                ranges = stringArrayResource(R.array.input_keyword_range_array),
-                onRangeSelect = onRangeSelect,
-            )
+            RangeList(onRangeSelect = onRangeSelect)
         }
     }
 }

@@ -13,13 +13,13 @@ import com.example.gourmetsearchercompose.theme.Blue
  * @param modifier Modifier
  */
 @Composable
-fun LoadingContent(modifier: Modifier = Modifier) {
+fun LoadingContent(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(
-            color = Blue,
-        )
+        CircularProgressIndicator(color = Blue)
     }
 }

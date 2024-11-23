@@ -5,81 +5,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gourmetsearchercompose.mock.FakePermissionState
 import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.theme.AppTheme
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationContent
+import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
+import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 
 /** 位置情報検索画面プレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview
 @Composable
-private fun SearchLocationContentLoadingPreview() {
-    SearchLocationContent(
-        modifier = Modifier,
-        searchState = LocationSearchState.Loading,
-        locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
-        onRetry = {},
-        onOpenSettings = {}
-    )
-}
-
-/** 位置情報検索画面エラープレビュー */
-@Suppress("UnusedPrivateMember")
-@OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
-@Composable
-private fun SearchLocationContentErrorPreview() {
-    SearchLocationContent(
-        modifier = Modifier,
-        searchState = LocationSearchState.Error,
-        locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
-        onRetry = {},
-        onOpenSettings = {}
-    )
-}
-
-/** 位置情報検索画面拒否エラープレビュー */
-@Suppress("UnusedPrivateMember")
-@OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
-@Composable
-private fun SearchLocationContentDeniedErrorPreview() {
-    SearchLocationContent(
-        modifier = Modifier,
-        searchState = LocationSearchState.Error,
-        locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = false)),
-        onRetry = {},
-        onOpenSettings = {}
-    )
-}
-
-/** 位置情報検索画面許可ダイアログプレビュー */
-@Suppress("UnusedPrivateMember")
-@OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
-@Composable
-private fun SearchLocationContentRationalRequiredPreview() {
-    SearchLocationContent(
-        modifier = Modifier,
-        searchState = LocationSearchState.RationalRequired,
-        locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = true)),
-        onRetry = {},
-        onOpenSettings = {}
-    )
-}
-
-/** 位置情報検索画面ダークモードプレビュー */
-@Suppress("UnusedPrivateMember")
-@OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
-@Composable
-private fun SearchLocationContentLoadingDarkPreview() {
-    AppTheme(darkTheme = true) {
+private fun LoadingPreview() {
+    PreviewWrapper {
         SearchLocationContent(
             modifier = Modifier,
-            searchState = LocationSearchState.Loading,
+            searchState = LocationSearchState.LOADING,
             locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
             onRetry = {},
             onOpenSettings = {}
@@ -90,13 +30,85 @@ private fun SearchLocationContentLoadingDarkPreview() {
 /** 位置情報検索画面エラープレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview
 @Composable
-private fun SearchLocationContentErrorDarkPreview() {
-    AppTheme(darkTheme = true) {
+private fun ContentErrorPreview() {
+    PreviewWrapper {
         SearchLocationContent(
             modifier = Modifier,
-            searchState = LocationSearchState.Error,
+            searchState = LocationSearchState.ERROR,
+            locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
+            onRetry = {},
+            onOpenSettings = {}
+        )
+    }
+}
+
+/** 位置情報検索画面拒否エラープレビュー */
+@Suppress("UnusedPrivateMember")
+@OptIn(ExperimentalPermissionsApi::class)
+@Preview
+@Composable
+private fun DeniedErrorPreview() {
+    PreviewWrapper {
+        SearchLocationContent(
+            modifier = Modifier,
+            searchState = LocationSearchState.ERROR,
+            locationPermissionsState = FakePermissionState(
+                PermissionStatus.Denied(
+                    shouldShowRationale = false
+                )
+            ),
+            onRetry = {},
+            onOpenSettings = {}
+        )
+    }
+}
+
+/** 位置情報検索画面許可ダイアログプレビュー */
+@Suppress("UnusedPrivateMember")
+@OptIn(ExperimentalPermissionsApi::class)
+@Preview
+@Composable
+private fun RationalRequiredPreview() {
+    PreviewWrapper {
+        SearchLocationContent(
+            modifier = Modifier,
+            searchState = LocationSearchState.RATIONAL_REQUIRED,
+            locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = true)),
+            onRetry = {},
+            onOpenSettings = {}
+        )
+    }
+}
+
+/** 位置情報検索画面ダークモードプレビュー */
+@Suppress("UnusedPrivateMember")
+@OptIn(ExperimentalPermissionsApi::class)
+@Preview
+@Composable
+private fun SearchLocationContentLoadingDarkPreview() {
+    PreviewWrapper(darkTheme = true) {
+        SearchLocationContent(
+            modifier = Modifier,
+            searchState = LocationSearchState.LOADING,
+            locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
+            onRetry = {},
+            onOpenSettings = {}
+        )
+    }
+}
+
+/** 位置情報検索画面エラープレビュー */
+@Suppress("UnusedPrivateMember")
+@OptIn(ExperimentalPermissionsApi::class)
+@Preview
+@Composable
+private fun ErrorDarkPreview() {
+    PreviewWrapper(darkTheme = true) {
+        SearchLocationContent(
+            modifier = Modifier,
+            searchState = LocationSearchState.ERROR,
             locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
             onRetry = {},
             onOpenSettings = {}
@@ -107,13 +119,13 @@ private fun SearchLocationContentErrorDarkPreview() {
 /** 位置情報検索画面拒否エラーダークモードプレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview
 @Composable
-private fun SearchLocationContentDeniedErrorDarkPreview() {
-    AppTheme(darkTheme = true) {
+private fun DeniedErrorDarkPreview() {
+    PreviewWrapper(darkTheme = true) {
         SearchLocationContent(
             modifier = Modifier,
-            searchState = LocationSearchState.Error,
+            searchState = LocationSearchState.ERROR,
             locationPermissionsState = FakePermissionState(
                 PermissionStatus.Denied(
                     shouldShowRationale = false
@@ -128,13 +140,13 @@ private fun SearchLocationContentDeniedErrorDarkPreview() {
 /** 位置情報検索画面許可ダイアログダークモードプレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview
 @Composable
-private fun SearchLocationContentRationalRequiredDarkPreview() {
-    AppTheme(darkTheme = true) {
+private fun RationalRequiredDarkPreview() {
+    PreviewWrapper(darkTheme = true) {
         SearchLocationContent(
             modifier = Modifier,
-            searchState = LocationSearchState.RationalRequired,
+            searchState = LocationSearchState.RATIONAL_REQUIRED,
             locationPermissionsState = FakePermissionState(
                 PermissionStatus.Denied(
                     shouldShowRationale = true

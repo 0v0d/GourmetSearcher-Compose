@@ -39,20 +39,20 @@ fun RestaurantListContent(
         contentAlignment = Alignment.TopStart
     ) {
         when (searchState) {
-            SearchState.Loading -> LoadingContent()
+            SearchState.LOADING -> LoadingContent()
 
-            SearchState.Success -> shops?.let {
+            SearchState.SUCCESS -> shops?.let {
                 RestaurantRow(it, onNavigateToDetail)
             }
 
-            SearchState.EmptyResult -> ErrorContent(
+            SearchState.EMPTY_RESULT -> ErrorContent(
                 errorMessage = R.string.restaurant_list_empty_result_message,
                 onRetry = { popBack() },
                 retryButtonText = R.string.restaurant_list_retry_keyword,
                 isSettingButtonEnabled = false,
             )
 
-            SearchState.NetworkError -> ErrorContent(
+            SearchState.NETWORK_ERROR -> ErrorContent(
                 errorMessage = R.string.restaurant_list_network_error_message,
                 onRetry = { onRetry() },
             )
@@ -60,13 +60,14 @@ fun RestaurantListContent(
     }
 }
 
+/** プレビュー */
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantListContent() {
     PreviewWrapper {
         RestaurantListContentWrapper(
-            searchState = SearchState.Success,
+            searchState = SearchState.SUCCESS,
             shops = MockRestaurantData.sampleRestaurantList
         )
     }

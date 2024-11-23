@@ -32,7 +32,8 @@ constructor(
      * LOADING: 現在地取得中
      * ERROR: 現在地取得失敗
      */
-    private val _locationSearchState = MutableStateFlow(LocationSearchState.Loading)
+    private val _locationSearchState =
+        MutableStateFlow(LocationSearchState.LOADING)
 
     val locationSearchState = _locationSearchState.asStateFlow()
 
@@ -43,17 +44,12 @@ constructor(
 
     /** パーミッションの許可が拒否された場合の処理 */
     fun handlePermissionDenied() {
-        _locationSearchState.value = LocationSearchState.Error
+        _locationSearchState.value = LocationSearchState.ERROR
     }
 
     /** パーミッションの許可が必要な場合の処理 */
     fun handleRationaleRequired() {
-        _locationSearchState.value = LocationSearchState.RationalRequired
-    }
-
-    /** 現在地取得に失敗した場合の処理 */
-    private fun handleLocationError() {
-        _locationSearchState.value = LocationSearchState.Error
+        _locationSearchState.value = LocationSearchState.RATIONAL_REQUIRED
     }
 
     /** 現在地取得を再試行する */
@@ -61,16 +57,24 @@ constructor(
         getLocation()
     }
 
+    /** 現在地取得に失敗した場合の処理 */
+    private fun handleError(error: Throwable) {
+        _locationSearchState.value = when (error) {
+            is SecurityException -> LocationSearchState.ERROR
+            else -> LocationSearchState.ERROR
+        }
+    }
+
     /** 現在地を取得する */
     private fun getLocation() {
-        _locationSearchState.value = LocationSearchState.Loading
+        _locationSearchState.value = LocationSearchState.LOADING
         viewModelScope.launch {
             try {
                 performSearch()
             } catch (e: SecurityException) {
-                handleLocationError()
+                handleError(e)
             } catch (e: Exception) {
-                handleLocationError()
+                handleError(e)
             }
         }
     }
@@ -82,7 +86,7 @@ constructor(
             handleLocationSuccess(it)
             return
         }
-        handleLocationError()
+        _locationSearchState.value = LocationSearchState.ERROR
     }
 
     /**

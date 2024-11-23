@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.mock.MockRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.ui.screen.component.IconText
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
@@ -56,13 +56,14 @@ fun RestaurantInfo(
     }
 }
 
+/** プレビュー */
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
 private fun PreviewRestaurantInfo() {
     PreviewComponentWrapper {
         RestaurantInfo(
-            restaurant = MockRestaurantData.sampleRestaurantData
+            restaurant = sampleRestaurantData
         )
     }
 }

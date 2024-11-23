@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.seachlocation
+package com.example.gourmetsearchercompose.ui.screen.seachlocation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.component.Dialog
 import com.example.gourmetsearchercompose.ui.screen.component.ErrorContent
 import com.example.gourmetsearchercompose.ui.screen.component.LoadingContent
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -42,27 +41,44 @@ fun SearchLocationContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (searchState) {
-            LocationSearchState.Loading -> LoadingContent()
-            LocationSearchState.Error -> ErrorContent(
-                errorMessage = if (locationPermissionsState.status.isGranted) {
-                    R.string.search_location_error_message
-                } else {
-                    R.string.search_location_permission_denied_message
-                },
+            LocationSearchState.LOADING -> LoadingContent()
+
+            LocationSearchState.ERROR -> ErrorContent(
+                errorMessage = getErrorMessage(locationPermissionsState.status.isGranted),
                 onRetry = {
-                    if (locationPermissionsState.status.isGranted) {
-                        onRetry()
-                    } else {
-                        locationPermissionsState.launchPermissionRequest()
-                    }
+                    handleRetry(
+                        locationPermissionsState.status.isGranted,
+                        onRetry,
+                        locationPermissionsState::launchPermissionRequest
+                    )
                 },
                 onOpenSettings = onOpenSettings
             )
 
-            LocationSearchState.RationalRequired -> Dialog(
-                onConfirmClick = { locationPermissionsState.launchPermissionRequest() },
-                errorMessage = R.string.search_location_permission_required_message
+            LocationSearchState.RATIONAL_REQUIRED -> RationalDialog(
+                locationPermissionsState::launchPermissionRequest
             )
         }
     }
 }
+
+/**
+ * エラーメッセージ取得
+ * @param isGranted パーミッションが許可されているか
+ */
+private fun getErrorMessage(isGranted: Boolean) = when (isGranted) {
+    true -> R.string.search_location_error_message
+    false -> R.string.search_location_permission_denied_message
+}
+
+/**
+ * リトライ処理
+ * @param isGranted パーミッションが許可されているか
+ * @param onRetry リトライボタンクリック時のコールバック
+ * @param launchPermissionRequest パーミッションリクエスト実行コールバック
+ */
+private fun handleRetry(
+    isGranted: Boolean,
+    onRetry: () -> Unit,
+    launchPermissionRequest: () -> Unit
+) = if (isGranted) onRetry() else launchPermissionRequest()

@@ -10,6 +10,20 @@ import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWra
 import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
 import kotlinx.collections.immutable.ImmutableList
 
+/** レストランリスト画面ダークモードプレビュー */
+@Suppress("UnusedPrivateMember")
+@Preview
+@Composable
+private fun SuccessPreview() {
+    PreviewWrapper {
+        RestaurantListContentWrapper(
+            searchState = SearchState.SUCCESS,
+            shops = sampleRestaurantList
+        )
+    }
+}
+
+/** レストランリスト画面プレビュー */
 @Composable
 fun RestaurantListContentWrapper(
     searchState: SearchState,
@@ -28,10 +42,10 @@ fun RestaurantListContentWrapper(
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenErrorPreview() {
+private fun ErrorPreview() {
     PreviewWrapper {
         RestaurantListContentWrapper(
-            searchState = SearchState.NetworkError
+            searchState = SearchState.NETWORK_ERROR
         )
     }
 }
@@ -40,10 +54,10 @@ private fun RestaurantListScreenErrorPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenLoadingPreview() {
+private fun LoadingPreview() {
     PreviewWrapper {
         RestaurantListContentWrapper(
-            searchState = SearchState.Loading
+            searchState = SearchState.LOADING
         )
     }
 }
@@ -52,10 +66,10 @@ private fun RestaurantListScreenLoadingPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenEmptyPreview() {
+private fun EmptyPreview() {
     PreviewWrapper {
         RestaurantListContentWrapper(
-            searchState = SearchState.EmptyResult
+            searchState = SearchState.EMPTY_RESULT
         )
     }
 }
@@ -64,10 +78,10 @@ private fun RestaurantListScreenEmptyPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenSuccessDarkPreview() {
+private fun SuccessDarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantListContentWrapper(
-            searchState = SearchState.Success,
+            searchState = SearchState.SUCCESS,
             shops = sampleRestaurantList
         )
     }
@@ -77,10 +91,10 @@ private fun RestaurantListScreenSuccessDarkPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenErrorDarkPreview() {
+private fun ErrorDarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantListContentWrapper(
-            searchState = SearchState.NetworkError
+            searchState = SearchState.NETWORK_ERROR
         )
     }
 }
@@ -89,10 +103,10 @@ private fun RestaurantListScreenErrorDarkPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenLoadingDarkPreview() {
+private fun LoadingDarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantListContentWrapper(
-            searchState = SearchState.Loading
+            searchState = SearchState.LOADING
         )
     }
 }
@@ -101,10 +115,10 @@ private fun RestaurantListScreenLoadingDarkPreview() {
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantListScreenEmptyDarkPreview() {
+private fun EmptyDarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantListContentWrapper(
-            searchState = SearchState.EmptyResult
+            searchState = SearchState.EMPTY_RESULT
         )
     }
 }

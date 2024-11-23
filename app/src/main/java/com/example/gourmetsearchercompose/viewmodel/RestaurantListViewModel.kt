@@ -32,7 +32,7 @@ constructor(
     /** レストラン情報 */
     val shops = _shops.asStateFlow()
 
-    private val _searchState = MutableStateFlow(SearchState.Loading)
+    private val _searchState = MutableStateFlow(SearchState.LOADING)
 
     /** 検索状態 */
     val searchState = _searchState.asStateFlow()
@@ -44,13 +44,13 @@ constructor(
      * @param terms 検索条件
      */
     fun searchRestaurants(terms: SearchTerms) {
-        _searchState.value = SearchState.Loading
+        _searchState.value = SearchState.LOADING
         viewModelScope.launch {
             try {
                 searchTerm = terms
                 handleResponse(getRestaurantUseCase(terms))
             } catch (e: Exception) {
-                _searchState.value = SearchState.EmptyResult
+                _searchState.value = SearchState.EMPTY_RESULT
             }
         }
     }
@@ -72,16 +72,16 @@ constructor(
      */
     private fun handleResponse(response: Response<RestaurantList>?) {
         if (response?.body() == null) {
-            _searchState.value = SearchState.NetworkError
+            _searchState.value = SearchState.NETWORK_ERROR
             return
         }
         val repositories = response.body()?.results?.shops?.map { it.toDomain() }
 
         if (response.isSuccessful && !repositories.isNullOrEmpty()) {
-            _searchState.value = SearchState.Success
+            _searchState.value = SearchState.SUCCESS
             _shops.value = repositories.toImmutableList()
         } else {
-            _searchState.value = SearchState.EmptyResult
+            _searchState.value = SearchState.EMPTY_RESULT
         }
     }
 }

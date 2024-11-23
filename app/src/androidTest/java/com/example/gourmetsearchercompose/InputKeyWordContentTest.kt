@@ -5,10 +5,10 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.InputKeyWordContent
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.KeyWordHistoryList
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.RangeList
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.SearchTextField
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.range.RangeList
+import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.textfield.SearchTextField
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +22,6 @@ class InputKeyWordContentTest {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "",
-                isInputEmpty = true,
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf("History 1", "History 2"),
                 onInputTextChange = {},
@@ -42,7 +41,6 @@ class InputKeyWordContentTest {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "Test",
-                isInputEmpty = false,
                 focusRequester = FocusRequester(),
                 historyList = persistentListOf(),
                 onInputTextChange = {},
@@ -66,7 +64,7 @@ class InputKeyWordContentTest {
             )
         }
 
-        composeTestRule.onNodeWithTag("textField").assertExists()
+        composeTestRule.onNodeWithTag("searchTextField").assertExists()
         composeTestRule.onNodeWithText(testQuery).assertExists()
         composeTestRule.onNodeWithText("キーワードを入力").assertExists()
     }
@@ -90,7 +88,6 @@ class InputKeyWordContentTest {
     fun testRangeList() {
         composeTestRule.setContent {
             RangeList(
-                ranges = arrayOf("300", "500", "1000", "2000", "3000"),
                 onRangeSelect = {}
             )
         }

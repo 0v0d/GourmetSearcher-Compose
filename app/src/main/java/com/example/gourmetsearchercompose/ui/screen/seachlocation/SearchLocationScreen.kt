@@ -2,22 +2,19 @@ package com.example.gourmetsearchercompose.ui.screen.seachlocation
 
 import android.Manifest
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.gourmetsearchercompose.model.data.CurrentLocation
 import com.example.gourmetsearchercompose.model.data.SearchTerms
+import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
+import com.example.gourmetsearchercompose.ui.screen.seachlocation.effect.HandleLocationDataEffect
+import com.example.gourmetsearchercompose.ui.screen.seachlocation.effect.HandlePermissionEffects
 import com.example.gourmetsearchercompose.utils.openSettings
 import com.example.gourmetsearchercompose.viewmodel.SearchLocationViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 
 /**
  * 位置情報検索画面
@@ -42,6 +39,7 @@ fun SearchLocationScreen(
     val locationPermissionsState =
         rememberPermissionState(Manifest.permission.ACCESS_COARSE_LOCATION)
 
+    // 位置情報パーミッションの状態によって処理を分岐
     HandlePermissionEffects(
         locationPermissionsState = locationPermissionsState,
         onPermissionGrant = viewModel::handlePermissionGranted,
@@ -49,14 +47,17 @@ fun SearchLocationScreen(
         onPermissionDeny = viewModel::handlePermissionDenied
     )
 
-    HandleLocationDataEffect(locationData, inputText, range, onNavigateToResultList)
-
-    val rememberedOnNavigateToResultList by rememberUpdatedState(onNavigateToResultList)
-
-    LaunchedEffect(locationData) {
-        locationData?.let { location ->
-            rememberedOnNavigateToResultList(SearchTerms(inputText, location, range))
-        }
+    // 位置情報が取得できたら検索結果画面に遷移
+    locationData?.let {
+        HandleLocationDataEffect(
+            searchTerms =
+            SearchTerms(
+                keyword = inputText,
+                location = it,
+                range = range
+            ),
+            onNavigateToResultList = onNavigateToResultList
+        )
     }
 
     SearchLocationContent(
@@ -68,52 +69,4 @@ fun SearchLocationScreen(
             openSettings(context = context)
         }
     )
-}
-
-/**
- * 位置情報検索画面コンテンツ
- * @param locationPermissionsState 位置情報パーミッション状態
- * @param onPermissionGrant 位置情報パーミッション許可時のコールバック
- * @param onRationaleRequire 位置情報パーミッション許可が必要な旨のコールバック
- * @param onPermissionDeny 位置情報パーミッション拒否時のコールバック
- */
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun HandlePermissionEffects(
-    locationPermissionsState: PermissionState,
-    onPermissionGrant: () -> Unit,
-    onRationaleRequire: () -> Unit,
-    onPermissionDeny: () -> Unit
-) {
-    val rememberedOnPermissionGranted by rememberUpdatedState(onPermissionGrant)
-    val rememberedOnRationaleRequired by rememberUpdatedState(onRationaleRequire)
-    val rememberedOnPermissionDenied by rememberUpdatedState(onPermissionDeny)
-
-    LaunchedEffect(Unit) {
-        locationPermissionsState.launchPermissionRequest()
-    }
-
-    LaunchedEffect(locationPermissionsState.status) {
-        when {
-            locationPermissionsState.status.isGranted -> rememberedOnPermissionGranted()
-            locationPermissionsState.status.shouldShowRationale -> rememberedOnRationaleRequired()
-            else -> rememberedOnPermissionDenied()
-        }
-    }
-}
-
-@Composable
-private fun HandleLocationDataEffect(
-    locationData: CurrentLocation?,
-    inputText: String,
-    range: Int,
-    onNavigateToResultList: (SearchTerms) -> Unit
-) {
-    val rememberedOnNavigateToResultList by rememberUpdatedState(onNavigateToResultList)
-
-    LaunchedEffect(locationData, inputText, range) {
-        locationData?.let { location ->
-            rememberedOnNavigateToResultList(SearchTerms(inputText, location, range))
-        }
-    }
 }

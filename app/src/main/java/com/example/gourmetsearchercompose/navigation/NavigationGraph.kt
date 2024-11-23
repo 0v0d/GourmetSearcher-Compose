@@ -74,16 +74,14 @@ private fun NavGraphBuilder.addSearchLocationScreen(navController: NavHostContro
             range = backStackEntry.arguments?.getInt("range") ?: 0,
             onNavigateToResultList = { searchTerms ->
                 val encodedSearchTerms = encodeSearchTerms(searchTerms)
-                navController.navigateSingleTopTo(
-                    "${AppScreens.RestaurantList.name}/$encodedSearchTerms"
-                )
 
-                // 現在の画面をスタックから削除
-                navController.popBackStack(
-                    route = "${AppScreens.SearchLocation.name}/{inputText},{range}",
+                navController.navigateSingleTopTo(
+                    route = "${AppScreens.RestaurantList.name}/$encodedSearchTerms",
+                    popUpToRoute = "${AppScreens.SearchLocation.name}/{inputText},{range}",
                     inclusive = true
                 )
             }
+
         )
     }
 }
@@ -107,7 +105,11 @@ private fun NavGraphBuilder.addRestaurantListScreen(navController: NavHostContro
                     "${AppScreens.RestaurantDetail.name}/$encodedRestaurantData"
                 )
             },
-            popBack = { navController.popBackStack() }
+            popBack = {
+                if (navController.previousBackStackEntry != null) {
+                    navController.popBackStack()
+                }
+            }
         )
     }
 }
@@ -134,8 +136,18 @@ private fun NavGraphBuilder.addRestaurantDetailScreen() {
  * シングルトップでナビゲーションする
  * @param route ルート
  */
-fun NavHostController.navigateSingleTopTo(route: String) =
+fun NavHostController.navigateSingleTopTo(
+    route: String,
+    popUpToRoute: String? = null,
+    inclusive: Boolean = false
+) {
     this.navigate(route) {
         launchSingleTop = true
         restoreState = true
+        popUpToRoute?.let {
+            popUpTo(it) {
+                this.inclusive = inclusive
+            }
+        }
     }
+}

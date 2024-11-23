@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.example.gourmetsearchercompose.state.LocationSearchState
 import com.example.gourmetsearchercompose.mock.FakePermissionState
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationContent
+import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import org.junit.Rule
@@ -20,7 +20,7 @@ class SearchLocationContentTest {
     fun testSearchLocationContent_Error_PermissionGranted() {
         composeTestRule.setContent {
             SearchLocationContent(
-                searchState = LocationSearchState.Error,
+                searchState = LocationSearchState.ERROR,
                 locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
                 onRetry = {},
                 onOpenSettings = {}
@@ -37,7 +37,7 @@ class SearchLocationContentTest {
 
         composeTestRule.setContent {
             SearchLocationContent(
-                searchState = LocationSearchState.Error,
+                searchState = LocationSearchState.ERROR,
                 locationPermissionsState = FakePermissionState(
                     PermissionStatus.Denied(
                         shouldShowRationale = false
@@ -57,7 +57,7 @@ class SearchLocationContentTest {
     fun testSearchLocationContent_RationalRequired() {
         composeTestRule.setContent {
             SearchLocationContent(
-                searchState = LocationSearchState.RationalRequired,
+                searchState = LocationSearchState.RATIONAL_REQUIRED,
                 locationPermissionsState = FakePermissionState(
                     PermissionStatus.Denied(
                         shouldShowRationale = true

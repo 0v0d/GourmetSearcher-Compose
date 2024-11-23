@@ -24,7 +24,7 @@ class RestaurantListContentTest {
             RestaurantListContent(
                 onRetry = {},
                 popBack = {},
-                searchState = SearchState.Success,
+                searchState = SearchState.SUCCESS,
                 shops = sampleRestaurantList,
                 onNavigateToDetail = {}
             )
@@ -40,7 +40,7 @@ class RestaurantListContentTest {
             RestaurantListContent(
                 onRetry = {},
                 popBack = {},
-                searchState = SearchState.EmptyResult,
+                searchState = SearchState.EMPTY_RESULT,
                 shops = null,
                 onNavigateToDetail = {},
             )
@@ -55,7 +55,7 @@ class RestaurantListContentTest {
             RestaurantListContent(
                 onRetry = {},
                 popBack = {},
-                searchState = SearchState.NetworkError,
+                searchState = SearchState.NETWORK_ERROR,
                 shops = null,
                 onNavigateToDetail = {}
             )

@@ -73,7 +73,7 @@ class SearchLocationViewModelTest {
             viewModel.handlePermissionGranted()
 
             assertEquals(
-                LocationSearchState.Error,
+                LocationSearchState.ERROR,
                 viewModel.locationSearchState.value
             )
         }
@@ -92,7 +92,7 @@ class SearchLocationViewModelTest {
 
             latch.await(2, TimeUnit.SECONDS)
             assertEquals(
-                LocationSearchState.Error,
+                LocationSearchState.ERROR,
                 viewModel.locationSearchState.value
             )
         }
@@ -109,7 +109,7 @@ class SearchLocationViewModelTest {
 
             latch.await(2, TimeUnit.SECONDS)
             assertEquals(
-                LocationSearchState.Error,
+                LocationSearchState.ERROR,
                 viewModel.locationSearchState.value
             )
         }
@@ -119,7 +119,7 @@ class SearchLocationViewModelTest {
     fun testHandlePermissionDenied() {
         viewModel.handlePermissionDenied()
         assertEquals(
-            LocationSearchState.Error,
+            LocationSearchState.ERROR,
             viewModel.locationSearchState.value
         )
     }
@@ -129,7 +129,7 @@ class SearchLocationViewModelTest {
     fun testHandleRationaleRequired() {
         viewModel.handleRationaleRequired()
         assertEquals(
-            LocationSearchState.RationalRequired,
+            LocationSearchState.RATIONAL_REQUIRED,
             viewModel.locationSearchState.value
         )
     }

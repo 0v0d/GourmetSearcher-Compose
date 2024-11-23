@@ -13,6 +13,11 @@ import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.navigation.NavigationGraph
 import com.example.gourmetsearchercompose.ui.screen.component.AppBar
 
+/**
+ * アプリケーションコンテンツ
+ * @param modifier Modifier
+ * @param navController ナビゲーションコントローラー
+ */
 @Composable
 fun AppContent(
     modifier: Modifier = Modifier,
