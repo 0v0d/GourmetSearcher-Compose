@@ -1,5 +1,8 @@
 package com.example.gourmetsearchercompose.mock
 
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleEmptyRestaurantList
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.model.api.BudgetData
 import com.example.gourmetsearchercompose.model.api.GenreData
 import com.example.gourmetsearchercompose.model.api.LargeAreaData
@@ -13,6 +16,7 @@ import com.example.gourmetsearchercompose.model.api.Urls
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.model.domain.toDomain
 import kotlinx.collections.immutable.toImmutableList
+import retrofit2.Response
 
 /**
  * モックレストランデータ
@@ -56,6 +60,10 @@ object MockRestaurantData {
                 ),
             ),
         )
+
+    val sampleAPIResponse = Response.success(
+        sampleResponseData
+    )
 
     val sampleRestaurantList =
         sampleResponseData.results.shops.map { it.toDomain() }.toImmutableList()

@@ -1,6 +1,7 @@
 package com.example.gourmetsearchercompose.manager
 
 import android.util.LruCache
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
 import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
@@ -34,7 +35,7 @@ class CacheManagerTest {
     /** キャッシュにレスポンスが存在する場合のgetメソッドのテスト */
     @Test
     fun testGetCachedResponse() {
-        val mockResponse = Response.success(sampleResponseData)
+        val mockResponse = sampleAPIResponse
         `when`(mockCache[sampleSearchTerms]).thenReturn(mockResponse)
 
         val result = cacheManager.get(sampleSearchTerms)
@@ -55,7 +56,7 @@ class CacheManagerTest {
     /** putメソッドのテスト */
     @Test
     fun testPutResponse() {
-        val mockResponse = Response.success(sampleResponseData)
+        val mockResponse = sampleAPIResponse
 
         cacheManager.put(sampleSearchTerms, mockResponse)
 

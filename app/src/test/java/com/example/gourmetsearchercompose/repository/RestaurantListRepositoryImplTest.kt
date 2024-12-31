@@ -2,7 +2,7 @@ package com.example.gourmetsearchercompose.repository
 
 import com.example.gourmetsearchercompose.BuildConfig
 import com.example.gourmetsearchercompose.manager.CacheManager
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
 import com.example.gourmetsearchercompose.model.api.Results
@@ -36,8 +36,6 @@ class RestaurantListRepositoryImplTest {
 
     private val responseFormat = "json"
 
-    private val mockResponse = Response.success(sampleResponseData)
-
     /** 各テスト前の準備 */
     @Before
     fun setup() {
@@ -48,7 +46,7 @@ class RestaurantListRepositoryImplTest {
     @Test
     fun testExecuteCacheHit() =
         runBlocking {
-            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(mockResponse)
+            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(sampleAPIResponse)
 
             val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
@@ -61,7 +59,7 @@ class RestaurantListRepositoryImplTest {
                 anyInt(),
                 anyString(),
             )
-            assertEquals(mockResponse, result)
+            assertEquals(sampleAPIResponse, result)
         }
 
     /** キャッシュミス時のテスト */
@@ -78,7 +76,7 @@ class RestaurantListRepositoryImplTest {
                     anyInt(),
                     anyString(),
                 ),
-            ).thenReturn(mockResponse)
+            ).thenReturn(sampleAPIResponse)
 
             val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
@@ -94,8 +92,8 @@ class RestaurantListRepositoryImplTest {
                     responseFormat
                 )
             }
-            verify(mockCacheManager).put(sampleSearchTerms, mockResponse)
-            assertEquals(mockResponse, result)
+            verify(mockCacheManager).put(sampleSearchTerms, sampleAPIResponse)
+            assertEquals(sampleAPIResponse, result)
         }
 
     /** API例外時のテスト */
@@ -128,7 +126,7 @@ class RestaurantListRepositoryImplTest {
                 )
             }
 
-            verify(mockCacheManager, never()).put(sampleSearchTerms, mockResponse)
+            verify(mockCacheManager, never()).put(sampleSearchTerms, sampleAPIResponse)
             assertNull(result)
         }
 

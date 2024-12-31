@@ -1,6 +1,6 @@
 package com.example.gourmetsearchercompose.usecase.network
 
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.repository.RestaurantRepository
 import kotlinx.coroutines.runBlocking
@@ -12,7 +12,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Response
 
 /** GetHotPepperDataUseCaseのユニットテストクラス */
 @RunWith(MockitoJUnitRunner::class)
@@ -23,21 +22,16 @@ class GetRestaurantListUseCaseTest {
     @InjectMocks
     private lateinit var getRestaurantUseCase: GetRestaurantUseCase
 
-    private val mockResponse =
-        Response.success(
-            sampleResponseData
-        )
-
     /** 正しくAPIが呼び出された場合のテスト */
     @Test
     fun testInvokeReturnsSuccessful() =
         runBlocking {
             `when`(restaurantRepository.searchRestaurantRepository(sampleSearchTerms))
-                .thenReturn(mockResponse)
+                .thenReturn(sampleAPIResponse)
 
             val result = getRestaurantUseCase(sampleSearchTerms)
 
-            assertEquals(mockResponse, result)
+            assertEquals(sampleAPIResponse, result)
         }
 
     /** レスポンスがnullの場合のテスト */

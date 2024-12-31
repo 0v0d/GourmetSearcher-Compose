@@ -1,6 +1,6 @@
 package com.example.gourmetsearchercompose.viewmodel
 
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
 import com.example.gourmetsearchercompose.model.api.Results
@@ -38,8 +38,6 @@ class RestaurantListViewModelTest {
     @InjectMocks
     private lateinit var viewModel: RestaurantListViewModel
 
-    private val mockResponse = Response.success(sampleResponseData)
-
     private val mockEmptyResponse =
         RestaurantList(
             Results(
@@ -63,10 +61,10 @@ class RestaurantListViewModelTest {
     @Test
     fun testSearchRestaurantsSuccess() =
         runTest {
-            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(mockResponse)
+            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(sampleAPIResponse)
             viewModel.searchRestaurants(sampleSearchTerms)
 
-            val shops = mockResponse.body()?.results?.shops?.map { it.toDomain() }
+            val shops = sampleAPIResponse.body()?.results?.shops?.map { it.toDomain() }
             assertEquals(shops, viewModel.shops.value)
             assertEquals(
                 SearchState.SUCCESS,
