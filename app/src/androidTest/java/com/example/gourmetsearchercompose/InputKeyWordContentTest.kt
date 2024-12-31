@@ -1,14 +1,16 @@
 package com.example.gourmetsearchercompose
 
+import android.content.Context
 import androidx.compose.ui.focus.FocusRequester
-
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.test.core.app.ApplicationProvider
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.range.RangeList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.textfield.SearchTextField
+import com.example.gourmetsearchercompose.utils.UITestHelper
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.Rule
 import org.junit.Test
@@ -17,13 +19,19 @@ class InputKeyWordContentTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val context: Context = ApplicationProvider.getApplicationContext()
+
+    private val mockHistoryList = persistentListOf("History 1", "History 2")
+
+    private val testHelper = UITestHelper(composeTestRule)
+
     @Test
     fun testInputKeyWordContent_emptyInput() {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "",
                 focusRequester = FocusRequester(),
-                historyList = persistentListOf("History 1", "History 2"),
+                historyList = mockHistoryList,
                 onInputTextChange = {},
                 onClearHistory = {},
                 onRangeSelect = {}
@@ -31,9 +39,13 @@ class InputKeyWordContentTest {
         }
 
         composeTestRule.onNodeWithTag("SearchBar").assertExists()
-        composeTestRule.onNodeWithText("History 1").assertExists()
-        composeTestRule.onNodeWithText("History 2").assertExists()
-        composeTestRule.onNodeWithText("キーワードをクリア").assertExists()
+        for (mockHistory in mockHistoryList) {
+            testHelper.assertTextsDisplayed(mockHistory)
+        }
+
+        //キーワードをクリア
+        val clearLabel = context.getString(R.string.input_keyword_key_word_clear)
+        testHelper.assertTextsDisplayed(clearLabel)
     }
 
     @Test
@@ -50,7 +62,8 @@ class InputKeyWordContentTest {
         }
 
         composeTestRule.onNodeWithTag("SearchBar").assertExists()
-        composeTestRule.onNodeWithText("検索半径を選択して検索").assertExists()
+        val rangeLabel = context.getString(R.string.input_keyword_select_range_explanation)
+        testHelper.assertTextsDisplayed(rangeLabel)
     }
 
     @Test
@@ -65,23 +78,31 @@ class InputKeyWordContentTest {
         }
 
         composeTestRule.onNodeWithTag("searchTextField").assertExists()
-        composeTestRule.onNodeWithText(testQuery).assertExists()
-        composeTestRule.onNodeWithText("キーワードを入力").assertExists()
+        //キーワードを入力
+        val hint = context.getString(R.string.input_keyword_search_input_hint)
+        testHelper.assertTextsDisplayed(
+            testQuery,
+            hint
+        )
     }
 
     @Test
     fun testKeyWordHistoryList() {
         composeTestRule.setContent {
             KeyWordHistoryList(
-                historyList = persistentListOf("History 1", "History 2"),
+                historyList = mockHistoryList,
                 onItemClick = {},
                 onClearClick = {}
             )
         }
 
-        composeTestRule.onNodeWithText("History 1").assertExists()
-        composeTestRule.onNodeWithText("History 2").assertExists()
-        composeTestRule.onNodeWithText("キーワードをクリア").assertExists()
+        for (mockHistory in mockHistoryList) {
+            composeTestRule.onNodeWithText(mockHistory).assertExists()
+        }
+
+        //キーワードをクリア
+        val clearLabel = context.getString(R.string.input_keyword_key_word_clear)
+        testHelper.assertTextsDisplayed(clearLabel)
     }
 
     @Test
@@ -92,11 +113,14 @@ class InputKeyWordContentTest {
             )
         }
 
-        composeTestRule.onNodeWithText("検索半径を選択して検索").assertExists()
-        composeTestRule.onNodeWithText("300m").assertExists()
-        composeTestRule.onNodeWithText("500m").assertExists()
-        composeTestRule.onNodeWithText("1000m").assertExists()
-        composeTestRule.onNodeWithText("2000m").assertExists()
-        composeTestRule.onNodeWithText("3000m").assertExists()
+        //検索半径を選択して検索
+        val rangeLabel = context.getString(R.string.input_keyword_select_range_explanation)
+        testHelper.assertTextsDisplayed(rangeLabel)
+
+        val rangeArray = context.resources.getStringArray(R.array.input_keyword_range_array)
+        val meter = context.getString(R.string.input_keyword_meter)
+        for (range in rangeArray) {
+            testHelper.assertTextsDisplayed(range + meter)
+        }
     }
 }
