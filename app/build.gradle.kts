@@ -135,7 +135,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // MockitoJUnitRunner
-    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito)
     testImplementation(libs.junit)
     testImplementation(libs.dagger.hilt.android.testing)
     kspTest(libs.dagger.hilt.android.compiler)
@@ -151,7 +151,6 @@ dependencies {
     androidTestImplementation(libs.dagger.hilt.android.testing)
     kspAndroidTest(libs.dagger.hilt.android.compiler)
 }
-
 detekt {
     parallel = true
     config.setFrom("${rootProject.projectDir}/config/detekt/detekt.yml")

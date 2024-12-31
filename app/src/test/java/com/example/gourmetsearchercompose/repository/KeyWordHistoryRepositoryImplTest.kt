@@ -1,6 +1,8 @@
 package com.example.gourmetsearchercompose.repository
 
 import com.example.gourmetsearchercompose.manager.PreferencesManager
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.KEYWORD
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -30,7 +32,6 @@ class KeyWordHistoryRepositoryImplTest {
     private val testDispatcher = UnconfinedTestDispatcher()
 
     /** 各テスト前の準備 */
-
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
@@ -46,7 +47,7 @@ class KeyWordHistoryRepositoryImplTest {
     @Test
     fun testSaveHistoryItem() =
         runTest {
-            val input = "keyword 1"
+            val input = KEYWORD
             keyWordHistoryRepository.saveHistoryItem(input)
             verify(preferences).saveHistoryItem(input)
         }
@@ -55,7 +56,7 @@ class KeyWordHistoryRepositoryImplTest {
     @Test
     fun testGetHistoryList() =
         runTest {
-            val expectedHistoryList = listOf("keyword1", "keyword2", "keyword3")
+            val expectedHistoryList = sampleHistoryList
             `when`(preferences.getHistoryList()).thenReturn(flowOf(expectedHistoryList))
             val actualHistoryList = keyWordHistoryRepository.getHistoryList()
             actualHistoryList.collect {

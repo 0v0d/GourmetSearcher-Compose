@@ -1,5 +1,7 @@
 package com.example.gourmetsearchercompose.viewmodel
 
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.KEYWORD
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.usecase.keywordhistory.ClearKeyWordHistoryUseCase
 import com.example.gourmetsearchercompose.usecase.keywordhistory.GetKeyWordHistoryUseCase
 import com.example.gourmetsearchercompose.usecase.keywordhistory.SaveKeyWordHistoryUseCase
@@ -51,7 +53,7 @@ class InputKeyWordViewModelTest {
     /** テキストの更新が正しく行われることを確認するテスト */
     @Test
     fun testUpdateWithNewValue() = runTest {
-        val newText = "Hello, World!"
+        val newText = KEYWORD
 
         viewModel =
             InputKeyWordViewModel(
@@ -83,8 +85,8 @@ class InputKeyWordViewModelTest {
     /** 複数回の更新が正しく行われることを確認するテスト */
     @Test
     fun testMultipleUpdates() = runTest {
-        val firstText = "First"
-        val secondText = "Second"
+        val firstText = sampleHistoryList[0]
+        val secondText = sampleHistoryList[1]
 
         viewModel =
             InputKeyWordViewModel(
@@ -116,7 +118,7 @@ class InputKeyWordViewModelTest {
     @Test
     fun testLoadHistoryOnInit() =
         runTest {
-            val testHistory = listOf("test1", "test2")
+            val testHistory = sampleHistoryList
             `when`(getHistoryListUseCase()).thenReturn(flowOf(testHistory))
 
             viewModel =
@@ -133,7 +135,7 @@ class InputKeyWordViewModelTest {
     @Test
     fun testSaveHistoryItemUpdatesHistoryList() =
         runTest {
-            val updatedHistory = listOf("test1", "test2", "test3")
+            val updatedHistory = sampleHistoryList
 
             `when`(getHistoryListUseCase()).thenReturn(
                 flowOf(updatedHistory),
@@ -147,9 +149,10 @@ class InputKeyWordViewModelTest {
                     clearHistoryUseCase,
                 )
 
-            viewModel.saveHistoryItem("test3")
+            val newItem = "newItem"
+            viewModel.saveHistoryItem(newItem)
 
-            verify(saveHistoryItemUseCase).invoke("test3")
+            verify(saveHistoryItemUseCase).invoke(newItem)
             assertEquals(updatedHistory.reversed(), viewModel.historyListData.value)
         }
 
@@ -157,7 +160,7 @@ class InputKeyWordViewModelTest {
     @Test
     fun testSaveAndGetHistoryItem() =
         runTest {
-            val testHistory = listOf("test1", "test2")
+            val testHistory = sampleHistoryList
             `when`(getHistoryListUseCase()).thenReturn(flowOf(testHistory))
             `when`(saveHistoryItemUseCase(anyString())).thenReturn(Unit)
 
@@ -168,9 +171,10 @@ class InputKeyWordViewModelTest {
                     clearHistoryUseCase,
                 )
 
-            viewModel.saveHistoryItem("test3")
+            val newItem = "newItem"
+            viewModel.saveHistoryItem(newItem)
 
-            verify(saveHistoryItemUseCase).invoke("test3")
+            verify(saveHistoryItemUseCase).invoke(newItem)
             assertEquals(testHistory.reversed(), viewModel.historyListData.value)
         }
 

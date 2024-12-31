@@ -1,16 +1,10 @@
 package com.example.gourmetsearchercompose.manager
 
 import android.util.LruCache
-import com.example.gourmetsearchercompose.model.api.BudgetData
-import com.example.gourmetsearchercompose.model.api.GenreData
-import com.example.gourmetsearchercompose.model.api.LargeAreaData
-import com.example.gourmetsearchercompose.model.api.PCData
-import com.example.gourmetsearchercompose.model.api.PhotoData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
-import com.example.gourmetsearchercompose.model.api.Results
-import com.example.gourmetsearchercompose.model.api.Shops
-import com.example.gourmetsearchercompose.model.api.SmallAreaData
-import com.example.gourmetsearchercompose.model.api.Urls
 import com.example.gourmetsearchercompose.model.data.CurrentLocation
 import com.example.gourmetsearchercompose.model.data.SearchTerms
 import org.junit.Assert.assertEquals
@@ -32,34 +26,6 @@ class CacheManagerTest {
 
     private lateinit var cacheManager: CacheManager
 
-    private val mockSearchTerms = SearchTerms(
-        "keyword",
-        CurrentLocation(35.0, 139.0),
-        1
-    )
-
-    private val mockRestaurantList =
-        RestaurantList(
-            Results(
-                listOf(
-                    Shops(
-                        "Restaurant",
-                        "Address",
-                        "Station",
-                        LargeAreaData("Large Area"),
-                        SmallAreaData("Small Area"),
-                        GenreData("Genre"),
-                        BudgetData("Budget"),
-                        "Access",
-                        Urls("URL"),
-                        PhotoData(PCData("Photo URL")),
-                        "Open",
-                        "Close",
-                    ),
-                ),
-            ),
-        )
-
     /** テスト前の初期化 */
     @Before
     fun setUp() {
@@ -69,10 +35,10 @@ class CacheManagerTest {
     /** キャッシュにレスポンスが存在する場合のgetメソッドのテスト */
     @Test
     fun testGetCachedResponse() {
-        val mockResponse = Response.success(mockRestaurantList)
-        `when`(mockCache[mockSearchTerms]).thenReturn(mockResponse)
+        val mockResponse = sampleAPIResponse
+        `when`(mockCache[sampleSearchTerms]).thenReturn(mockResponse)
 
-        val result = cacheManager.get(mockSearchTerms)
+        val result = cacheManager.get(sampleSearchTerms)
 
         assertEquals(mockResponse, result)
     }
@@ -80,9 +46,9 @@ class CacheManagerTest {
     /** キャッシュが空の場合のgetメソッドのテスト */
     @Test
     fun testGetEmptyCache() {
-        `when`(mockCache[mockSearchTerms]).thenReturn(null)
+        `when`(mockCache[sampleSearchTerms]).thenReturn(null)
 
-        val result = cacheManager.get(mockSearchTerms)
+        val result = cacheManager.get(sampleSearchTerms)
 
         assertNull(result)
     }
@@ -90,11 +56,11 @@ class CacheManagerTest {
     /** putメソッドのテスト */
     @Test
     fun testPutResponse() {
-        val mockResponse = Response.success(mockRestaurantList)
+        val mockResponse = sampleAPIResponse
 
-        cacheManager.put(mockSearchTerms, mockResponse)
+        cacheManager.put(sampleSearchTerms, mockResponse)
 
-        verify(mockCache).put(mockSearchTerms, mockResponse)
+        verify(mockCache).put(sampleSearchTerms, mockResponse)
     }
 
     /** 無効な入力でのgetメソッドのテスト */
@@ -111,15 +77,16 @@ class CacheManagerTest {
         val maxSize = 5
         val fullCache = mockCache
         val fullCacheManager = CacheManager(fullCache)
+        val location = sampleSearchTerms.location
 
         repeat(maxSize) { i ->
-            val terms = SearchTerms("keyword$i", CurrentLocation(35.0, 139.0), i)
-            fullCacheManager.put(terms, Response.success(mockRestaurantList))
+            val terms = SearchTerms("keyword$i", location, i)
+            fullCacheManager.put(terms, Response.success(sampleResponseData))
         }
 
-        val newTerms = SearchTerms("newKeyword", CurrentLocation(35.0, 139.0), maxSize)
-        fullCacheManager.put(newTerms, Response.success(mockRestaurantList))
+        val newTerms = SearchTerms("newKeyword", location, maxSize)
+        fullCacheManager.put(newTerms, Response.success(sampleResponseData))
 
-        assertNull(fullCacheManager.get(SearchTerms("keyword0", CurrentLocation(35.0, 139.0), 0)))
+        assertNull(fullCacheManager.get(SearchTerms("keyword0", location, 0)))
     }
 }

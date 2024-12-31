@@ -3,7 +3,7 @@ package com.example.gourmetsearchercompose
 import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.component.RestaurantDetailContent
 import com.example.gourmetsearchercompose.utils.UITestHelper
 import org.junit.Rule
@@ -21,14 +21,14 @@ class RestaurantDetailContentTest {
     fun testRestaurantDetailContent() {
         composeTestRule.setContent {
             RestaurantDetailContent(
-                restaurantData = sampleRestaurantData,
+                restaurantData = sampleRestaurantList[0],
                 onHotPepperClick = {},
                 onMapClick = {}
             )
         }
 
         // レストランの情報が表示されていることを確認
-        with(sampleRestaurantData) {
+        with(sampleRestaurantList[0]) {
             testHelper.assertTextsDisplayed(
                 name,
                 genre.name,

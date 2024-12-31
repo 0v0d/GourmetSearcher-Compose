@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -50,21 +51,23 @@ class PreferencesManagerTest {
     @Test
     fun testAddNewToEmpty() =
         runBlocking {
-            preferencesManager.saveHistoryItem("test")
+            val textList = listOf("test")
+            preferencesManager.saveHistoryItem(textList.first())
             val historyList = preferencesManager.getHistoryList().first()
-            assertEquals(listOf("test"), historyList)
+            assertEquals(textList, historyList)
         }
 
     /** 既存の履歴に新しいアイテムを追加するテスト */
     @Test
     fun testAddNewToExisting() =
         runBlocking {
-            val initialItems = listOf("item1", "item2")
+            val initialItems = sampleHistoryList
             dataStore.edit { it[historyKey] = initialItems.joinToString(",") }
 
-            preferencesManager.saveHistoryItem("item3")
+            val newText = "newItem"
+            preferencesManager.saveHistoryItem(newText)
             val historyList = preferencesManager.getHistoryList().first()
-            assertEquals(initialItems + "item3", historyList)
+            assertEquals(initialItems + newText, historyList)
         }
 
     /** 履歴が最大数に達した時に最も古いアイテムを削除するテスト */
@@ -74,9 +77,10 @@ class PreferencesManagerTest {
             val initialItems = List(MAX_HISTORY_SIZE) { "item$it" }
             dataStore.edit { it[historyKey] = initialItems.joinToString(",") }
 
-            preferencesManager.saveHistoryItem("newItem")
+            val newText = "newItem"
+            preferencesManager.saveHistoryItem(newText)
             val historyList = preferencesManager.getHistoryList().first()
-            assertEquals(initialItems.drop(1) + "newItem", historyList)
+            assertEquals(initialItems.drop(1) + newText, historyList)
             assertEquals(MAX_HISTORY_SIZE, historyList.size)
         }
 
@@ -84,10 +88,11 @@ class PreferencesManagerTest {
     @Test
     fun testPreventDuplicates() =
         runBlocking {
-            val initialItems = listOf("item1", "item2", "item3")
+            val initialItems = sampleHistoryList
             dataStore.edit { it[historyKey] = initialItems.joinToString(",") }
 
-            preferencesManager.saveHistoryItem("item2")
+            val existingItem = initialItems.first()
+            preferencesManager.saveHistoryItem(existingItem)
             val historyList = preferencesManager.getHistoryList().first()
             assertEquals(initialItems, historyList)
         }
@@ -96,7 +101,7 @@ class PreferencesManagerTest {
     @Test
     fun testGetHistory() =
         runBlocking {
-            val expectedItems = listOf("item1", "item2", "item3")
+            val expectedItems = sampleHistoryList
             dataStore.edit { it[historyKey] = expectedItems.joinToString(",") }
 
             val historyList = preferencesManager.getHistoryList().first()
@@ -115,7 +120,7 @@ class PreferencesManagerTest {
     @Test
     fun testClearHistory() =
         runBlocking {
-            val initialItems = listOf("item1", "item2", "item3")
+            val initialItems = sampleHistoryList
             dataStore.edit { it[historyKey] = initialItems.joinToString(",") }
 
             preferencesManager.clearHistory()

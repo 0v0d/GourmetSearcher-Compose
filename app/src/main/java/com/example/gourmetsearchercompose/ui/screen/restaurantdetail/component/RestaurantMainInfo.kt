@@ -73,7 +73,7 @@ fun RestaurantMainInfo(
 private fun PreviewRestaurantMainInfo() {
     PreviewComponentWrapper {
         RestaurantMainInfo(
-            restaurantData = MockRestaurantData.sampleRestaurantData
+            restaurantData = MockRestaurantData.sampleRestaurantList[0]
         )
     }
 }

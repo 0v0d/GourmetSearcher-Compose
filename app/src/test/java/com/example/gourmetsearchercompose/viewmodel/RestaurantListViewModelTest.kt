@@ -1,17 +1,10 @@
 package com.example.gourmetsearchercompose.viewmodel
 
-import com.example.gourmetsearchercompose.model.api.BudgetData
-import com.example.gourmetsearchercompose.model.api.GenreData
-import com.example.gourmetsearchercompose.model.api.LargeAreaData
-import com.example.gourmetsearchercompose.model.api.PCData
-import com.example.gourmetsearchercompose.model.api.PhotoData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleAPIResponse
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
 import com.example.gourmetsearchercompose.model.api.Results
 import com.example.gourmetsearchercompose.model.api.Shops
-import com.example.gourmetsearchercompose.model.api.SmallAreaData
-import com.example.gourmetsearchercompose.model.api.Urls
-import com.example.gourmetsearchercompose.model.data.CurrentLocation
-import com.example.gourmetsearchercompose.model.data.SearchTerms
 import com.example.gourmetsearchercompose.model.domain.toDomain
 import com.example.gourmetsearchercompose.state.SearchState
 import com.example.gourmetsearchercompose.usecase.network.GetRestaurantUseCase
@@ -45,39 +38,11 @@ class RestaurantListViewModelTest {
     @InjectMocks
     private lateinit var viewModel: RestaurantListViewModel
 
-    private val mockResponse =
-        RestaurantList(
-            Results(
-                listOf(
-                    Shops(
-                        "Restaurant",
-                        "Address",
-                        "Station",
-                        LargeAreaData("Large Area"),
-                        SmallAreaData("Small Area"),
-                        GenreData("Genre"),
-                        BudgetData("Budget"),
-                        "Access",
-                        Urls("URL"),
-                        PhotoData(PCData("Photo URL")),
-                        "Open",
-                        "Close",
-                    ),
-                ),
-            ),
-        )
     private val mockEmptyResponse =
         RestaurantList(
             Results(
                 emptyList(),
             ),
-        )
-
-    private val mockSearchTerms =
-        SearchTerms(
-            "keyword",
-            CurrentLocation(0.0, 0.0),
-            1,
         )
 
     /** 各テスト前の準備 */
@@ -96,10 +61,10 @@ class RestaurantListViewModelTest {
     @Test
     fun testSearchRestaurantsSuccess() =
         runTest {
-            `when`(getRestaurantUseCase(mockSearchTerms)).thenReturn(Response.success(mockResponse))
-            viewModel.searchRestaurants(mockSearchTerms)
+            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(sampleAPIResponse)
+            viewModel.searchRestaurants(sampleSearchTerms)
 
-            val shops = mockResponse.results.shops.map { it.toDomain() }
+            val shops = sampleAPIResponse.body()?.results?.shops?.map { it.toDomain() }
             assertEquals(shops, viewModel.shops.value)
             assertEquals(
                 SearchState.SUCCESS,
@@ -111,9 +76,9 @@ class RestaurantListViewModelTest {
     @Test
     fun testSearchRestaurantsNetworkError() =
         runTest {
-            `when`(getRestaurantUseCase(mockSearchTerms)).thenReturn(null)
+            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(null)
 
-            viewModel.searchRestaurants(mockSearchTerms)
+            viewModel.searchRestaurants(sampleSearchTerms)
 
             assertEquals(SearchState.NETWORK_ERROR, viewModel.searchState.value)
         }
@@ -122,13 +87,13 @@ class RestaurantListViewModelTest {
     @Test
     fun testSearchRestaurantsEmptyResponse() =
         runTest {
-            `when`(getRestaurantUseCase(mockSearchTerms)).thenReturn(
+            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(
                 Response.success(
                     mockEmptyResponse
                 )
             )
 
-            viewModel.searchRestaurants(mockSearchTerms)
+            viewModel.searchRestaurants(sampleSearchTerms)
             val shops = mockEmptyResponse.results.shops.map { it.toDomain() }
             assertEquals(emptyList<Shops>(), shops)
             assertEquals(SearchState.EMPTY_RESULT, viewModel.searchState.value)
@@ -139,11 +104,11 @@ class RestaurantListViewModelTest {
     fun testRetrySearch() =
         runTest {
             val mockResponse = mock<Response<RestaurantList>>()
-            `when`(getRestaurantUseCase(mockSearchTerms)).thenReturn(mockResponse)
+            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(mockResponse)
 
-            viewModel.searchRestaurants(mockSearchTerms)
+            viewModel.searchRestaurants(sampleSearchTerms)
             viewModel.retrySearch()
 
-            verify(getRestaurantUseCase, times(2)).invoke(mockSearchTerms)
+            verify(getRestaurantUseCase, times(2)).invoke(sampleSearchTerms)
         }
 }

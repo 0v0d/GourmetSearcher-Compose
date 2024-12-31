@@ -6,12 +6,14 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ApplicationProvider
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.range.RangeList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.textfield.SearchTextField
 import com.example.gourmetsearchercompose.utils.UITestHelper
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import org.junit.Rule
 import org.junit.Test
 
@@ -21,8 +23,7 @@ class InputKeyWordContentTest {
 
     private val context: Context = ApplicationProvider.getApplicationContext()
 
-    private val mockHistoryList = persistentListOf("History 1", "History 2")
-
+    private val mockHistoryList = sampleHistoryList.toPersistentList()
     private val testHelper = UITestHelper(composeTestRule)
 
     @Test

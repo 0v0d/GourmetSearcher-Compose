@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.KEYWORD
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.keywordHistory
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.ui.screen.component.IconText
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
@@ -63,7 +63,7 @@ private fun RangeListPreview() {
         InputKeyWordContent(
             focusRequester = FocusRequester(),
             inputText = KEYWORD,
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onInputTextChange = {},
             onClearHistory = {},
             onRangeSelect = {}

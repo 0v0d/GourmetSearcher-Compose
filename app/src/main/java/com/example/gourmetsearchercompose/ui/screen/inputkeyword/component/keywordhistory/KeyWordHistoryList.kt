@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.keywordHistory
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.ui.screen.component.CustomOutlinedButton
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
 import kotlinx.collections.immutable.ImmutableList
@@ -60,7 +60,7 @@ fun KeyWordHistoryList(
 private fun PreviewKeyWordHistoryList() {
     PreviewComponentWrapper {
         KeyWordHistoryList(
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onItemClick = {},
             onClearClick = {}
         )

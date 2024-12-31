@@ -1,5 +1,6 @@
 package com.example.gourmetsearchercompose.usecase.keywordhistory
 
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.KEYWORD
 import com.example.gourmetsearchercompose.repository.KeyWordHistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,7 +44,7 @@ class SaveKeyWordHistoryUseCaseTest {
     @Test
     fun testInvokeCallsSaveHistoryItem() =
         runTest {
-            val keyword = "testKeyword"
+            val keyword = KEYWORD
 
             saveKeyWordHistoryUseCase(keyword)
 

@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
 
 /**
@@ -56,7 +56,7 @@ private fun PreviewContentItem() {
     PreviewComponentWrapper {
         ContentItem(
             title = R.string.restaurant_detail_closed_days,
-            content = sampleRestaurantData.close,
+            content = sampleRestaurantList[0].close,
             icon = Icons.Default.EventBusy
         )
     }

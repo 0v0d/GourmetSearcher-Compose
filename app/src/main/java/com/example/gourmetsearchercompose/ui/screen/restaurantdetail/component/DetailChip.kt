@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.ui.screen.component.IconText
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
 
@@ -48,7 +48,7 @@ private fun PreviewDetailChip() {
     PreviewComponentWrapper {
         DetailChip(
             icon = Icons.Default.AttachMoney,
-            text = sampleRestaurantData.budget.name
+            text = sampleRestaurantList[0].budget.name
         )
     }
 }
