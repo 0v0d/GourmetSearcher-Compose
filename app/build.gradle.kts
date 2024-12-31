@@ -4,7 +4,7 @@ plugins {
     // APIキーを隠すためのプラグイン
     alias(libs.plugins.secrets.gradle.plugin)
     alias(libs.plugins.dagger.hilt.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
     alias(libs.plugins.serialization)
     alias(libs.plugins.compose.compiler)
@@ -113,7 +113,7 @@ dependencies {
     // Dagger-Hilt
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
-    kapt(libs.dagger.hilt.android.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
 
     // メモリリーク検出ライブラリ
     debugImplementation(libs.leakcanary)
@@ -138,7 +138,7 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.junit)
     testImplementation(libs.dagger.hilt.android.testing)
-    kaptTest(libs.dagger.hilt.android.compiler)
+    kspTest(libs.dagger.hilt.android.compiler)
     testImplementation(libs.androidx.runner)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -149,12 +149,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4.android)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.dagger.hilt.android.testing)
-    kaptAndroidTest(libs.dagger.hilt.android.compiler)
-}
-
-kapt {
-    // エラータイプの修正を有効化
-    correctErrorTypes = true
+    kspAndroidTest(libs.dagger.hilt.android.compiler)
 }
 
 detekt {
