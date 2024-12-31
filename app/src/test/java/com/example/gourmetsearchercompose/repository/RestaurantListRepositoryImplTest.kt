@@ -2,18 +2,10 @@ package com.example.gourmetsearchercompose.repository
 
 import com.example.gourmetsearchercompose.BuildConfig
 import com.example.gourmetsearchercompose.manager.CacheManager
-import com.example.gourmetsearchercompose.model.api.BudgetData
-import com.example.gourmetsearchercompose.model.api.GenreData
-import com.example.gourmetsearchercompose.model.api.LargeAreaData
-import com.example.gourmetsearchercompose.model.api.PCData
-import com.example.gourmetsearchercompose.model.api.PhotoData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleResponseData
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.api.RestaurantList
 import com.example.gourmetsearchercompose.model.api.Results
-import com.example.gourmetsearchercompose.model.api.Shops
-import com.example.gourmetsearchercompose.model.api.SmallAreaData
-import com.example.gourmetsearchercompose.model.api.Urls
-import com.example.gourmetsearchercompose.model.data.CurrentLocation
-import com.example.gourmetsearchercompose.model.data.SearchTerms
 import com.example.gourmetsearchercompose.service.HotPepperGourmetApiService
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -42,35 +34,9 @@ class RestaurantListRepositoryImplTest {
 
     private lateinit var restaurantRepository: RestaurantRepository
 
-    private val mockSearchTerms = SearchTerms(
-        "keyword",
-        CurrentLocation(35.0, 139.0),
-        1
-    )
+    private val responseFormat = "json"
 
-    private val mockResponse =
-        Response.success(
-            RestaurantList(
-                Results(
-                    listOf(
-                        Shops(
-                            "Restaurant",
-                            "Address",
-                            "Station",
-                            LargeAreaData("Large Area"),
-                            SmallAreaData("Small Area"),
-                            GenreData("Genre"),
-                            BudgetData("Budget"),
-                            "Access",
-                            Urls("URL"),
-                            PhotoData(PCData("Photo URL")),
-                            "Open",
-                            "Close",
-                        ),
-                    ),
-                ),
-            ),
-        )
+    private val mockResponse = Response.success(sampleResponseData)
 
     /** 各テスト前の準備 */
     @Before
@@ -82,11 +48,11 @@ class RestaurantListRepositoryImplTest {
     @Test
     fun testExecuteCacheHit() =
         runBlocking {
-            `when`(mockCacheManager.get(mockSearchTerms)).thenReturn(mockResponse)
+            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(mockResponse)
 
-            val result = restaurantRepository.searchRestaurantRepository(mockSearchTerms)
+            val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
-            verify(mockCacheManager).get(mockSearchTerms)
+            verify(mockCacheManager).get(sampleSearchTerms)
             verify(mockService, never()).searchRestaurants(
                 anyString(),
                 anyString(),
@@ -102,7 +68,7 @@ class RestaurantListRepositoryImplTest {
     @Test
     fun testExecuteCacheMiss() =
         runBlocking {
-            `when`(mockCacheManager.get(mockSearchTerms)).thenReturn(null)
+            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(null)
             `when`(
                 mockService.searchRestaurants(
                     anyString(),
@@ -114,18 +80,21 @@ class RestaurantListRepositoryImplTest {
                 ),
             ).thenReturn(mockResponse)
 
-            val result = restaurantRepository.searchRestaurantRepository(mockSearchTerms)
+            val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
-            verify(mockCacheManager).get(mockSearchTerms)
-            verify(mockService).searchRestaurants(
-                BuildConfig.API_KEY,
-                mockSearchTerms.keyword,
-                mockSearchTerms.location.latitude,
-                mockSearchTerms.location.longitude,
-                mockSearchTerms.range,
-                "json",
-            )
-            verify(mockCacheManager).put(mockSearchTerms, mockResponse)
+            verify(mockCacheManager).get(sampleSearchTerms)
+
+            with(sampleSearchTerms) {
+                verify(mockService).searchRestaurants(
+                    BuildConfig.API_KEY,
+                    keyword,
+                    location.latitude,
+                    location.longitude,
+                    range,
+                    responseFormat
+                )
+            }
+            verify(mockCacheManager).put(sampleSearchTerms, mockResponse)
             assertEquals(mockResponse, result)
         }
 
@@ -133,7 +102,7 @@ class RestaurantListRepositoryImplTest {
     @Test
     fun testExecuteWithException() =
         runBlocking {
-            `when`(mockCacheManager.get(mockSearchTerms)).thenReturn(null)
+            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(null)
             `when`(
                 mockService.searchRestaurants(
                     anyString(),
@@ -145,18 +114,21 @@ class RestaurantListRepositoryImplTest {
                 ),
             ).thenThrow(RuntimeException::class.java)
 
-            val result = restaurantRepository.searchRestaurantRepository(mockSearchTerms)
+            val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
-            verify(mockCacheManager).get(mockSearchTerms)
-            verify(mockService).searchRestaurants(
-                BuildConfig.API_KEY,
-                mockSearchTerms.keyword,
-                mockSearchTerms.location.latitude,
-                mockSearchTerms.location.longitude,
-                mockSearchTerms.range,
-                "json",
-            )
-            verify(mockCacheManager, never()).put(mockSearchTerms, mockResponse)
+            verify(mockCacheManager).get(sampleSearchTerms)
+            with(sampleSearchTerms) {
+                verify(mockService).searchRestaurants(
+                    BuildConfig.API_KEY,
+                    keyword,
+                    location.latitude,
+                    location.longitude,
+                    range,
+                    responseFormat,
+                )
+            }
+
+            verify(mockCacheManager, never()).put(sampleSearchTerms, mockResponse)
             assertNull(result)
         }
 
@@ -165,7 +137,7 @@ class RestaurantListRepositoryImplTest {
     fun testExecuteWithEmptyResponse() =
         runBlocking {
             val emptyResponse = Response.success(RestaurantList(Results(emptyList())))
-            `when`(mockCacheManager.get(mockSearchTerms)).thenReturn(null)
+            `when`(mockCacheManager.get(sampleSearchTerms)).thenReturn(null)
             `when`(
                 mockService.searchRestaurants(
                     anyString(),
@@ -177,18 +149,20 @@ class RestaurantListRepositoryImplTest {
                 ),
             ).thenReturn(emptyResponse)
 
-            val result = restaurantRepository.searchRestaurantRepository(mockSearchTerms)
+            val result = restaurantRepository.searchRestaurantRepository(sampleSearchTerms)
 
-            verify(mockCacheManager).get(mockSearchTerms)
-            verify(mockService).searchRestaurants(
-                BuildConfig.API_KEY,
-                mockSearchTerms.keyword,
-                mockSearchTerms.location.latitude,
-                mockSearchTerms.location.longitude,
-                mockSearchTerms.range,
-                "json",
-            )
-            verify(mockCacheManager).put(mockSearchTerms, emptyResponse)
+            verify(mockCacheManager).get(sampleSearchTerms)
+            with(sampleSearchTerms) {
+                verify(mockService).searchRestaurants(
+                    BuildConfig.API_KEY,
+                    keyword,
+                    location.latitude,
+                    location.longitude,
+                    range,
+                    responseFormat,
+                )
+            }
+            verify(mockCacheManager).put(sampleSearchTerms, emptyResponse)
             assertEquals(emptyResponse, result)
         }
 }

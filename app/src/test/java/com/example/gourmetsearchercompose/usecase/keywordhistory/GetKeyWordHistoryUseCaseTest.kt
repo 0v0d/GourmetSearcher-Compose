@@ -1,5 +1,6 @@
 package com.example.gourmetsearchercompose.usecase.keywordhistory
 
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.repository.KeyWordHistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,7 +47,7 @@ class GetKeyWordHistoryUseCaseTest {
     @Test
     fun testInvokeReturnsHistoryList() =
         runTest {
-            val expectedHistoryList = listOf("keyword1", "keyword2", "keyword3")
+            val expectedHistoryList = sampleHistoryList
             `when`(keyWordHistoryRepository.getHistoryList()).thenReturn(flowOf(expectedHistoryList))
 
             val result = getKeyWordHistoryUseCase()

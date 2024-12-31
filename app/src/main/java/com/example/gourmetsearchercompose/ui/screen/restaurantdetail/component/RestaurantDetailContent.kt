@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.ui.screen.component.CustomOutlinedButton
 import com.example.gourmetsearchercompose.ui.screen.component.ImageCard
@@ -72,7 +72,7 @@ fun RestaurantDetailContent(
 private fun RestaurantDetailContentPreview() {
     PreviewWrapper {
         RestaurantDetailScreen(
-            restaurantData = sampleRestaurantData
+            restaurantData = sampleRestaurantList[0]
         )
     }
 }

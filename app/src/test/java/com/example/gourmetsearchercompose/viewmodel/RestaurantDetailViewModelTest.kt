@@ -1,5 +1,6 @@
 package com.example.gourmetsearchercompose.viewmodel
 
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,7 +17,7 @@ class RestaurantDetailViewModelTest {
     /** 地図を開く機能のテスト */
     @Test
     fun testOpenMap() {
-        val address = "東京都渋谷区道玄坂1-2-3"
+        val address = sampleRestaurantList.first().address
         val encodedAddress = URLEncoder.encode(address, "UTF-8")
 
         viewModel.openMap(address)
@@ -35,7 +36,7 @@ class RestaurantDetailViewModelTest {
     /** URLを開く機能のテスト */
     @Test
     fun testOpenUrl() {
-        val url = "https://example.com"
+        val url = sampleRestaurantList.first().url.pc
 
         viewModel.openUrl(url)
 

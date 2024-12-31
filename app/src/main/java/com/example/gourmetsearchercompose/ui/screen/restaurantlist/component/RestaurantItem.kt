@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.ui.screen.component.ImageCard
 
@@ -60,7 +60,7 @@ fun RestaurantItem(
 @Composable
 private fun PreviewRestaurantItem() {
     RestaurantItem(
-        restaurant = sampleRestaurantData,
+        restaurant = sampleRestaurantList[0],
         onClick = {}
     )
 }

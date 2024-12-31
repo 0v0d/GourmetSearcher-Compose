@@ -1,6 +1,7 @@
 package com.example.gourmetsearchercompose.repository
 
 import android.location.Location
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.data.CurrentLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -42,10 +43,7 @@ class SearchLocationRepositoryImplTest {
     @Test
     fun testGetLocationSuccess() =
         runTest {
-            val expectedLocation = CurrentLocation(
-                35.6895,
-                139.6917
-            )
+            val expectedLocation = sampleSearchTerms.location
             val mockLocation = mock<Location>()
             `when`(mockLocation.latitude).thenReturn(expectedLocation.latitude)
             `when`(mockLocation.longitude).thenReturn(expectedLocation.longitude)

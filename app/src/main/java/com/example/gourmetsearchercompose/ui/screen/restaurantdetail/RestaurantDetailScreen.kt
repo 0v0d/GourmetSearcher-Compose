@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.model.domain.ShopsDomain
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.component.RestaurantDetailContent
@@ -63,7 +63,7 @@ fun RestaurantDetailScreen(
 private fun RestaurantDetailContentPreview() {
     PreviewWrapper {
         RestaurantDetailScreen(
-            restaurantData = sampleRestaurantData
+            restaurantData = sampleRestaurantList[0]
         )
     }
 }

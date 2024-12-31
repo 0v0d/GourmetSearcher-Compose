@@ -2,7 +2,7 @@ package com.example.gourmetsearchercompose.ui.screen.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
+import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailScreen
 
@@ -13,7 +13,7 @@ import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantD
 private fun Preview() {
     PreviewWrapper {
         RestaurantDetailScreen(
-            restaurantData = sampleRestaurantData
+            restaurantData = sampleRestaurantList[0]
         )
     }
 }
@@ -25,7 +25,7 @@ private fun Preview() {
 private fun DarkPreview() {
     PreviewWrapper(darkTheme = true) {
         RestaurantDetailScreen(
-            restaurantData = sampleRestaurantData
+            restaurantData = sampleRestaurantList[0]
         )
     }
 }

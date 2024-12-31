@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.keywordHistory
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
 
@@ -61,7 +61,7 @@ fun RangeListContent(
 private fun PreviewRangeList() {
     PreviewComponentWrapper {
         KeyWordHistoryList(
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onItemClick = {},
             onClearClick = {}
         )

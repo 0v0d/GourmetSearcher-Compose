@@ -1,6 +1,7 @@
 package com.example.gourmetsearchercompose.usecase.location
 
 import android.location.Location
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
 import com.example.gourmetsearchercompose.model.data.CurrentLocation
 import com.example.gourmetsearchercompose.repository.SearchLocationRepository
 import kotlinx.coroutines.runBlocking
@@ -27,7 +28,7 @@ class GetCurrentLocationUseCaseTest {
     @Test
     fun testInvokeReturnsLocationSuccessful() =
         runBlocking {
-            val expectedLocation = CurrentLocation(35.6895, 139.6917)
+            val expectedLocation = sampleSearchTerms.location
             val mockLocation = mock<Location>()
             `when`(mockLocation.latitude).thenReturn(expectedLocation.latitude)
             `when`(mockLocation.longitude).thenReturn(expectedLocation.longitude)

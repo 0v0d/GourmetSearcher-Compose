@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.gourmetsearchercompose.mock.MockSearchTerms.KEYWORD
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.keywordHistory
+import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
 import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
 import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
 
@@ -17,7 +17,7 @@ private fun KeyWordListPreview() {
         InputKeyWordContent(
             focusRequester = FocusRequester(),
             inputText = "",
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onInputTextChange = {},
             onClearHistory = {},
             onRangeSelect = {}
@@ -34,7 +34,7 @@ private fun KeyWordListDarkPreview() {
         InputKeyWordContent(
             focusRequester = FocusRequester(),
             inputText = "",
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onInputTextChange = {},
             onClearHistory = {},
             onRangeSelect = {}
@@ -51,7 +51,7 @@ private fun RangeListPreview() {
         InputKeyWordContent(
             focusRequester = FocusRequester(),
             inputText = KEYWORD,
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onInputTextChange = {},
             onClearHistory = {},
             onRangeSelect = {}
@@ -68,7 +68,7 @@ private fun RangeListDarkPreview() {
         InputKeyWordContent(
             focusRequester = FocusRequester(),
             inputText = KEYWORD,
-            historyList = keywordHistory,
+            historyList = sampleHistoryList,
             onInputTextChange = {},
             onClearHistory = {},
             onRangeSelect = {}
