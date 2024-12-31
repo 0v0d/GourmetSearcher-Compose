@@ -1,16 +1,21 @@
 package com.example.gourmetsearchercompose
 
-import androidx.compose.ui.test.assertIsDisplayed
+import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.test.core.app.ApplicationProvider
 import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantData
 import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.component.RestaurantDetailContent
+import com.example.gourmetsearchercompose.utils.UITestHelper
 import org.junit.Rule
 import org.junit.Test
 
 class RestaurantDetailContentTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+
+    private val context: Context = ApplicationProvider.getApplicationContext()
+
+    private val testHelper = UITestHelper(composeTestRule)
 
     @Test
     fun testRestaurantDetailContent() {
@@ -22,28 +27,31 @@ class RestaurantDetailContentTest {
             )
         }
 
-        // レストラン名のテスト
-        composeTestRule.onNodeWithText(sampleRestaurantData.name).assertIsDisplayed()
-            .assertIsDisplayed()
+        // レストランの情報が表示されていることを確認
+        with(sampleRestaurantData) {
+            testHelper.assertTextsDisplayed(
+                name,
+                genre.name,
+                budget.name,
+                open,
+                address,
+                access,
+                close
+            )
+        }
 
-        // 主要情報のテスト
-        composeTestRule.onNodeWithText(sampleRestaurantData.genre.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleRestaurantData.budget.name).assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleRestaurantData.open)
-            .assertIsDisplayed()
-
-        // 詳細情報のテスト
-        composeTestRule.onNodeWithText("住所").assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleRestaurantData.address)
-            .assertIsDisplayed()
-        composeTestRule.onNodeWithText("アクセス").assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleRestaurantData.access)
-            .assertIsDisplayed()
-        composeTestRule.onNodeWithText("休業日")
-            .assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleRestaurantData.close).assertIsDisplayed()
-
+        // タイトルのテスト
+        val addressTitle = context.getString(R.string.restaurant_detail_address)
+        val accessTitle = context.getString(R.string.restaurant_detail_access)
+        val closedDaysTitle = context.getString(R.string.restaurant_detail_closed_days)
         // ホットペッパーボタンのテスト
-        composeTestRule.onNodeWithText("HotPepperへ").assertIsDisplayed()
+        val hotPepperButton = context.getString(R.string.restaurant_detail_hot_pepper)
+
+        testHelper.assertTextsDisplayed(
+            addressTitle,
+            accessTitle,
+            closedDaysTitle,
+            hotPepperButton
+        )
     }
 }
