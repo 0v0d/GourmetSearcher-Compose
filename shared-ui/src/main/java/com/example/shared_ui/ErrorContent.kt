@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.component
+package com.example.shared_ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -15,14 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.R
 
 /**
  * エラーコンテンツ
  * @param errorMessage エラーメッセージ
  * @param onRetry リトライボタンクリック時のコールバック
  * @param modifier Modifier
- * @param retryButtonText リトライボタンテキスト
+ * @param buttonText ボタンテキスト
  * @param onOpenSettings 設定画面を開くボタンクリック時のコールバック
  * @param isSettingButtonEnabled 設定画面を開くボタンが有効かどうか
  */
@@ -31,7 +30,7 @@ fun ErrorContent(
     @StringRes errorMessage: Int,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
-    @StringRes retryButtonText: Int = R.string.common_retry,
+    @StringRes buttonText: Int? = null,
     onOpenSettings: () -> Unit = {},
     isSettingButtonEnabled: Boolean = true
 ) {
@@ -51,15 +50,17 @@ fun ErrorContent(
         ) {
             // リトライボタン
             CustomOutlinedButton(
-                text = retryButtonText,
+                text = R.string.common_retry,
                 onClick = onRetry
             )
             if (isSettingButtonEnabled) {
-                // 設定画面を開くボタン
-                CustomOutlinedButton(
-                    text = R.string.search_location_setting,
-                    onClick = onOpenSettings
-                )
+                buttonText?.let {
+                    // 設定画面を開くボタン
+                    CustomOutlinedButton(
+                        text = it,
+                        onClick = onOpenSettings
+                    )
+                }
             }
         }
     }

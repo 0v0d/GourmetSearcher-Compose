@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.component
+package com.example.shared_ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
