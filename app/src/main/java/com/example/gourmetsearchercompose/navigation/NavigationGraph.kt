@@ -9,15 +9,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.gourmetsearchercompose.model.data.decodeSearchTerms
-import com.example.gourmetsearchercompose.model.data.encodeSearchTerms
-import com.example.gourmetsearchercompose.model.domain.decodeRestaurantData
-import com.example.gourmetsearchercompose.model.domain.encodeRestaurantData
-import com.example.gourmetsearchercompose.ui.screen.AppScreens
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.InputKeyWordScreen
-import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.RestaurantDetailScreen
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.RestaurantListScreen
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.SearchLocationScreen
+import com.example.feature_keyword.InputKeyWordScreen
+import com.example.feature_location.component.SearchLocationScreen
+import com.example.feature_restaurant.decodeSearchTerms
+import com.example.feature_restaurant.domain.decodeRestaurantData
+import com.example.feature_restaurant.domain.encodeRestaurantData
+import com.example.feature_restaurant.encodeSearchTerms
+import com.example.feature_restaurant.restaurantdetail.RestaurantDetailScreen
+import com.example.feature_restaurant.restaurantlist.RestaurantListScreen
+import com.example.gourmetsearchercompose.ui.AppScreens
 
 /**
  * ナビゲーショングラフ
@@ -72,9 +72,13 @@ private fun NavGraphBuilder.addSearchLocationScreen(navController: NavHostContro
         SearchLocationScreen(
             inputText = backStackEntry.arguments?.getString("inputText") ?: "",
             range = backStackEntry.arguments?.getInt("range") ?: 0,
-            onNavigateToResultList = { searchTerms ->
-                val encodedSearchTerms = encodeSearchTerms(searchTerms)
-
+            onNavigateToResultList = { inputText, range, latitude, longitude ->
+                val encodedSearchTerms = encodeSearchTerms(
+                    inputText,
+                    range,
+                    latitude = latitude,
+                    longitude = longitude
+                )
                 navController.navigateSingleTopTo(
                     route = "${AppScreens.RestaurantList.name}/$encodedSearchTerms",
                     popUpToRoute = "${AppScreens.SearchLocation.name}/{inputText},{range}",
@@ -100,7 +104,8 @@ private fun NavGraphBuilder.addRestaurantListScreen(navController: NavHostContro
         RestaurantListScreen(
             searchTerms = searchTerms,
             onNavigateToDetail = { shopsDomain ->
-                val encodedRestaurantData = encodeRestaurantData(shopsDomain)
+                val encodedRestaurantData =
+                    encodeRestaurantData(shopsDomain)
                 navController.navigateSingleTopTo(
                     "${AppScreens.RestaurantDetail.name}/$encodedRestaurantData"
                 )

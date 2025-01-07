@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "GourmetSearcher-Compose"
 include(":app")
- 
+include(":core")
+include(":feature-keyword")
+include(":feature-restaurant")
+include(":feature-location")
+include(":shared-ui")

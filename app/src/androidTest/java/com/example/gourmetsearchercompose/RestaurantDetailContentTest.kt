@@ -3,9 +3,9 @@ package com.example.gourmetsearchercompose
 import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
-import com.example.gourmetsearchercompose.ui.screen.restaurantdetail.component.RestaurantDetailContent
-import com.example.gourmetsearchercompose.utils.UITestHelper
+import com.example.feature_restaurant.R
+import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
+import com.example.feature_restaurant.restaurantdetail.component.RestaurantDetailContent
 import org.junit.Rule
 import org.junit.Test
 

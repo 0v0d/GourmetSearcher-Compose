@@ -3,10 +3,10 @@ package com.example.gourmetsearchercompose
 import android.content.Context
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ApplicationProvider
-import com.example.gourmetsearchercompose.mock.FakePermissionState
-import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
-import com.example.gourmetsearchercompose.utils.UITestHelper
+import com.example.feature_location.R
+import com.example.feature_location.component.SearchLocationContent
+import com.example.feature_location.mock.FakePermissionState
+import com.example.feature_location.state.LocationSearchState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import org.junit.Rule
@@ -22,19 +22,21 @@ class SearchLocationContentTest {
     private val testHelper = UITestHelper(composeTestRule)
 
     @Test
-    fun testSearchLocationContent_Error_PermissionGranted() {
+    fun testSearchLocationContentErrorPermissionGranted() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.ERROR,
-                locationPermissionsState = FakePermissionState(PermissionStatus.Granted),
+                locationPermissionsState = FakePermissionState(
+                    PermissionStatus.Granted
+                ),
                 onRetry = {},
                 onOpenSettings = {}
             )
         }
 
-        val errorMessage = context.getString(R.string.search_location_error_message)
-        val retryLabel = context.getString(R.string.common_retry)
-        val settingLabel = context.getString(R.string.search_location_setting)
+        val errorMessage = context.getString(R.string.error_message)
+        val retryLabel = context.getString(com.example.shared_ui.R.string.common_retry)
+        val settingLabel = context.getString(R.string.setting)
 
         testHelper.assertTextsDisplayed(
             errorMessage,
@@ -44,8 +46,7 @@ class SearchLocationContentTest {
     }
 
     @Test
-    fun testSearchLocationContent_Error_PermissionDenied() {
-
+    fun testSearchLocationContentErrorPermissionDenied() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.ERROR,
@@ -60,9 +61,9 @@ class SearchLocationContentTest {
         }
 
 
-        val errorMessage = context.getString(R.string.search_location_permission_denied_message)
-        val retryLabel = context.getString(R.string.common_retry)
-        val settingLabel = context.getString(R.string.search_location_setting)
+        val errorMessage = context.getString(R.string.permission_denied_message)
+        val retryLabel = context.getString(com.example.shared_ui.R.string.common_retry)
+        val settingLabel = context.getString(R.string.setting)
 
         testHelper.assertTextsDisplayed(
             errorMessage,
@@ -72,7 +73,7 @@ class SearchLocationContentTest {
     }
 
     @Test
-    fun testSearchLocationContent_RationalRequired() {
+    fun testSearchLocationContentRationalRequired() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.RATIONAL_REQUIRED,
@@ -86,9 +87,8 @@ class SearchLocationContentTest {
             )
         }
 
-        val rationalMessage =
-            context.getString(R.string.search_location_permission_required_message)
-        val okLabel = context.getString(R.string.common_ok)
+        val rationalMessage = context.getString(R.string.permission_required_message)
+        val okLabel = context.getString(com.example.shared_ui.R.string.common_ok)
 
         testHelper.assertTextsDisplayed(
             rationalMessage,

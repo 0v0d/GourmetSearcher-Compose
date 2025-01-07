@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="permission_required_title">位置情報パーミッションが必要です</string>
+    <string name="permission_required_message">このアプリでは、位置情報を取得するために位置情報パーミッションが必要です</string>
+    <string name="error_message">位置情報を取得できませんでした</string>
+    <string name="permission_denied_message">位置情報が許可されていません</string>
+    <string name="setting">設定を開く</string>
+
+</resources>
