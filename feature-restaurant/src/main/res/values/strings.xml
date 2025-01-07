@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Restaurant List -->
+    <string name="restaurant_list_network_error_message">ネットワークエラーが発生しました</string>
+    <string name="restaurant_list_empty_result_message">検索結果がありませんでした</string>
+    <string name="restaurant_list_retry_keyword">別のキーワードで検索</string>
+
+
+    <!-- Restaurant Detail -->
+    <string name="restaurant_detail_google_map">com.google.android.apps.maps</string>
+    <string name="restaurant_detail_google_map_activity">com.google.android.maps.MapsActivity</string>
+
+    <string name="restaurant_detail_chrome">com.android.chrome</string>
+    <string name="restaurant_detail_chrome_activity">com.google.android.apps.chrome.Main</string>
+
+    <string name="restaurant_detail_map_url">geo:0:0?q=</string>
+
+    <string name="restaurant_detail_restaurant_name">店舗名</string>
+    <string name="restaurant_detail_genre">ジャンル</string>
+    <string name="restaurant_detail_budget">予算</string>
+    <string name="restaurant_detail_closed_days">休業日</string>
+    <string name="restaurant_detail_opening_hours">営業時間</string>
+    <string name="restaurant_detail_address">住所</string>
+    <string name="restaurant_detail_access">アクセス</string>
+    <string name="restaurant_detail_map_description">Mapを開く</string>
+    <string name="restaurant_detail_hot_pepper">HotPepperへ</string>
+</resources>
