@@ -8,11 +8,11 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     registries: "*"
     labels: [ "version update" ]
     groups:
@@ -28,4 +28,3 @@ registries:
     type: "maven-repository"
     url: "https://maven.google.com"
     replaces-base: true
-    
