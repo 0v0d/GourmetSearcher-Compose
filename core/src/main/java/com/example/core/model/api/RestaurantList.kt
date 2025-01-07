@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.model.api
+package com.example.core.model.api
 
 import com.squareup.moshi.Json
 import kotlinx.serialization.Serializable

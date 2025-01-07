@@ -1,6 +1,6 @@
-package com.example.gourmetsearchercompose.service
+package com.example.core.service
 
-import com.example.gourmetsearchercompose.model.api.RestaurantList
+import com.example.core.model.api.RestaurantList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,11 +1,13 @@
-package com.example.gourmetsearchercompose.ui.screen.preview.component
+package com.example.core.utils
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.gourmetsearchercompose.theme.AppTheme
+
 
 /**
  * プレビュー用ラッパー
@@ -19,7 +21,13 @@ fun PreviewWrapper(
     darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    AppTheme(darkTheme = darkTheme) {
+    val colorScheme = if (darkTheme) {
+        darkColorScheme()
+    } else {
+        lightColorScheme()
+    }
+
+    MaterialTheme(colorScheme = colorScheme) {
         Surface(
             modifier = modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -41,7 +49,12 @@ fun PreviewComponentWrapper(
     darkTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    AppTheme(darkTheme = darkTheme) {
+    val colorScheme = if (darkTheme) {
+        darkColorScheme()
+    } else {
+        lightColorScheme()
+    }
+    MaterialTheme(colorScheme = colorScheme) {
         Surface(
             modifier = modifier,
             color = MaterialTheme.colorScheme.background

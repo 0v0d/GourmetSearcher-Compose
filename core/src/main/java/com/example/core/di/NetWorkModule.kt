@@ -1,14 +1,11 @@
-package com.example.gourmetsearchercompose.di.network
+package com.example.core.di
 
-import android.content.Context
-import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.service.HotPepperGourmetApiService
+import com.example.core.service.HotPepperGourmetApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -18,6 +15,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
+
+    private const val BASE_URL = "https://webservice.recruit.co.jp/hotpepper/"
     /**
      * Moshiを提供
      * @return Moshi
@@ -25,8 +24,7 @@ object NetWorkModule {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi =
-        Moshi
-            .Builder()
+        Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
@@ -39,12 +37,11 @@ object NetWorkModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        @ApplicationContext context: Context,
         moshi: Moshi,
     ): Retrofit =
         Retrofit
             .Builder()
-            .baseUrl(context.getString(R.string.restaurant_list_hot_pepper_url))
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
 
@@ -54,7 +51,7 @@ object NetWorkModule {
      * @return HotPepperGourmetApiService
      */
     @Provides
-    @Singleton // Singletonスコープを明示
+    @Singleton
     fun provideHotPepperService(
         retrofit: Retrofit
     ): HotPepperGourmetApiService = retrofit.create(HotPepperGourmetApiService::class.java)
