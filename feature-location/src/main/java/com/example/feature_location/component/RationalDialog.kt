@@ -1,10 +1,10 @@
-package com.example.gourmetsearchercompose.ui.screen.seachlocation.component
+package com.example.feature_location.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.ui.screen.component.Dialog
-import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewComponentWrapper
+import com.example.core.utils.PreviewComponentWrapper
+import com.example.feature_location.R
+import com.example.shared_ui.Dialog
 
 /**
  * パーミッションリクエストダイアログ
@@ -16,7 +16,7 @@ fun RationalDialog(
 ) {
     Dialog(
         onConfirmClick = { launchPermissionRequest() },
-        errorMessage = R.string.search_location_permission_required_message
+        errorMessage = R.string.permission_required_message
     )
 }
 

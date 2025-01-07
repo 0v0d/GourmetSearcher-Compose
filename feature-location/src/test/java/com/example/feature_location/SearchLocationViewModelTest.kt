@@ -1,9 +1,10 @@
-package com.example.gourmetsearchercompose.viewmodel
+package com.example.feature_location
 
 import android.location.Location
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
-import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.usecase.location.GetCurrentLocationUseCase
+import com.example.feature_location.mock.MockLocation.sampleLocation
+import com.example.feature_location.state.LocationSearchState
+import com.example.feature_location.usecase.GetCurrentLocationUseCase
+import com.example.feature_location.viewmodel.SearchLocationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -50,7 +51,7 @@ class SearchLocationViewModelTest {
     @Test
     fun testGetLocationSuccess() =
         runTest {
-            val expectedLocation = sampleSearchTerms.location
+            val expectedLocation = sampleLocation
             val mockLocation = mock<Location>()
             `when`(mockLocation.latitude).thenReturn(expectedLocation.latitude)
             `when`(mockLocation.longitude).thenReturn(expectedLocation.longitude)

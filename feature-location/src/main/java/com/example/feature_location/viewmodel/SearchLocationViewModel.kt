@@ -1,11 +1,11 @@
-package com.example.gourmetsearchercompose.viewmodel
+package com.example.feature_location.viewmodel
 
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gourmetsearchercompose.model.data.CurrentLocation
-import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.usecase.location.GetCurrentLocationUseCase
+import com.example.core.model.data.CurrentLocation
+import com.example.feature_location.state.LocationSearchState
+import com.example.feature_location.usecase.GetCurrentLocationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -94,7 +94,8 @@ constructor(
      * @param location 現在地の緯度経度
      */
     private fun handleLocationSuccess(location: Location) {
-        val locationData = CurrentLocation(location.latitude, location.longitude)
+        val locationData =
+            CurrentLocation(location.latitude, location.longitude)
         _locationData.value = locationData
     }
 }

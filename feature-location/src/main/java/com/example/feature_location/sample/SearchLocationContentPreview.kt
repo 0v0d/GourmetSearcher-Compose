@@ -1,12 +1,12 @@
-package com.example.gourmetsearchercompose.ui.screen.preview
+package com.example.feature_location.sample
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.gourmetsearchercompose.mock.FakePermissionState
-import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.preview.component.PreviewWrapper
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
+import com.example.core.utils.PreviewWrapper
+import com.example.feature_location.component.SearchLocationContent
+import com.example.feature_location.mock.FakePermissionState
+import com.example.feature_location.state.LocationSearchState
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 
@@ -75,7 +75,11 @@ private fun RationalRequiredPreview() {
         SearchLocationContent(
             modifier = Modifier,
             searchState = LocationSearchState.RATIONAL_REQUIRED,
-            locationPermissionsState = FakePermissionState(PermissionStatus.Denied(shouldShowRationale = true)),
+            locationPermissionsState = FakePermissionState(
+                PermissionStatus.Denied(
+                    shouldShowRationale = true
+                )
+            ),
             onRetry = {},
             onOpenSettings = {}
         )

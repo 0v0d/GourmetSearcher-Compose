@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.seachlocation.component
+package com.example.feature_location.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,10 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.gourmetsearchercompose.R
-import com.example.gourmetsearchercompose.state.LocationSearchState
-import com.example.gourmetsearchercompose.ui.screen.component.ErrorContent
-import com.example.gourmetsearchercompose.ui.screen.component.LoadingContent
+import com.example.feature_location.R
+import com.example.feature_location.state.LocationSearchState
+import com.example.shared_ui.ErrorContent
+import com.example.shared_ui.LoadingContent
+
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
@@ -44,6 +45,7 @@ fun SearchLocationContent(
             LocationSearchState.LOADING -> LoadingContent()
 
             LocationSearchState.ERROR -> ErrorContent(
+                buttonText = R.string.setting,
                 errorMessage = getErrorMessage(locationPermissionsState.status.isGranted),
                 onRetry = {
                     handleRetry(
@@ -67,8 +69,8 @@ fun SearchLocationContent(
  * @param isGranted パーミッションが許可されているか
  */
 private fun getErrorMessage(isGranted: Boolean) = when (isGranted) {
-    true -> R.string.search_location_error_message
-    false -> R.string.search_location_permission_denied_message
+    true -> R.string.error_message
+    false -> R.string.permission_denied_message
 }
 
 /**

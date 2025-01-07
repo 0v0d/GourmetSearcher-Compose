@@ -1,8 +1,10 @@
-package com.example.gourmetsearchercompose.repository
+package com.example.feature_location
 
 import android.location.Location
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleSearchTerms
-import com.example.gourmetsearchercompose.model.data.CurrentLocation
+import com.example.core.model.data.CurrentLocation
+import com.example.feature_location.mock.MockLocation.sampleLocation
+import com.example.feature_location.repository.SearchLocationRepository
+import com.example.feature_location.repository.SearchLocationRepositoryImpl
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.OnCompleteListener
@@ -43,7 +45,7 @@ class SearchLocationRepositoryImplTest {
     @Test
     fun testGetLocationSuccess() =
         runTest {
-            val expectedLocation = sampleSearchTerms.location
+            val expectedLocation = sampleLocation
             val mockLocation = mock<Location>()
             `when`(mockLocation.latitude).thenReturn(expectedLocation.latitude)
             `when`(mockLocation.longitude).thenReturn(expectedLocation.longitude)

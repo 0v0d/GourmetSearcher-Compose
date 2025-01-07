@@ -1,7 +1,7 @@
-package com.example.gourmetsearchercompose.di.location
+package com.example.feature_location.di
 
-import com.example.gourmetsearchercompose.repository.SearchLocationRepository
-import com.example.gourmetsearchercompose.usecase.location.GetCurrentLocationUseCase
+import com.example.feature_location.repository.SearchLocationRepository
+import com.example.feature_location.usecase.GetCurrentLocationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,5 +18,7 @@ object SearchLocationUseCaseModule {
      */
     @Provides
     fun provideLocationUseCase(searchLocationRepository: SearchLocationRepository): GetCurrentLocationUseCase =
-        GetCurrentLocationUseCase(searchLocationRepository)
+        GetCurrentLocationUseCase(
+            searchLocationRepository
+        )
 }

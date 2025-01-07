@@ -1,6 +1,6 @@
-package com.example.gourmetsearchercompose.usecase.location
+package com.example.feature_location.usecase
 
-import com.example.gourmetsearchercompose.repository.SearchLocationRepository
+import com.example.feature_location.repository.SearchLocationRepository
 import javax.inject.Inject
 
 /**

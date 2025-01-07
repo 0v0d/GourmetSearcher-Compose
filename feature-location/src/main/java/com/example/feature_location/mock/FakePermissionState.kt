@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.mock
+package com.example.feature_location.mock
 
 import android.Manifest
 import com.google.accompanist.permissions.ExperimentalPermissionsApi

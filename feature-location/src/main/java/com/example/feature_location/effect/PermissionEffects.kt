@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.ui.screen.seachlocation.effect
+package com.example.feature_location.effect
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

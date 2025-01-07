@@ -1,20 +1,21 @@
-package com.example.gourmetsearchercompose.ui.screen.seachlocation
+package com.example.feature_location.component
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.gourmetsearchercompose.model.data.SearchTerms
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.component.SearchLocationContent
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.effect.HandleLocationDataEffect
-import com.example.gourmetsearchercompose.ui.screen.seachlocation.effect.HandlePermissionEffects
-import com.example.gourmetsearchercompose.utils.openSettings
-import com.example.gourmetsearchercompose.viewmodel.SearchLocationViewModel
+import com.example.core.model.data.CurrentLocation
+import com.example.feature_location.effect.HandleLocationDataEffect
+import com.example.feature_location.effect.HandlePermissionEffects
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
+import com.example.feature_location.viewmodel.SearchLocationViewModel
 
 /**
  * 位置情報検索画面
@@ -29,7 +30,12 @@ import com.google.accompanist.permissions.rememberPermissionState
 fun SearchLocationScreen(
     inputText: String,
     range: Int,
-    onNavigateToResultList: (SearchTerms) -> Unit,
+    onNavigateToResultList: (
+            inputText: String,
+            range: Int,
+            latitude: Double,
+            longitude: Double
+            ) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SearchLocationViewModel = hiltViewModel()
 ) {
@@ -50,12 +56,12 @@ fun SearchLocationScreen(
     // 位置情報が取得できたら検索結果画面に遷移
     locationData?.let {
         HandleLocationDataEffect(
-            searchTerms =
-            SearchTerms(
-                keyword = inputText,
-                location = it,
-                range = range
+            keyword = inputText,
+            location = CurrentLocation(
+                latitude = it.latitude,
+                longitude = it.longitude
             ),
+            range = range,
             onNavigateToResultList = onNavigateToResultList
         )
     }
@@ -69,4 +75,14 @@ fun SearchLocationScreen(
             openSettings(context = context)
         }
     )
+}
+
+/**
+ *  設定画面を開く
+ *  @param context コンテキスト
+ */
+private fun openSettings(context: Context) {
+    val intent = Intent(ACTION_LOCATION_SOURCE_SETTINGS)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    context.startActivity(intent)
 }

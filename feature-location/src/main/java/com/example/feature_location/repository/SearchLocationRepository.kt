@@ -1,4 +1,4 @@
-package com.example.gourmetsearchercompose.repository
+package com.example.feature_location.repository
 
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient

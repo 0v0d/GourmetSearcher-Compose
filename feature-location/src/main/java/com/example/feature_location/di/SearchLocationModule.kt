@@ -1,8 +1,8 @@
-package com.example.gourmetsearchercompose.di.location
+package com.example.feature_location.di
 
 import android.content.Context
-import com.example.gourmetsearchercompose.repository.SearchLocationRepository
-import com.example.gourmetsearchercompose.repository.SearchLocationRepositoryImpl
+import com.example.feature_location.repository.SearchLocationRepository
+import com.example.feature_location.repository.SearchLocationRepositoryImpl
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.Module
@@ -36,5 +36,7 @@ object SearchLocationModule {
     @Singleton
     fun provideLocationRepository(
         locationProvider: FusedLocationProviderClient
-    ): SearchLocationRepository = SearchLocationRepositoryImpl(locationProvider)
+    ): SearchLocationRepository = SearchLocationRepositoryImpl(
+        locationProvider
+    )
 }
