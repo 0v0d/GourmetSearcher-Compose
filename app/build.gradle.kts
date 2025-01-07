@@ -1,23 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    // APIキーを隠すためのプラグイン
-    alias(libs.plugins.secrets.gradle.plugin)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    alias(libs.plugins.serialization)
     alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.example.gourmetsearchercompose"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.gourmetsearchercompose"
-        minSdk = 32
-        targetSdk = 35
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -36,19 +33,13 @@ android {
                 "proguard-rules.pro",
             )
         }
-        debug {
-            signingConfig = signingConfigs.getByName("debug")
-            isDebuggable = true
-            versionNameSuffix = ".D"
-            applicationIdSuffix = ".debug"
-        }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.java.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.java.get())
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = libs.versions.kotlin.jvm.get()
         freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
     }
     buildFeatures {
@@ -83,6 +74,10 @@ composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 dependencies {
+    implementation(project(":feature-location"))
+    implementation(project(":feature-restaurant"))
+    implementation(project(":feature-keyword"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -92,56 +87,24 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.accompanist.permissions)
-
-    implementation(libs.kotlinx.collections.immutable)
-
-    // 位置情報取得ライブラリ
-    implementation(libs.play.services.location)
-    // retrofit
-    implementation(libs.retrofit)
-    // MoshiのConverterを使うためのJsonパースライブラリ
-    implementation(libs.retrofit.converter.moshi)
-    // Jsonパーサライブラリ
-    implementation(libs.moshi.kotlin)
-    // 画像表示ライブラリ
-    implementation(libs.coil)
+    implementation(libs.androidx.compose.material.iconsExtended)
 
     // Dagger-Hilt
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.dagger.hilt.android.compiler)
 
-    // メモリリーク検出ライブラリ
-    debugImplementation(libs.leakcanary)
-
     // detektフォーマット
     detektPlugins(libs.detekt.formatting)
     detektPlugins(libs.detekt.rules)
     detektPlugins(libs.detekt.rules.twitter)
 
-    // Kotlin Serialization
-    implementation(libs.kotlinx.serialization.json)
-
-    // DataStore
-    implementation(libs.androidx.datastore.preferences)
-
-    implementation(libs.androidx.compose.material.iconsExtended)
-
+    // メモリリーク検出ライブラリ
+    debugImplementation(libs.leakcanary)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    // MockitoJUnitRunner
-    testImplementation(libs.mockito)
-    testImplementation(libs.junit)
-    testImplementation(libs.dagger.hilt.android.testing)
-    kspTest(libs.dagger.hilt.android.compiler)
-    testImplementation(libs.androidx.runner)
-    testImplementation(libs.androidx.core.testing)
-    testImplementation(libs.kotlinx.coroutines.test)
 
     // Espresso
     androidTestImplementation(libs.androidx.junit)
@@ -150,6 +113,8 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.dagger.hilt.android.testing)
     kspAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.accompanist.permissions)
+    androidTestImplementation(libs.kotlinx.collections.immutable)
 }
 detekt {
     parallel = true

@@ -30,7 +30,6 @@ object NetWorkModule {
 
     /**
      * Retrofitを提供
-     * @param context Context
      * @param moshi Moshi
      * @return Retrofit
      */

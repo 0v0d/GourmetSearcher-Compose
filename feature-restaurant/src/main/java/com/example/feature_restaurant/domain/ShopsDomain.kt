@@ -9,7 +9,6 @@ import com.example.core.model.api.Shops
 import com.example.core.model.api.SmallAreaData
 import com.example.core.model.api.Urls
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.net.URLDecoder
 import java.net.URLEncoder

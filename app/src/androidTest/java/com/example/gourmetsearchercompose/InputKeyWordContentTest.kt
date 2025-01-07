@@ -6,12 +6,12 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ApplicationProvider
-import com.example.gourmetsearchercompose.mock.MockSearchTerms.sampleHistoryList
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.InputKeyWordContent
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.keywordhistory.KeyWordHistoryList
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.range.RangeList
-import com.example.gourmetsearchercompose.ui.screen.inputkeyword.component.textfield.SearchTextField
-import com.example.gourmetsearchercompose.utils.UITestHelper
+import com.example.feature_keyword.R
+import com.example.feature_keyword.component.InputKeyWordContent
+import com.example.feature_keyword.component.keywordhistory.KeyWordHistoryList
+import com.example.feature_keyword.component.range.RangeList
+import com.example.feature_keyword.component.textfield.SearchTextField
+import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import org.junit.Rule
@@ -27,7 +27,7 @@ class InputKeyWordContentTest {
     private val testHelper = UITestHelper(composeTestRule)
 
     @Test
-    fun testInputKeyWordContent_emptyInput() {
+    fun testInputKeyWordContentEmptyInput() {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "",
@@ -45,12 +45,12 @@ class InputKeyWordContentTest {
         }
 
         //キーワードをクリア
-        val clearLabel = context.getString(R.string.input_keyword_key_word_clear)
+        val clearLabel = context.getString(R.string.key_word_clear)
         testHelper.assertTextsDisplayed(clearLabel)
     }
 
     @Test
-    fun testInputKeyWordContent_nonEmptyInput() {
+    fun testInputKeyWordContentNonEmptyInput() {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "Test",
@@ -63,7 +63,7 @@ class InputKeyWordContentTest {
         }
 
         composeTestRule.onNodeWithTag("SearchBar").assertExists()
-        val rangeLabel = context.getString(R.string.input_keyword_select_range_explanation)
+        val rangeLabel = context.getString(R.string.select_range_explanation)
         testHelper.assertTextsDisplayed(rangeLabel)
     }
 
@@ -80,7 +80,7 @@ class InputKeyWordContentTest {
 
         composeTestRule.onNodeWithTag("searchTextField").assertExists()
         //キーワードを入力
-        val hint = context.getString(R.string.input_keyword_search_input_hint)
+        val hint = context.getString(R.string.search_input_hint)
         testHelper.assertTextsDisplayed(
             testQuery,
             hint
@@ -102,7 +102,7 @@ class InputKeyWordContentTest {
         }
 
         //キーワードをクリア
-        val clearLabel = context.getString(R.string.input_keyword_key_word_clear)
+        val clearLabel = context.getString(R.string.key_word_clear)
         testHelper.assertTextsDisplayed(clearLabel)
     }
 
@@ -115,11 +115,11 @@ class InputKeyWordContentTest {
         }
 
         //検索半径を選択して検索
-        val rangeLabel = context.getString(R.string.input_keyword_select_range_explanation)
+        val rangeLabel = context.getString(R.string.select_range_explanation)
         testHelper.assertTextsDisplayed(rangeLabel)
 
-        val rangeArray = context.resources.getStringArray(R.array.input_keyword_range_array)
-        val meter = context.getString(R.string.input_keyword_meter)
+        val rangeArray = context.resources.getStringArray(R.array.range_array)
+        val meter = context.getString(R.string.meter)
         for (range in rangeArray) {
             testHelper.assertTextsDisplayed(range + meter)
         }

@@ -3,7 +3,6 @@ package com.example.feature_restaurant
 import com.example.core.model.data.CurrentLocation
 import com.example.core.model.data.GeoLocation
 import com.example.core.model.data.SearchKey
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.Serializable
 import java.net.URLDecoder
@@ -43,7 +42,8 @@ data class SearchTerms(
  * 検索条件をエンコードする
  * @param inputText 検索キーワード
  * @param range 範囲
- * @param location 現在地
+ * @param latitude 緯度
+ * @param longitude 経度
  * @return エンコードされた検索条件
  */
 fun encodeSearchTerms(

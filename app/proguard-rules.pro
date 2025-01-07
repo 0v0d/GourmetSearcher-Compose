@@ -19,10 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
--keep public class com.example.gourmetsearcher.model.** { *; }
--keep public class com.example.gourmetsearcher.view.** { *; }
--keep public class com.example.gourmetsearcher.state.** { *; }
-
--keep,allowobfuscation,allowshrinking interface retrofit2.Call
--keep,allowobfuscation,allowshrinking class retrofit2.Response
--keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation

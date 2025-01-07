@@ -6,13 +6,13 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ApplicationProvider
-import com.example.gourmetsearchercompose.mock.MockRestaurantData.sampleRestaurantList
-import com.example.gourmetsearchercompose.state.SearchState
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantInfo
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantItem
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantListContent
-import com.example.gourmetsearchercompose.ui.screen.restaurantlist.component.RestaurantRow
-import com.example.gourmetsearchercompose.utils.UITestHelper
+import com.example.feature_restaurant.R
+import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
+import com.example.feature_restaurant.restaurantlist.component.RestaurantInfo
+import com.example.feature_restaurant.restaurantlist.component.RestaurantItem
+import com.example.feature_restaurant.restaurantlist.component.RestaurantListContent
+import com.example.feature_restaurant.restaurantlist.component.RestaurantRow
+import com.example.feature_restaurant.state.SearchState
 import org.junit.Rule
 import org.junit.Test
 
@@ -25,7 +25,7 @@ class RestaurantListContentTest {
     private val testHelper = UITestHelper(composeTestRule)
 
     @Test
-    fun testRestaurantListContent_Success() {
+    fun testRestaurantListContentSuccess() {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
@@ -42,7 +42,7 @@ class RestaurantListContentTest {
     }
 
     @Test
-    fun testRestaurantListContent_EmptyResult() {
+    fun testRestaurantListContentEmptyResult() {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
@@ -58,7 +58,7 @@ class RestaurantListContentTest {
     }
 
     @Test
-    fun testRestaurantListContent_NetworkError() {
+    fun testRestaurantListContentNetworkError() {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
@@ -70,7 +70,7 @@ class RestaurantListContentTest {
         }
 
         val networkErrorMessage = context.getString(R.string.restaurant_list_network_error_message)
-        val retryLabel = context.getString(R.string.common_retry)
+        val retryLabel = context.getString(com.example.shared_ui.R.string.common_retry)
 
         testHelper.assertTextsDisplayed(
             networkErrorMessage,

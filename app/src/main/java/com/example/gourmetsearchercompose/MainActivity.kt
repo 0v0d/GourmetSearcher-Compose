@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import com.example.gourmetsearchercompose.theme.AppTheme
-import com.example.gourmetsearchercompose.ui.screen.AppContent
+import com.example.gourmetsearchercompose.ui.AppContent
 import dagger.hilt.android.AndroidEntryPoint
 
 /** メイン画面 */
