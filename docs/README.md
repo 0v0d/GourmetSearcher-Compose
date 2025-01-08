@@ -1,13 +1,95 @@
 [English README is here](README-en.md)
 ## アプリ名
 
-GourmetSearcher
+**GourmetSearcher**
 
 ## アプリ仕様
 
 現在位置付近のレストランをキーワードで検索できるAndroidアプリのCompose版です。
 
 <img src="app.gif" width="320" alt="アプリのデモ動画">
+
+## 画面概要
+
+- **キーワード入力画面**  
+  ユーザーが検索したいキーワードを入力し、検索範囲（半径）を選択する画面です。条件を入力したら位置情報検索画面に進むことができます。  
+
+- **位置情報検索画面**  
+  現在地のGPS情報を取得する画面です。位置情報が正しく取得されると、周辺の飲食店が一覧表示される店舗一覧画面に進みます。  
+
+- **レストラン検索結果画面**  
+  検索結果の飲食店がリストで表示される画面です。気になるお店を選ぶと、さらに詳しい情報を確認できる店舗詳細画面に進むことができます。  
+
+- **レストラン詳細画面**  
+  飲食店の詳細情報を表示する画面です。店舗所在地を地図アプリで確認したい場合は「Map」ボタンをタップします。また、「Hot Pepperへ」ボタンを押すと、店舗のWebページが表示されます。  
+
+## 機能
+
+- **レストラン検索**  
+  ホットペッパーグルメサーチAPIを活用して、現在地周辺の飲食店を検索します。  
+   
+- **レストラン情報取得**  
+  ホットペッパーグルメサーチAPIを使用して、飲食店の詳細な情報を取得します。  
+
+- **地図アプリ連携**  
+  飲食店の所在地を地図アプリで簡単に確認できる機能です。  
+
+- **キーワード検索**  
+  気になるジャンルやお店を見つけやすくするため、検索条件としてキーワードを入力し、結果を絞り込むことができます。  
+
+
+## ディレクトリ構成
+
+以下はプロジェクトの主要なディレクトリとその説明です。
+
+```bash
+.github/            # GitHubActionsとDependabotを管理
+app/                # アプリケーションのエントリポイント
+core/               # 共通ロジック(API クライアント,キャッシュなど)を集約
+docs/               # ドキュメントを管理
+feature-keyword/    # キーワード検索機能に関するコードを格納
+feature-location/   # 現在地検索機能に関連するコードを管理
+feature-restaurant/ # レストラン検索リストや詳細機能のコードを集約
+shared-ui/          # 再利用可能な UI コンポーネント群
+scripts/            # 静的解析などのスクリプトを配置
+gradle/             # Gradle の依存ライブラリやバージョン管理ファイル 
+```
+
+## 各モジュールの詳細
+
+### app/
+アプリのエントリポイントを含みます。  
+`MainActivity.kt` でアプリケーションを起動し、`NavigationGraph.kt` による画面遷移を管理します。
+
+### core/
+- **NetworkModule**: API 通信のための設定を提供します。
+- **CacheManager**: データのキャッシュ管理。
+- **PreferencesManager**: ローカルの設定管理。
+
+### feature-keyword/
+キーワード検索に関する UI、ロジック、およびリポジトリを提供します。
+
+- `InputKeyWordScreen.kt`: キーワード検索画面。
+- `UseCases`: ユーザーの検索履歴を管理します。
+
+### feature-location/
+現在地情報を取得し、近隣のレストランを検索します。
+
+- `GetCurrentLocationUseCase.kt`: 現在地を取得するユースケース。
+- `PermissionEffects.kt`: 位置情報権限を管理します。
+
+### feature-restaurant/
+レストランリストや詳細情報の表示を管理します。
+
+- `RestaurantListViewModel.kt`: レストランリストのロジック。
+- `RestaurantDetailContent.kt`: 詳細情報画面のコンポーネント。
+
+### shared-ui/
+アプリ全体で再利用可能な UI コンポーネントを含みます。
+
+- **CustomOutlinedButton**: カスタムボタン。
+- **Dialog**: 標準ダイアログ。
+- **ImageCard**: レストラン画像のカード表示。
 
 ### APIKeyについて
 
@@ -39,113 +121,17 @@ Android 14
 
 Android Studio Koala Feature Drop 2024.1.2 Canary 7
 
-- コンパイルSDKバージョン: 34
+- コンパイルSDKバージョン: 35
 - 最小SDKバージョン: 32
-- ターゲットSDKバージョン: 34
-- Java：VERSION_17
-- Gradle：8.8
-- Gradle Plugin 8.5.0
-- minSdk：32
-- targetSdk：34
-- kotlinCompilerExtensionVersion 1.5.3
+- ターゲットSDKバージョン: 35
+- JVM バージョン: 17
+- Gradle：8.10.2
+- Gradle Plugin 8.7.3
 
 ### 開発言語
 
-- Kotlin 2.0.0
+- Kotlin 2.0.21
 
 ### 実機端末環境
 
 - Redmi 12 (Android 14)
-
-## アプリケーション機能
-
-### 機能一覧
-
-- レストラン検索：ホットペッパーグルメサーチAPIを使用して、現在地周辺の飲食店を検索する。
-- レストラン情報取得：ホットペッパーグルメサーチAPIを使用して、飲食店の詳細情報を取得する。
-- 地図アプリ連携：飲食店の所在地を地図アプリに表示する。
-- キーワード検索：キーワードを入力することで、ホットペッパーグルメサーチAPIの検索結果を絞る。
-
-### 画面概要
-
-- キーワード入力画面 (InputSearchTermsFragment) ： キーワードを入力し、半径が選択されると位置情報検索画面へ遷移する。
-- 位置情報検索画面 (LocationSearchFragment) : GPSの取得に成功すると店舗一覧画面へ遷移する。
-- レストラン検索結果画面 (RestaurantListViewFragment) : 検索結果の飲食店を一覧表示し、選択されると店舗詳細画面へ遷移する。
-- レストラン詳細画面 (RestaurantDetailFragment) : 店舗の詳細を表示し、Mapボタンを押された時にはマップアプリへ遷移
-  する。「Hot Pepperへ」ボタンを押されたときにWebページを表示する。
-
-## 使用しているAPI, SDK, ライブラリ
-
-### Android
-- Accompanist Permissions
-- AndroidX Core KTX
-- AndroidX DataStore Preferences
-- AndroidX Lifecycle Runtime KTX
-- AndroidX Activity Compose
-- AndroidX Compose BOM
-- AndroidX Compose UI
-- AndroidX Compose UI Graphics
-- AndroidX Compose UI Test Manifest
-- AndroidX Compose UI Tooling
-- AndroidX Compose UI Tooling Preview
-- AndroidX Material3
-- AndroidX Navigation UI KTX
-- AndroidX Navigation Runtime KTX
-- AndroidX Navigation Compose
-- AndroidX Hilt Navigation Compose
-- Play Services Location
-
-### 画像ライブラリ
-- Coil Compose
-
-### 静的解析
-- Detekt Rules Twitter
-- Detekt Formatting
-- Detekt Rules
-
-### コレクション
-- Kotlinx Collections Immutable
-
-### シリアライズ
-- Kotlinx Serialization JSON
-
-### 依存性注入
-- Dagger Hilt Android Compiler
-- Dagger Hilt Android
-
-### ネットワーキング
-- Retrofit
-- Retrofit Converter Moshi
-- Moshi Kotlin
-
-### デバッグツール
-- LeakCanary
-
-### ユニットテスト
-- JUnit
-- Dagger Hilt Android Testing
-- Mockito Core
-- AndroidX Runner
-- Kotlinx Coroutines Test
-- AndroidX Core Testing
-
-### Androidテスト
-- AndroidX JUnit
-- AndroidX Espresso Core
-- AndroidX UI Automator
-- AndroidX UI Test JUnit4 Android
-
-### その他
-- AndroidX Compose Material Icons Extended
-- AndroidX Lifecycle Runtime Compose Android
-
-### プラグイン
-- Android Application
-- JetBrains Kotlin Android
-- Kotlin Kapt
-- Dagger Hilt Android
-- Kotlin Parcelize
-- Secrets Gradle Plugin
-- Detekt
-- Serialization
-- Compose Compiler
