@@ -1,145 +1,128 @@
-[日本語はこちら](README.md)
+[日本語のREADMEはこちら](README.md)
+
 ## App Name
 
-GourmetSearcher
+**GourmetSearcher**
 
-## App Specifications
+## App Overview
 
-This is a Compose version of an Android app that allows you to search for restaurants near your current location using keywords.
+This is a Compose-based Android application that allows users to search for nearby restaurants by keywords.  
 
 <img src="app.gif" width="320" alt="App demo video">
 
-### About the API Key
+## Screens Overview
 
-This app uses the [Hot Pepper Gourmet Search API](https://webservice.recruit.co.jp/doc/hotpepper/reference.html).
-To use it, you need to register your email address [here](https://webservice.recruit.co.jp/register/).
-After registration, an API Key will be sent to your email, which you can set in the following format in the `local.properties` file located in the root directory of the project:
+- **Keyword Input Screen**  
+  A screen where users can input the keyword they want to search for and select the search range (radius). After setting the search criteria, users can navigate to the Location Search screen.  
 
-```properties
-API_KEY="YOUR_API_KEY"
+- **Location Search Screen**  
+  A screen for retrieving the user's current GPS location. Once the location is successfully acquired, users can proceed to the Restaurant List screen, where nearby restaurants are displayed.  
+
+- **Restaurant Search Results Screen**  
+  A screen that displays a list of restaurants matching the search criteria. Selecting a restaurant takes the user to the Restaurant Detail screen, where detailed information is displayed.  
+
+- **Restaurant Detail Screen**  
+  A screen showing detailed information about a selected restaurant. By tapping the "Map" button, users can view the location in a map application. Additionally, tapping the "Hot Pepper" button opens the restaurant's webpage.  
+
+## Features
+
+- **Restaurant Search**  
+  Uses the Hot Pepper Gourmet Search API to find restaurants near the user's current location.  
+
+- **Retrieve Restaurant Information**  
+  Fetches detailed information about restaurants using the Hot Pepper Gourmet Search API.  
+
+- **Map App Integration**  
+  Enables users to view restaurant locations in their preferred map application.  
+
+- **Keyword Search**  
+  Allows users to refine search results by inputting specific keywords, making it easier to find restaurants that match their preferences.  
+
+## Directory Structure
+
+Below is an overview of the project’s primary directories and their purposes:
+
+```bash
+.github/            # Manages GitHub Actions workflows and Dependabot settings
+app/                # Entry point of the application
+core/               # Contains shared logic (e.g., API clients, caching, utilities)
+docs/               # Documentation and related assets
+feature-keyword/    # Code related to the keyword search functionality
+feature-location/   # Code related to current location search functionality
+feature-restaurant/ # Code for restaurant list and detail functionality
+shared-ui/          # Reusable UI components
+scripts/            # Scripts for tasks like static analysis
+gradle/             # Gradle dependencies and version management files
 ```
 
-### Issues and Usage Notes
+## Module Details
 
-- When using a virtual device, there is an issue where GPS cannot be obtained.</br>
-  (On actual devices, it works without any issues.)
+### app/
+The entry point of the app, including:  
+- `MainActivity.kt`: Starts the application.  
+- `NavigationGraph.kt`: Manages screen navigation.
 
-### Supported Devices and OS
+### core/
+Contains common functionality, including:  
+- **NetworkModule**: Configures API communication.  
+- **CacheManager**: Manages data caching.  
+- **PreferencesManager**: Handles local settings.  
 
-#### Supported OS
+### feature-keyword/
+Manages the UI, logic, and repository for keyword search.  
+- `InputKeywordScreen.kt`: Keyword input screen.  
+- **UseCases**: Manages user search history.  
 
-Android 14
+### feature-location/
+Handles location data retrieval and nearby restaurant searches.  
+- `GetCurrentLocationUseCase.kt`: Retrieves the current location.  
+- `PermissionEffects.kt`: Manages location permission requests.  
+
+### feature-restaurant/
+Manages the display of restaurant lists and details.  
+- `RestaurantListViewModel.kt`: Logic for the restaurant list screen.  
+- `RestaurantDetailContent.kt`: Components for the detail screen.  
+
+### shared-ui/
+Reusable UI components for the app.  
+- **CustomOutlinedButton**: Custom buttons.  
+- **Dialog**: Standard dialog components.  
+- **ImageCard**: Displays restaurant images in card format.  
+
+### API Key Setup
+
+This app uses the [Hot Pepper Gourmet Search API](https://webservice.recruit.co.jp/doc/hotpepper/reference.html).  
+To use this service, you need to [register your email address](https://webservice.recruit.co.jp/register/).  
+After registration, an API key will be sent to your email. Set up your API key as follows:
+
+1. Create or edit the `local.properties` file in the project's root directory.  
+2. Add the following line:  
+   ```properties
+   API_KEY="YOUR_API_KEY"
+   ```
+
+### Known Issues and Notes
+
+- When using an emulator, GPS data may not be retrieved correctly.  
+  (The app works without issues on physical devices.)
+
+## Target Devices and OS
+
+### Target OS
+- Android 14
 
 ## Development Environment
 
-Android Studio Koala Feature Drop 2024.1.2 Canary 7
+- **Android Studio**: Koala Feature Drop 2024.1.2 Canary 7  
+- **Compile SDK Version**: 35  
+- **Minimum SDK Version**: 32  
+- **Target SDK Version**: 35  
+- **JVM Version**: 17  
+- **Gradle Version**: 8.10.2  
+- **Gradle Plugin Version**: 8.7.3  
 
-- Compile SDK Version: 34
-- Minimum SDK Version: 32
-- Target SDK Version: 34
-- Java: VERSION_17
-- Gradle: 8.8
-- Gradle Plugin: 8.5.0
-- minSdk: 32
-- targetSdk: 34
-- kotlinCompilerExtensionVersion: 1.5.3
+### Programming Language
+- Kotlin 2.0.21  
 
-### Development Language
-
-- Kotlin 2.0.0
-
-### Real Device Environment
-
-- Redmi 12 (Android 14)
-
-## Application Features
-
-### Feature List
-
-- Restaurant Search: Search for nearby restaurants using the Hot Pepper Gourmet Search API.
-- Retrieve Restaurant Information: Get detailed information about restaurants using the Hot Pepper Gourmet Search API.
-- Map App Integration: Display the restaurant's location on a map app.
-- Keyword Search: Filter the search results from the Hot Pepper Gourmet Search API by entering keywords.
-
-### Screen Overview
-
-- Keyword Input Screen (InputSearchTermsFragment): Enter keywords, and if a radius is selected, navigate to the location search screen.
-- Location Search Screen (LocationSearchFragment): If GPS is successfully obtained, navigate to the restaurant list screen.
-- Restaurant Search Results Screen (RestaurantListViewFragment): Display a list of restaurants from the search results and navigate to the restaurant detail screen when selected.
-- Restaurant Detail Screen (RestaurantDetailFragment): Display detailed information about the restaurant. When the Map button is pressed, navigate to the map app. When the "Hot Pepper" button is pressed, display the web page.
-
-## APIs, SDKs, and Libraries Used
-
-### Android
-- Accompanist Permissions
-- AndroidX Core KTX
-- AndroidX DataStore Preferences
-- AndroidX Lifecycle Runtime KTX
-- AndroidX Activity Compose
-- AndroidX Compose BOM
-- AndroidX Compose UI
-- AndroidX Compose UI Graphics
-- AndroidX Compose UI Test Manifest
-- AndroidX Compose UI Tooling
-- AndroidX Compose UI Tooling Preview
-- AndroidX Material3
-- AndroidX Navigation UI KTX
-- AndroidX Navigation Runtime KTX
-- AndroidX Navigation Compose
-- AndroidX Hilt Navigation Compose
-- Play Services Location
-
-### Image Library
-- Coil Compose
-
-### Static Analysis
-- Detekt Rules Twitter
-- Detekt Formatting
-- Detekt Rules
-
-### Collections
-- Kotlinx Collections Immutable
-
-### Serialization
-- Kotlinx Serialization JSON
-
-### Dependency Injection
-- Dagger Hilt Android Compiler
-- Dagger Hilt Android
-
-### Networking
-- Retrofit
-- Retrofit Converter Moshi
-- Moshi Kotlin
-
-### Debug Tools
-- LeakCanary
-
-### Unit Testing
-- JUnit
-- Dagger Hilt Android Testing
-- Mockito Core
-- AndroidX Runner
-- Kotlinx Coroutines Test
-- AndroidX Core Testing
-
-### Android Testing
-- AndroidX JUnit
-- AndroidX Espresso Core
-- AndroidX UI Automator
-- AndroidX UI Test JUnit4 Android
-
-### Others
-- AndroidX Compose Material Icons Extended
-- AndroidX Lifecycle Runtime Compose Android
-
-### Plugins
-- Android Application
-- JetBrains Kotlin Android
-- Kotlin Kapt
-- Dagger Hilt Android
-- Kotlin Parcelize
-- Secrets Gradle Plugin
-- Detekt
-- Serialization
-- Compose Compiler
+### Tested Device
+- Redmi 12 (Android 14)  
