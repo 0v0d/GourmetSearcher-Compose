@@ -8,7 +8,7 @@
 
 This is a Compose-based Android application that allows users to search for nearby restaurants by keywords.  
 
-<img src="app.gif" width="320" alt="App demo video">
+<img src="app.gif" width="640" alt="App demo video">
 
 ## Screens Overview
 
