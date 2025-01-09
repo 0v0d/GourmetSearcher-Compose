@@ -2,9 +2,9 @@ package com.example.shared_ui
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 
@@ -31,7 +31,7 @@ fun Dialog(
             CustomOutlinedButton(
                 text = R.string.common_ok,
                 onClick = onConfirmClick,
-                textColor = Blue
+                textColor = MaterialTheme.colorScheme.primary
             )
         },
         // OKボタン以外ないので何もしない

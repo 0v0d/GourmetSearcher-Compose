@@ -3,12 +3,12 @@ package com.example.shared_ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Blue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,7 +25,7 @@ fun CustomOutlinedButton(
     @StringRes text: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    textColor: Color = Blue,
+    textColor: Color = MaterialTheme.colorScheme.primary,
     icon: ImageVector? = null
 ) {
     OutlinedButton(
