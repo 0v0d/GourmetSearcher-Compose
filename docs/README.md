@@ -7,7 +7,7 @@
 
 現在位置付近のレストランをキーワードで検索できるAndroidアプリのCompose版です。
 
-<img src="app.gif" width="320" alt="アプリのデモ動画">
+<img src="app.gif" width="320" alt="App demo video">
 
 ## 画面概要
 
