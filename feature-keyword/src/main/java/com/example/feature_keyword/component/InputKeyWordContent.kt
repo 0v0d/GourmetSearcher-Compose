@@ -9,14 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.feature_keyword.component.keywordhistory.KeyWordHistoryList
 import com.example.feature_keyword.component.range.RangeList
 import com.example.feature_keyword.component.textfield.SearchTextField
-import com.example.feature_keyword.mock.MockKeyword.KEYWORD
-import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
-import com.example.shared_ui.utils.PreviewWrapper
 import kotlinx.collections.immutable.ImmutableList
 
 /**
@@ -64,39 +60,5 @@ fun InputKeyWordContent(
         } else {
             RangeList(onRangeSelect = onRangeSelect)
         }
-    }
-}
-
-/** キーワード入力画面プレビュー */
-@Suppress("UnusedPrivateMember")
-@Preview
-@Composable
-private fun KeyWordListPreview() {
-    PreviewWrapper {
-        InputKeyWordContent(
-            focusRequester = FocusRequester(),
-            inputText = "",
-            historyList = sampleHistoryList,
-            onInputTextChange = {},
-            onClearHistory = {},
-            onRangeSelect = {}
-        )
-    }
-}
-
-/** キーワード入力画面プレビュー */
-@Suppress("UnusedPrivateMember")
-@Preview
-@Composable
-private fun RangeListPreview() {
-    PreviewWrapper {
-        InputKeyWordContent(
-            focusRequester = FocusRequester(),
-            inputText = KEYWORD,
-            historyList = sampleHistoryList,
-            onInputTextChange = {},
-            onClearHistory = {},
-            onRangeSelect = {}
-        )
     }
 }
