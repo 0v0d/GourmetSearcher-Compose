@@ -3,21 +3,24 @@ package com.example.feature_restaurant.restaurantdetail
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.shared_ui.utils.PreviewWrapper
+import com.example.shared_ui.previewutils.PreviewWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 import com.example.feature_restaurant.restaurantdetail.component.RestaurantDetailContent
 import com.example.feature_restaurant.viewmodel.RestaurantDetailViewModel
+import com.example.shared_ui.previewutils.isDarkTheme
 
 /**
  * レストラン詳細画面
@@ -96,10 +99,22 @@ private fun openMap(
 
 /** レストラン詳細画面プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(
+    name = "Light Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Preview(
+    name = "Dark Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 private fun RestaurantDetailScreenPreview() {
-    PreviewWrapper {
+    val mode = isDarkTheme(LocalConfiguration.current.uiMode)
+    PreviewWrapper(darkTheme = mode) {
         RestaurantDetailScreen(
             restaurantData = sampleRestaurantList.first()
         )
