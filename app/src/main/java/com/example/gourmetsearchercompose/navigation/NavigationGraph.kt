@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.feature_keyword.InputKeyWordScreen
-import com.example.feature_location.component.SearchLocationScreen
+import com.example.feature_location.SearchLocationScreen
 import com.example.feature_restaurant.decodeSearchTerms
 import com.example.feature_restaurant.domain.decodeRestaurantData
 import com.example.feature_restaurant.domain.encodeRestaurantData
