@@ -22,7 +22,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_keyword.R
 
 /**
@@ -81,16 +80,14 @@ fun CustomTextField(
 
 /** プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CustomTextFieldPreview() {
-    PreviewComponentWrapper {
-        CustomTextField(
-            focusRequester = FocusRequester(),
-            textFieldValue = TextFieldValue(),
-            onValueChange = {},
-            showClearButton = false,
-            onClearClick = {}
-        )
-    }
+    CustomTextField(
+        focusRequester = FocusRequester(),
+        textFieldValue = TextFieldValue(),
+        onValueChange = {},
+        showClearButton = false,
+        onClearClick = {}
+    )
 }

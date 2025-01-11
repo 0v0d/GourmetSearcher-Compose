@@ -16,7 +16,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_keyword.R
 import com.example.feature_keyword.component.keywordhistory.KeyWordHistoryList
 import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
@@ -56,14 +55,12 @@ fun RangeListContent(
 
 /** プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PreviewRangeList() {
-    PreviewComponentWrapper {
-        KeyWordHistoryList(
-            historyList = sampleHistoryList,
-            onItemClick = {},
-            onClearClick = {}
-        )
-    }
+    KeyWordHistoryList(
+        historyList = sampleHistoryList,
+        onItemClick = {},
+        onClearClick = {}
+    )
 }

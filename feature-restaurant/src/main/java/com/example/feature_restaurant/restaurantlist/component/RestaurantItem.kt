@@ -60,7 +60,7 @@ fun RestaurantItem(
 @Composable
 private fun PreviewRestaurantItem() {
     RestaurantItem(
-        restaurant = sampleRestaurantList[0],
+        restaurant = sampleRestaurantList.first(),
         onClick = {}
     )
 }

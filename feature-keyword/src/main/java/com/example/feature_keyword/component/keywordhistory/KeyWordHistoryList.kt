@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_keyword.R
 import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
 import com.example.shared_ui.CustomOutlinedButton
@@ -55,14 +54,12 @@ fun KeyWordHistoryList(
 
 /** プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PreviewKeyWordHistoryList() {
-    PreviewComponentWrapper {
-        KeyWordHistoryList(
-            historyList = sampleHistoryList,
-            onItemClick = {},
-            onClearClick = {}
-        )
-    }
+    KeyWordHistoryList(
+        historyList = sampleHistoryList,
+        onItemClick = {},
+        onClearClick = {}
+    )
 }

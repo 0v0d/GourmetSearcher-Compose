@@ -18,10 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
-
 
 /**
  * コンテンツアイテム
@@ -51,14 +49,12 @@ fun ContentItem(
 
 /** プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PreviewContentItem() {
-    PreviewComponentWrapper {
-        ContentItem(
-            title = R.string.restaurant_detail_closed_days,
-            content = sampleRestaurantList[0].close,
-            icon = Icons.Default.EventBusy
-        )
-    }
+    ContentItem(
+        title = R.string.restaurant_detail_closed_days,
+        content = sampleRestaurantList.first().close,
+        icon = Icons.Default.EventBusy
+    )
 }

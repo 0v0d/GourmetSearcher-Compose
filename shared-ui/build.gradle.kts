@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.runtime)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -49,4 +50,6 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.coil)
+
+    debugImplementation(libs.androidx.ui.tooling)
 }

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.core.utils.PreviewWrapper
+import com.example.shared_ui.utils.PreviewWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
@@ -94,14 +94,14 @@ private fun openMap(
     context.startActivity(intent)
 }
 
-/** プレビュー */
+/** レストラン詳細画面プレビュー */
 @Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-private fun RestaurantDetailContentPreview() {
+private fun RestaurantDetailScreenPreview() {
     PreviewWrapper {
         RestaurantDetailScreen(
-            restaurantData = sampleRestaurantList[0]
+            restaurantData = sampleRestaurantList.first()
         )
     }
 }
