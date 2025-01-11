@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 
@@ -68,12 +67,10 @@ fun RestaurantMainInfo(
 
 /** プレビュー */
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PreviewRestaurantMainInfo() {
-    PreviewComponentWrapper {
-        RestaurantMainInfo(
-            restaurantData = sampleRestaurantList[0]
-        )
-    }
+    RestaurantMainInfo(
+        restaurantData = sampleRestaurantList.first()
+    )
 }

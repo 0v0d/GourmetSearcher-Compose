@@ -26,7 +26,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_keyword.mock.MockKeyword.KEYWORD
 
 /**
@@ -91,22 +90,20 @@ fun SearchTextField(
 }
 
 @Suppress("UnusedPrivateMember")
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PreviewSearchTextField() {
-    PreviewComponentWrapper {
-        Column {
-            SearchTextField(
-                focusRequester = FocusRequester(),
-                query = KEYWORD,
-                onQueryChange = {}
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
-            SearchTextField(
-                focusRequester = FocusRequester(),
-                query = "",
-                onQueryChange = {}
-            )
-        }
+    Column {
+        SearchTextField(
+            focusRequester = FocusRequester(),
+            query = KEYWORD,
+            onQueryChange = {}
+        )
+        Spacer(modifier = Modifier.padding(8.dp))
+        SearchTextField(
+            focusRequester = FocusRequester(),
+            query = "",
+            onQueryChange = {}
+        )
     }
 }

@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core.utils.PreviewComponentWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
@@ -63,9 +62,7 @@ fun RestaurantDetailCard(
 @Preview
 @Composable
 private fun PreviewRestaurantDetailCard() {
-    PreviewComponentWrapper {
-        RestaurantDetailCard(
-            restaurantData = sampleRestaurantList[0]
-        )
-    }
+    RestaurantDetailCard(
+        restaurantData = sampleRestaurantList.first()
+    )
 }
