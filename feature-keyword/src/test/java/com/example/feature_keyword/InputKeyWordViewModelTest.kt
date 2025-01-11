@@ -85,8 +85,8 @@ class InputKeyWordViewModelTest {
     /** 複数回の更新が正しく行われることを確認するテスト */
     @Test
     fun testMultipleUpdates() = runTest {
-        val firstText = sampleHistoryList[0]
-        val secondText = sampleHistoryList[1]
+        val firstText = sampleHistoryList.first()
+        val secondText = sampleHistoryList.last()
 
         viewModel =
             InputKeyWordViewModel(

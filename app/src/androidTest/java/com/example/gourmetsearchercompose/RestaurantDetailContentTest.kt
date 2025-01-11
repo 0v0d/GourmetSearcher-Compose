@@ -21,14 +21,14 @@ class RestaurantDetailContentTest {
     fun testRestaurantDetailContent() {
         composeTestRule.setContent {
             RestaurantDetailContent(
-                restaurantData = sampleRestaurantList[0],
+                restaurantData = sampleRestaurantList.first(),
                 onHotPepperClick = {},
                 onMapClick = {}
             )
         }
 
         // レストランの情報が表示されていることを確認
-        with(sampleRestaurantList[0]) {
+        with(sampleRestaurantList.first()) {
             testHelper.assertTextsDisplayed(
                 name,
                 genre.name,

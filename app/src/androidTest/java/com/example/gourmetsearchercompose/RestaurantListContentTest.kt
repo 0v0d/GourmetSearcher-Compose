@@ -97,13 +97,13 @@ class RestaurantListContentTest {
         val clicked = mutableStateOf(false)
         composeTestRule.setContent {
             RestaurantItem(
-                restaurant = sampleRestaurantList[0],
+                restaurant = sampleRestaurantList.first(),
                 onClick = { clicked.value = true }
             )
         }
 
 
-        with(sampleRestaurantList[0]) {
+        with(sampleRestaurantList.first()) {
             testHelper.assertTextsDisplayed(
                 name,
                 "${smallArea.name}[${largeArea.name}]",
@@ -120,10 +120,10 @@ class RestaurantListContentTest {
     @Test
     fun testRestaurantInfo() {
         composeTestRule.setContent {
-            RestaurantInfo(restaurant = sampleRestaurantList[0])
+            RestaurantInfo(restaurant = sampleRestaurantList.first())
         }
 
-        with(sampleRestaurantList[0]) {
+        with(sampleRestaurantList.first()) {
             testHelper.assertTextsDisplayed(
                 name,
                 "${smallArea.name}[${largeArea.name}]",
