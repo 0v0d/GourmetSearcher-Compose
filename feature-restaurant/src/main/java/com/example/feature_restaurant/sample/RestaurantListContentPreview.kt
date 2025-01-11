@@ -2,10 +2,8 @@ package com.example.feature_restaurant.sample
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.shared_ui.utils.PreviewWrapper
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleEmptyRestaurantList
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 import com.example.feature_restaurant.restaurantlist.component.RestaurantListContent
 import com.example.feature_restaurant.state.SearchState
 import kotlinx.collections.immutable.ImmutableList
