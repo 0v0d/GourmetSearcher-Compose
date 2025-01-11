@@ -1,4 +1,4 @@
-package com.example.feature_keyword
+package com.example.feature_keyword.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
