@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.feature_keyword.component.InputKeyWordContent
 import com.example.shared_ui.IconText
-import com.example.core.utils.PreviewWrapper
+import com.example.shared_ui.utils.PreviewWrapper
 import com.example.feature_keyword.mock.MockKeyword.KEYWORD
 import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
 
