@@ -1,4 +1,4 @@
-package com.example.feature_location.component
+package com.example.feature_location
 
 import android.Manifest
 import android.content.Context
@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.core.model.data.CurrentLocation
+import com.example.feature_location.component.SearchLocationContent
 import com.example.feature_location.effect.HandleLocationDataEffect
 import com.example.feature_location.effect.HandlePermissionEffects
 import com.google.accompanist.permissions.ExperimentalPermissionsApi

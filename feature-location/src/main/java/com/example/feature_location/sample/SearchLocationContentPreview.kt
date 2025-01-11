@@ -1,22 +1,37 @@
 package com.example.feature_location.sample
 
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.shared_ui.utils.PreviewWrapper
+import com.example.shared_ui.previewutils.PreviewWrapper
 import com.example.feature_location.component.SearchLocationContent
 import com.example.feature_location.mock.FakePermissionState
 import com.example.feature_location.state.LocationSearchState
+import com.example.shared_ui.previewutils.isDarkTheme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 
 /** 位置情報検索画面プレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview
+@Preview(
+    name = "Light Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Preview(
+    name = "Dark Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 private fun LoadingPreview() {
-    PreviewWrapper {
+    val mode = isDarkTheme(LocalConfiguration.current.uiMode)
+    PreviewWrapper(darkTheme = mode) {
         SearchLocationContent(
             modifier = Modifier,
             searchState = LocationSearchState.LOADING,
@@ -30,10 +45,22 @@ private fun LoadingPreview() {
 /** 位置情報検索画面エラープレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview
+@Preview(
+    name = "Light Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Preview(
+    name = "Dark Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 private fun ContentErrorPreview() {
-    PreviewWrapper {
+    val mode = isDarkTheme(LocalConfiguration.current.uiMode)
+    PreviewWrapper(darkTheme = mode) {
         SearchLocationContent(
             modifier = Modifier,
             searchState = LocationSearchState.ERROR,
@@ -47,10 +74,22 @@ private fun ContentErrorPreview() {
 /** 位置情報検索画面拒否エラープレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview
+@Preview(
+    name = "Light Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Preview(
+    name = "Dark Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 private fun DeniedErrorPreview() {
-    PreviewWrapper {
+    val mode = isDarkTheme(LocalConfiguration.current.uiMode)
+    PreviewWrapper(darkTheme = mode) {
         SearchLocationContent(
             modifier = Modifier,
             searchState = LocationSearchState.ERROR,
@@ -68,10 +107,22 @@ private fun DeniedErrorPreview() {
 /** 位置情報検索画面許可ダイアログプレビュー */
 @Suppress("UnusedPrivateMember")
 @OptIn(ExperimentalPermissionsApi::class)
-@Preview
+@Preview(
+    name = "Light Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    showSystemUi = true
+)
+@Preview(
+    name = "Dark Theme",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    showSystemUi = true
+)
 @Composable
 private fun RationalRequiredPreview() {
-    PreviewWrapper {
+    val mode = isDarkTheme(LocalConfiguration.current.uiMode)
+    PreviewWrapper(darkTheme = mode) {
         SearchLocationContent(
             modifier = Modifier,
             searchState = LocationSearchState.RATIONAL_REQUIRED,

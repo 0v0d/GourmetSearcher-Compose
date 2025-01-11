@@ -1,4 +1,4 @@
-package com.example.feature_restaurant.sample
+package com.example.feature_restaurant.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview

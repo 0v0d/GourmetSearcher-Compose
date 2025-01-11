@@ -5,12 +5,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.shared_ui.utils.PreviewWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.domain.ShopsDomain
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
-import com.example.feature_restaurant.sample.RestaurantListContentWrapper
 import com.example.feature_restaurant.state.SearchState
 import com.example.shared_ui.ErrorContent
 import com.example.shared_ui.LoadingContent
@@ -58,18 +54,5 @@ fun RestaurantListContent(
                 isSettingButtonEnabled = false,
             )
         }
-    }
-}
-
-/** プレビュー */
-@Suppress("UnusedPrivateMember")
-@Preview
-@Composable
-private fun PreviewRestaurantListContent() {
-    PreviewWrapper {
-        RestaurantListContentWrapper(
-            searchState = SearchState.SUCCESS,
-            shops = sampleRestaurantList
-        )
     }
 }

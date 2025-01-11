@@ -9,13 +9,9 @@ import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.shared_ui.utils.PreviewWrapper
 import com.example.feature_restaurant.R
 import com.example.feature_restaurant.domain.ShopsDomain
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
-import com.example.feature_restaurant.restaurantdetail.RestaurantDetailScreen
 import com.example.shared_ui.CustomOutlinedButton
 import com.example.shared_ui.ImageCard
 
@@ -61,18 +57,6 @@ fun RestaurantDetailContent(
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             icon = Icons.Default.Event
-        )
-    }
-}
-
-/** プレビュー */
-@Suppress("UnusedPrivateMember")
-@Preview
-@Composable
-private fun RestaurantDetailContentPreview() {
-    PreviewWrapper {
-        RestaurantDetailScreen(
-            restaurantData = sampleRestaurantList.first()
         )
     }
 }
