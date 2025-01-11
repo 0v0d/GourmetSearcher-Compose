@@ -55,7 +55,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.kotlinx.collections.immutable)
-
+    implementation(libs.androidx.runtime)
     implementation(libs.androidx.hilt.navigation.compose)
 
     // retrofit
@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.dagger.hilt.android.compiler)
+
+    debugImplementation(libs.androidx.ui.tooling)
 
     // MockitoJUnitRunner
     testImplementation(libs.mockito)

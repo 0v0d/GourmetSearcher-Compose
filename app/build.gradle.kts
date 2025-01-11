@@ -103,7 +103,6 @@ dependencies {
 
     // メモリリーク検出ライブラリ
     debugImplementation(libs.leakcanary)
-    debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Espresso
