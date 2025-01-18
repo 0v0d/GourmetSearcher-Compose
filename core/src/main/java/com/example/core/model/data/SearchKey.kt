@@ -8,7 +8,7 @@ package com.example.core.model.data
  */
 data class SearchKey(
     val keyword: String,
-    val location: GeoLocation,
+    val location: CurrentLocation,
     val range: Int,
 ) {
     /**

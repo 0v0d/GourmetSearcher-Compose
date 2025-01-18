@@ -3,7 +3,7 @@ package com.example.feature_restaurant
 import android.util.LruCache
 import com.example.core.manager.CacheManager
 import com.example.core.model.api.RestaurantList
-import com.example.core.model.data.GeoLocation
+import com.example.core.model.data.CurrentLocation
 import com.example.core.model.data.SearchKey
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleAPIResponse
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleResponseData
@@ -70,7 +70,7 @@ class CacheManagerTest {
     fun testGetWithInvalidInput() {
         val invalidSearchTerms = SearchKey(
             "",
-            GeoLocation(0.0, 0.0),
+            CurrentLocation(0.0, 0.0),
             0
         )
         val result = cacheManager.get(invalidSearchTerms)
@@ -83,7 +83,7 @@ class CacheManagerTest {
         val maxSize = 5
         val fullCache = mockCache
         val fullCacheManager = CacheManager(fullCache)
-        val location = GeoLocation(0.0, 0.0)
+        val location = CurrentLocation(0.0, 0.0)
 
         repeat(maxSize) { i ->
             val terms = SearchKey("keyword$i", location, i)
