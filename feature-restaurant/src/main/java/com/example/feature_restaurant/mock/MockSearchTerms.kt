@@ -1,7 +1,7 @@
 package com.example.feature_restaurant.mock
 
 import com.example.core.model.data.CurrentLocation
-import com.example.feature_restaurant.SearchTerms
+import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.mock.MockSearchTerms.sampleSearchTerms
 
 /**

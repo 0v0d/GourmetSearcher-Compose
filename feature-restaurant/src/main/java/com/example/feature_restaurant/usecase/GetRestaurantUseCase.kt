@@ -1,6 +1,6 @@
 package com.example.feature_restaurant.usecase
 
-import com.example.feature_restaurant.SearchTerms
+import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.repository.RestaurantRepository
 import javax.inject.Inject
 

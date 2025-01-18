@@ -1,10 +1,9 @@
-package com.example.feature_restaurant
+package com.example.feature_restaurant.model
 
 import com.example.core.model.data.CurrentLocation
-import com.example.core.model.data.GeoLocation
 import com.example.core.model.data.SearchKey
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.io.Serializable
 import java.net.URLDecoder
 import java.net.URLEncoder
 
@@ -14,12 +13,12 @@ import java.net.URLEncoder
  * @param location 現在地
  * @param range 範囲
  */
-@kotlinx.serialization.Serializable
+@Serializable
 data class SearchTerms(
     val keyword: String,
     val location: CurrentLocation,
     val range: Int,
-) : Serializable {
+) {
     companion object {
         @Suppress("ConstPropertyName", "ObjectPropertyNaming")
         private const val serialVersionUID = 1L
@@ -28,11 +27,8 @@ data class SearchTerms(
     fun toSearchKey(): SearchKey {
         return SearchKey(
             keyword = keyword,
-            location = GeoLocation(
-                location.latitude,
-                location.longitude
-            ),
-            range = range,
+            location = location,
+            range = range
         )
     }
 }

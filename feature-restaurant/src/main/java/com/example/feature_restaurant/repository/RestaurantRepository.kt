@@ -4,7 +4,7 @@ import com.example.core.manager.CacheManager
 import com.example.core.model.api.RestaurantList
 import com.example.core.service.HotPepperGourmetApiService
 import com.example.feature_restaurant.BuildConfig
-import com.example.feature_restaurant.SearchTerms
+import com.example.feature_restaurant.model.SearchTerms
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
