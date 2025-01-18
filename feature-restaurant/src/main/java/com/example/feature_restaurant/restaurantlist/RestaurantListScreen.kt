@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.feature_restaurant.SearchTerms
+import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 import com.example.feature_restaurant.restaurantlist.component.RestaurantListContent

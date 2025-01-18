@@ -3,7 +3,7 @@ package com.example.feature_restaurant.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.model.api.RestaurantList
-import com.example.feature_restaurant.SearchTerms
+import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.domain.toDomain
 import com.example.feature_restaurant.state.SearchState
