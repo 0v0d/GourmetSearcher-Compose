@@ -11,10 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.feature_keyword.InputKeyWordScreen
 import com.example.feature_location.SearchLocationScreen
-import com.example.feature_restaurant.decodeSearchTerms
 import com.example.feature_restaurant.domain.decodeRestaurantData
 import com.example.feature_restaurant.domain.encodeRestaurantData
-import com.example.feature_restaurant.encodeSearchTerms
+import com.example.feature_restaurant.model.decodeSearchTerms
+import com.example.feature_restaurant.model.encodeSearchTerms
 import com.example.feature_restaurant.restaurantdetail.RestaurantDetailScreen
 import com.example.feature_restaurant.restaurantlist.RestaurantListScreen
 import com.example.gourmetsearchercompose.ui.AppScreens
