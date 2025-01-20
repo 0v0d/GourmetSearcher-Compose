@@ -41,8 +41,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":shared-ui"))
+    implementation(projects.core)
+    implementation(projects.sharedUi)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

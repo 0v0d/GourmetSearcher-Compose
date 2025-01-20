@@ -20,6 +20,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GourmetSearcher-Compose"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":core")
 include(":feature-keyword")
