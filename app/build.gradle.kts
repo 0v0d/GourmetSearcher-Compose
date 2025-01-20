@@ -74,9 +74,9 @@ composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 dependencies {
-    implementation(project(":feature-location"))
-    implementation(project(":feature-restaurant"))
-    implementation(project(":feature-keyword"))
+    implementation(projects.featureLocation)
+    implementation(projects.featureRestaurant)
+    implementation(projects.featureKeyword)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.navigation.runtime.ktx)
