@@ -2,6 +2,7 @@ package com.example.feature_restaurant.restaurantlist.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,16 +30,21 @@ fun RestaurantListContent(
     onNavigateToDetail: (ShopsDomain) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val listState = rememberLazyListState()
+
     Box(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.TopStart
     ) {
         when (searchState) {
             SearchState.LOADING -> LoadingContent()
 
             SearchState.SUCCESS -> shops?.let {
-                RestaurantRow(it, onNavigateToDetail)
+                RestaurantRow(
+                    shops = it,
+                    navigateToDetail = onNavigateToDetail,
+                    listState = listState
+                )
             }
 
             SearchState.EMPTY_RESULT -> ErrorContent(

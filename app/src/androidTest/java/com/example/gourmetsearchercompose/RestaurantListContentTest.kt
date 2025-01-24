@@ -1,6 +1,7 @@
 package com.example.gourmetsearchercompose
 
 import android.content.Context
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -83,7 +84,8 @@ class RestaurantListContentTest {
         composeTestRule.setContent {
             RestaurantRow(
                 shops = sampleRestaurantList,
-                navigateToDetail = {}
+                navigateToDetail = {},
+                listState = rememberLazyListState()
             )
         }
 
