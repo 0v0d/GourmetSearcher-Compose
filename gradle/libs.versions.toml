@@ -2,7 +2,7 @@
 # SDK Versions
 compileSdk = "35"
 minSdk = "32"
-runtime = "1.7.6"
+runtime = "1.7.7"
 targetSdk = "35"
 
 # JVM Versions
