@@ -25,5 +25,6 @@ interface HotPepperGourmetApiService {
         @Query("lng") lng: Double,
         @Query("range") range: Int,
         @Query("format") responseFormat: String,
+        @Query("count") count: Int,
     ): Response<RestaurantList>
 }
