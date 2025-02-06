@@ -2,15 +2,19 @@ package com.example.feature_restaurant.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.core.model.api.RestaurantList
-import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.domain.toDomain
+import com.example.feature_restaurant.model.SearchTerms
+import com.example.feature_restaurant.source.ShopsPagingSource
 import com.example.feature_restaurant.state.SearchState
 import com.example.feature_restaurant.usecase.GetRestaurantUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -27,7 +31,7 @@ class RestaurantListViewModel
 constructor(
     private val getRestaurantUseCase: GetRestaurantUseCase,
 ) : ViewModel() {
-    private val _shops = MutableStateFlow<ImmutableList<ShopsDomain>?>(null)
+    private val _shops = MutableStateFlow<Flow<PagingData<ShopsDomain>>?>(null)
 
     /** レストラン情報 */
     val shops = _shops.asStateFlow()
@@ -79,7 +83,16 @@ constructor(
 
         if (response.isSuccessful && !repositories.isNullOrEmpty()) {
             _searchState.value = SearchState.SUCCESS
-            _shops.value = repositories.toImmutableList()
+
+            _shops.value = Pager(
+                config = PagingConfig(
+                    pageSize = 10,
+                    prefetchDistance = 5,
+                    initialLoadSize = 30,
+                    enablePlaceholders = false
+                ),
+                pagingSourceFactory = { ShopsPagingSource(repositories) }
+            ).flow.cachedIn(viewModelScope)
         } else {
             _searchState.value = SearchState.EMPTY_RESULT
         }

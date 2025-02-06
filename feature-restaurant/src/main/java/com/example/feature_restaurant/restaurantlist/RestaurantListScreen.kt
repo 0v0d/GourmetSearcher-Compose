@@ -3,6 +3,7 @@ package com.example.feature_restaurant.restaurantlist
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -11,13 +12,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.domain.ShopsDomain
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 import com.example.feature_restaurant.restaurantlist.component.RestaurantListContent
-import com.example.feature_restaurant.preview.RestaurantListContentWrapper
 import com.example.feature_restaurant.state.SearchState
 import com.example.feature_restaurant.viewmodel.RestaurantListViewModel
 import com.example.shared_ui.previewutils.PreviewWrapper
 import com.example.shared_ui.previewutils.isDarkTheme
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.feature_restaurant.preview.RestaurantListContentWrapper
 
 /**
  * レストランリスト画面
@@ -35,7 +36,9 @@ fun RestaurantListScreen(
     viewModel: RestaurantListViewModel = hiltViewModel()
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
-    val shops by viewModel.shops.collectAsStateWithLifecycle()
+    val pagingFlow = viewModel.shops.collectAsState().value
+    val shops = pagingFlow?.collectAsLazyPagingItems()
+
 
     LaunchedEffect(Unit) {
         viewModel.searchRestaurants(searchTerms)
@@ -59,19 +62,12 @@ fun RestaurantListScreen(
     showBackground = true,
     showSystemUi = true
 )
-@Preview(
-    name = "Dark Theme",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    showSystemUi = true
-)
 @Composable
 private fun PreviewRestaurantListContent() {
     val mode = isDarkTheme(LocalConfiguration.current.uiMode)
     PreviewWrapper(darkTheme = mode) {
         RestaurantListContentWrapper(
             searchState = SearchState.SUCCESS,
-            shops = sampleRestaurantList
         )
     }
 }

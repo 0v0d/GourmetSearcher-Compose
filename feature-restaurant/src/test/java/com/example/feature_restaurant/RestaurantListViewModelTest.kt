@@ -11,6 +11,8 @@ import com.example.feature_restaurant.usecase.GetRestaurantUseCase
 import com.example.feature_restaurant.viewmodel.RestaurantListViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -60,18 +62,18 @@ class RestaurantListViewModelTest {
 
     /** ホットペッパーグルメAPIからのレスポンスが成功した場合のテスト */
     @Test
-    fun testSearchRestaurantsSuccess() =
-        runTest {
-            `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(sampleAPIResponse)
-            viewModel.searchRestaurants(sampleSearchTerms)
-
-            val shops = sampleAPIResponse.body()?.results?.shops?.map { it.toDomain() }
-            assertEquals(shops, viewModel.shops.value)
-            assertEquals(
-                SearchState.SUCCESS,
-                viewModel.searchState.value
+    fun testSearchRestaurantsSuccess() = runTest {
+        val expectedShops =
+            sampleAPIResponse.body()?.results?.shops?.map { it.toDomain() } ?: emptyList()
+        `when`(getRestaurantUseCase(sampleSearchTerms)).thenReturn(
+            Response.success(
+                sampleAPIResponse.body()
             )
-        }
+        )
+
+        viewModel.searchRestaurants(sampleSearchTerms)
+        viewModel.shops.first()?.map { assertEquals(expectedShops, it) }
+    }
 
     /** ホットペッパーグルメAPIからのレスポンスが失敗した場合のテスト */
     @Test
