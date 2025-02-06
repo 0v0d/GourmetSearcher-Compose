@@ -39,6 +39,9 @@ constructor(
     /** レスポンスフォーマット */
     private val format = "json"
 
+    /** 結果表示件数 */
+    private val count = 50
+
     /** リポジトリ情報を取得
      * @param searchTerms 検索条件
      * @return レストラン情報 or null
@@ -67,6 +70,7 @@ constructor(
                         lng = searchTerms.location.longitude,
                         range = searchTerms.range,
                         responseFormat = format,
+                        count = count
                     )
                 cacheManager.put(searchKey, response)
                 response
