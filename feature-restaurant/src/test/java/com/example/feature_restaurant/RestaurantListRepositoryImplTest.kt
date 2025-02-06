@@ -38,6 +38,8 @@ class RestaurantListRepositoryImplTest {
 
     private val responseFormat = "json"
 
+    private val count = 50
+
     /** 各テスト前の準備 */
     @Before
     fun setup() {
@@ -61,6 +63,7 @@ class RestaurantListRepositoryImplTest {
                 anyDouble(),
                 anyInt(),
                 anyString(),
+                anyInt(),
             )
             assertEquals(sampleAPIResponse, result)
         }
@@ -78,6 +81,7 @@ class RestaurantListRepositoryImplTest {
                     anyDouble(),
                     anyInt(),
                     anyString(),
+                    anyInt(),
                 ),
             ).thenReturn(sampleAPIResponse)
 
@@ -92,7 +96,8 @@ class RestaurantListRepositoryImplTest {
                     location.latitude,
                     location.longitude,
                     range,
-                    responseFormat
+                    responseFormat,
+                    count
                 )
             }
             verify(mockCacheManager).put(sampleSearchKey, sampleAPIResponse)
@@ -112,6 +117,7 @@ class RestaurantListRepositoryImplTest {
                     anyDouble(),
                     anyInt(),
                     anyString(),
+                    anyInt(),
                 ),
             ).thenThrow(RuntimeException::class.java)
 
@@ -126,6 +132,7 @@ class RestaurantListRepositoryImplTest {
                     location.longitude,
                     range,
                     responseFormat,
+                    count
                 )
             }
 
@@ -153,6 +160,7 @@ class RestaurantListRepositoryImplTest {
                     anyDouble(),
                     anyInt(),
                     anyString(),
+                    anyInt(),
                 ),
             ).thenReturn(emptyResponse)
 
@@ -167,6 +175,7 @@ class RestaurantListRepositoryImplTest {
                     location.longitude,
                     range,
                     responseFormat,
+                    count
                 )
             }
             verify(mockCacheManager).put(sampleSearchKey, emptyResponse)

@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.dagger.hilt.android.compiler)
 
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
     debugImplementation(libs.androidx.ui.tooling)
 
     // MockitoJUnitRunner

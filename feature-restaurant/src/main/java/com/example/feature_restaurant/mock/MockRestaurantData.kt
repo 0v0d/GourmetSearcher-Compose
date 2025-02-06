@@ -1,5 +1,7 @@
 package com.example.feature_restaurant.mock
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.example.core.model.api.BudgetData
 import com.example.core.model.api.GenreData
 import com.example.core.model.api.LargeAreaData
@@ -15,6 +17,7 @@ import com.example.feature_restaurant.domain.toDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleEmptyRestaurantList
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleResponseData
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
+import com.example.feature_restaurant.source.ShopsPagingSource
 import kotlinx.collections.immutable.toImmutableList
 import retrofit2.Response
 
@@ -67,6 +70,16 @@ object MockRestaurantData {
 
     val sampleRestaurantList =
         sampleResponseData.results.shops.map { it.toDomain() }.toImmutableList()
+
+    val samplePagingRestaurantList =  Pager(
+        config = PagingConfig(
+            pageSize = 10,
+            prefetchDistance = 5,
+            initialLoadSize = 30,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { ShopsPagingSource(sampleRestaurantList) }
+    ).flow
 
     val sampleEmptyRestaurantList = emptyList<ShopsDomain>().toImmutableList()
 }

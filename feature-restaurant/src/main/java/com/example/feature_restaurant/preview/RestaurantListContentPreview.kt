@@ -2,17 +2,19 @@ package com.example.feature_restaurant.preview
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.feature_restaurant.domain.ShopsDomain
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleEmptyRestaurantList
+import com.example.feature_restaurant.mock.MockRestaurantData.samplePagingRestaurantList
 import com.example.feature_restaurant.restaurantlist.component.RestaurantListContent
 import com.example.feature_restaurant.state.SearchState
-import kotlinx.collections.immutable.ImmutableList
 
 /** レストランリスト画面プレビュー */
 @Composable
 fun RestaurantListContentWrapper(
     searchState: SearchState,
-    shops: ImmutableList<ShopsDomain> = sampleEmptyRestaurantList
+    shops: LazyPagingItems<ShopsDomain> = samplePagingRestaurantList
+        .collectAsLazyPagingItems()
 ) {
     RestaurantListContent(
         onRetry = {},

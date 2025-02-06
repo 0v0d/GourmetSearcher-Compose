@@ -3,14 +3,14 @@ package com.example.feature_restaurant.restaurantlist.component
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.feature_restaurant.domain.ShopsDomain
-import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
-import kotlinx.collections.immutable.ImmutableList
+import com.example.feature_restaurant.mock.MockRestaurantData.samplePagingRestaurantList
 
 /**
  * レストランリスト
@@ -20,7 +20,7 @@ import kotlinx.collections.immutable.ImmutableList
  */
 @Composable
 fun RestaurantRow(
-    shops: ImmutableList<ShopsDomain>,
+    shops: LazyPagingItems<ShopsDomain>,
     navigateToDetail: (ShopsDomain) -> Unit,
     modifier: Modifier = Modifier,
     listState: LazyListState,
@@ -30,11 +30,13 @@ fun RestaurantRow(
         state = listState,
         contentPadding = PaddingValues(vertical = 8.dp)
     ) {
-        items(shops) { restaurant ->
-            RestaurantItem(
-                restaurant = restaurant,
-                onClick = { navigateToDetail(restaurant) }
-            )
+        items(shops.itemCount) { index ->
+            shops[index]?.let { restaurant ->
+                RestaurantItem(
+                    restaurant = restaurant,
+                    onClick = { navigateToDetail(restaurant) }
+                )
+            }
         }
     }
 }
@@ -45,7 +47,8 @@ fun RestaurantRow(
 @Composable
 private fun PreviewRestaurantRow() {
     RestaurantRow(
-        shops = sampleRestaurantList,
+        shops = samplePagingRestaurantList
+            .collectAsLazyPagingItems(),
         navigateToDetail = {},
         listState = LazyListState()
     )

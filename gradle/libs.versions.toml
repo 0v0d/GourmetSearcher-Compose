@@ -47,6 +47,7 @@ hiltNavigationCompose = "1.2.0"
 lifecycleRuntimeComposeAndroid = "2.8.7"
 appcompat = "1.7.0"
 material = "1.12.0"
+paging = "3.3.5"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -108,6 +109,10 @@ androidx-compose-material-iconsExtended = { group = "androidx.compose.material",
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# paging
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "paging" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
