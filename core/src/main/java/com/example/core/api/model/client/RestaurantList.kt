@@ -1,4 +1,4 @@
-package com.example.core.model.api
+package com.example.core.api.model.client
 
 import com.squareup.moshi.Json
 import kotlinx.serialization.Serializable

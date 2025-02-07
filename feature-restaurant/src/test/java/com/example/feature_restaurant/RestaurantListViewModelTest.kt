@@ -1,8 +1,8 @@
 package com.example.feature_restaurant
 
-import com.example.core.model.api.RestaurantList
-import com.example.core.model.api.Results
-import com.example.core.model.api.Shops
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.model.client.Results
+import com.example.core.api.model.client.Shops
 import com.example.feature_restaurant.domain.toDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleAPIResponse
 import com.example.feature_restaurant.mock.MockSearchTerms.sampleSearchTerms

@@ -1,6 +1,6 @@
-package com.example.core.service
+package com.example.core.api.service
 
-import com.example.core.model.api.RestaurantList
+import com.example.core.api.model.client.RestaurantList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

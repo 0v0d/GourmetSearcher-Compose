@@ -1,4 +1,4 @@
-package com.example.core.model.data
+package com.example.core.api.model.data
 
 /**
  * 検索条件をキャッシュのキーとして使用するクラス

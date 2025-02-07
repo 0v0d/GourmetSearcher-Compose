@@ -1,6 +1,6 @@
 package com.example.feature_restaurant.mock
 
-import com.example.core.model.data.CurrentLocation
+import com.example.core.api.model.data.CurrentLocation
 import com.example.feature_restaurant.model.SearchTerms
 import com.example.feature_restaurant.mock.MockSearchTerms.sampleSearchTerms
 

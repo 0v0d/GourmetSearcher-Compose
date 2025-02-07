@@ -1,7 +1,7 @@
 package com.example.feature_location
 
 import android.location.Location
-import com.example.core.model.data.CurrentLocation
+import com.example.core.api.model.data.CurrentLocation
 import com.example.feature_location.mock.MockLocation.sampleLocation
 import com.example.feature_location.repository.SearchLocationRepository
 import com.example.feature_location.repository.SearchLocationRepositoryImpl

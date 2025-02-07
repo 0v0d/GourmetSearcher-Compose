@@ -1,8 +1,8 @@
 package com.example.feature_restaurant.di
 
 import android.util.LruCache
-import com.example.core.manager.CacheManager
-import com.example.core.model.api.RestaurantList
+import com.example.core.cache.manager.CacheManager
+import com.example.core.api.model.client.RestaurantList
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

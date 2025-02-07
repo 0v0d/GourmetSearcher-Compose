@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
-import com.example.core.model.data.CurrentLocation
+import com.example.core.api.model.data.CurrentLocation
 
 /**
  * 画面遷移処理

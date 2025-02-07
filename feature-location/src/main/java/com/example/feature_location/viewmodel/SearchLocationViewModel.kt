@@ -3,7 +3,7 @@ package com.example.feature_location.viewmodel
 import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.model.data.CurrentLocation
+import com.example.core.api.model.data.CurrentLocation
 import com.example.feature_location.state.LocationSearchState
 import com.example.feature_location.usecase.GetCurrentLocationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
