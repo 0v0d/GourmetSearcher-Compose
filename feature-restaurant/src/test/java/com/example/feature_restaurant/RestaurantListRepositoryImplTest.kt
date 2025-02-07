@@ -1,9 +1,9 @@
 package com.example.feature_restaurant
 
-import com.example.core.manager.CacheManager
-import com.example.core.model.api.RestaurantList
-import com.example.core.model.api.Results
-import com.example.core.service.HotPepperGourmetApiService
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.model.client.Results
+import com.example.core.api.service.HotPepperGourmetApiService
+import com.example.core.cache.manager.CacheManager
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleAPIResponse
 import com.example.feature_restaurant.mock.MockSearchTerms.sampleSearchKey
 import com.example.feature_restaurant.mock.MockSearchTerms.sampleSearchTerms

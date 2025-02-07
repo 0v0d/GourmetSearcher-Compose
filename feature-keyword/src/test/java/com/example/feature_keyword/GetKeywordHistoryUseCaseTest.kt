@@ -1,32 +1,35 @@
 package com.example.feature_keyword
 
-import com.example.feature_keyword.mock.MockKeyword.KEYWORD
+import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
 import com.example.feature_keyword.repository.KeyWordHistoryRepository
-import com.example.feature_keyword.usecase.SaveKeyWordHistoryUseCase
+import com.example.feature_keyword.usecase.GetKeyWordHistoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
-/** SaveKeyWordHistoryUseCaseのユニットテストクラス */
+/** GetKeyWordHistoryUseCaseのユニットテストクラス */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class SaveKeyWordHistoryUseCaseTest {
+class GetKeywordHistoryUseCaseTest {
     @Mock
     private lateinit var keyWordHistoryRepository: KeyWordHistoryRepository
 
     @InjectMocks
-    private lateinit var saveKeyWordHistoryUseCase: SaveKeyWordHistoryUseCase
+    private lateinit var getKeyWordHistoryUseCase: GetKeyWordHistoryUseCase
+
     private val testDispatcher = UnconfinedTestDispatcher()
 
     /** 各テスト前の準備 */
@@ -41,14 +44,14 @@ class SaveKeyWordHistoryUseCaseTest {
         Dispatchers.resetMain()
     }
 
-    /** invokeが正しく呼び出されるかテスト */
+    /** invokeが履歴リストを返すかテスト */
     @Test
-    fun testInvokeCallsSaveHistoryItem() =
+    fun testInvokeReturnsHistoryList() =
         runTest {
-            val keyword = KEYWORD
+            val expectedHistoryList = sampleHistoryList
+            `when`(keyWordHistoryRepository.getHistoryList()).thenReturn(flowOf(expectedHistoryList))
 
-            saveKeyWordHistoryUseCase(keyword)
-
-            verify(keyWordHistoryRepository).saveHistoryItem(keyword)
+            val result = getKeyWordHistoryUseCase()
+            result.collect { assertEquals(expectedHistoryList, it) }
         }
 }

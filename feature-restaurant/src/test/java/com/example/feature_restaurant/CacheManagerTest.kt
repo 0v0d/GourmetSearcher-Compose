@@ -1,10 +1,10 @@
 package com.example.feature_restaurant
 
 import android.util.LruCache
-import com.example.core.manager.CacheManager
-import com.example.core.model.api.RestaurantList
-import com.example.core.model.data.CurrentLocation
-import com.example.core.model.data.SearchKey
+import com.example.core.cache.manager.CacheManager
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.model.data.CurrentLocation
+import com.example.core.api.model.data.SearchKey
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleAPIResponse
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleResponseData
 import com.example.feature_restaurant.mock.MockSearchTerms.cacheKey

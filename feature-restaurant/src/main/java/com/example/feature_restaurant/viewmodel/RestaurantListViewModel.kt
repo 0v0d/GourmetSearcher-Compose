@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.core.model.api.RestaurantList
+import com.example.core.api.model.client.RestaurantList
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.domain.toDomain
 import com.example.feature_restaurant.model.SearchTerms

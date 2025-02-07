@@ -2,16 +2,16 @@ package com.example.feature_restaurant.mock
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.example.core.model.api.BudgetData
-import com.example.core.model.api.GenreData
-import com.example.core.model.api.LargeAreaData
-import com.example.core.model.api.PCData
-import com.example.core.model.api.PhotoData
-import com.example.core.model.api.RestaurantList
-import com.example.core.model.api.Results
-import com.example.core.model.api.Shops
-import com.example.core.model.api.SmallAreaData
-import com.example.core.model.api.Urls
+import com.example.core.api.model.client.BudgetData
+import com.example.core.api.model.client.GenreData
+import com.example.core.api.model.client.LargeAreaData
+import com.example.core.api.model.client.PCData
+import com.example.core.api.model.client.PhotoData
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.model.client.Results
+import com.example.core.api.model.client.Shops
+import com.example.core.api.model.client.SmallAreaData
+import com.example.core.api.model.client.Urls
 import com.example.feature_restaurant.domain.ShopsDomain
 import com.example.feature_restaurant.domain.toDomain
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleEmptyRestaurantList

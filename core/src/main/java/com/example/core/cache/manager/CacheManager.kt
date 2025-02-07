@@ -1,8 +1,8 @@
-package com.example.core.manager
+package com.example.core.cache.manager
 
 import android.util.LruCache
-import com.example.core.model.api.RestaurantList
-import com.example.core.model.data.SearchKey
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.model.data.SearchKey
 import retrofit2.Response
 
 /**

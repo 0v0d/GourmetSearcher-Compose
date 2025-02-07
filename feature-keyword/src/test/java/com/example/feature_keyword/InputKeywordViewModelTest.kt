@@ -27,7 +27,7 @@ import org.mockito.junit.MockitoJUnitRunner
 /** InputKeyWordViewModelのユニットテストクラス */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class InputKeyWordViewModelTest {
+class InputKeywordViewModelTest {
     @Mock
     private lateinit var getHistoryListUseCase: GetKeyWordHistoryUseCase
 

@@ -114,6 +114,8 @@ dependencies {
     kspAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.accompanist.permissions)
     androidTestImplementation(libs.kotlinx.collections.immutable)
+    androidTestImplementation(libs.paging.runtime)
+    androidTestImplementation(libs.paging.compose)
 }
 detekt {
     parallel = true

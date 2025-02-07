@@ -61,8 +61,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     ksp(libs.dagger.hilt.android.compiler)
 
-    // DataStore
-    implementation(libs.androidx.datastore.preferences)
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // MockitoJUnitRunner
     testImplementation(libs.mockito)

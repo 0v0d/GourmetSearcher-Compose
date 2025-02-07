@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.core.model.data.CurrentLocation
+import com.example.core.api.model.data.CurrentLocation
 import com.example.feature_location.component.SearchLocationContent
 import com.example.feature_location.effect.HandleLocationDataEffect
 import com.example.feature_location.effect.HandlePermissionEffects

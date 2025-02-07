@@ -1,6 +1,6 @@
-package com.example.core.di
+package com.example.core.api.di
 
-import com.example.core.service.HotPepperGourmetApiService
+import com.example.core.api.service.HotPepperGourmetApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

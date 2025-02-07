@@ -1,34 +1,31 @@
 package com.example.feature_keyword
 
-import com.example.feature_keyword.mock.MockKeyword.sampleHistoryList
 import com.example.feature_keyword.repository.KeyWordHistoryRepository
-import com.example.feature_keyword.usecase.GetKeyWordHistoryUseCase
+import com.example.feature_keyword.usecase.ClearKeyWordHistoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
-/** GetKeyWordHistoryUseCaseのユニットテストクラス */
+/** ClearKeyWordHistoryUseCaseのユニットテストクラス */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class GetKeyWordHistoryUseCaseTest {
+class ClearKeywordHistoryUseCaseTest {
     @Mock
     private lateinit var keyWordHistoryRepository: KeyWordHistoryRepository
 
     @InjectMocks
-    private lateinit var getKeyWordHistoryUseCase: GetKeyWordHistoryUseCase
+    private lateinit var clearKeyWordHistoryUseCase: ClearKeyWordHistoryUseCase
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
@@ -44,14 +41,12 @@ class GetKeyWordHistoryUseCaseTest {
         Dispatchers.resetMain()
     }
 
-    /** invokeが履歴リストを返すかテスト */
+    /** invokeが正しく呼び出されるかテスト */
     @Test
-    fun testInvokeReturnsHistoryList() =
+    fun testInvokeCallsClearHistory() =
         runTest {
-            val expectedHistoryList = sampleHistoryList
-            `when`(keyWordHistoryRepository.getHistoryList()).thenReturn(flowOf(expectedHistoryList))
+            clearKeyWordHistoryUseCase()
 
-            val result = getKeyWordHistoryUseCase()
-            result.collect { assertEquals(expectedHistoryList, it) }
+            verify(keyWordHistoryRepository).clearHistory()
         }
 }

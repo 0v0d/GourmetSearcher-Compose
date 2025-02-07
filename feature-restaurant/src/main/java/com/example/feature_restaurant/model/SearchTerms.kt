@@ -1,7 +1,7 @@
 package com.example.feature_restaurant.model
 
-import com.example.core.model.data.CurrentLocation
-import com.example.core.model.data.SearchKey
+import com.example.core.api.model.data.CurrentLocation
+import com.example.core.api.model.data.SearchKey
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.net.URLDecoder

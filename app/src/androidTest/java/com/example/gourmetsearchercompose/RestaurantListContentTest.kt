@@ -6,8 +6,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.test.core.app.ApplicationProvider
 import com.example.feature_restaurant.R
+import com.example.feature_restaurant.mock.MockRestaurantData.samplePagingRestaurantList
 import com.example.feature_restaurant.mock.MockRestaurantData.sampleRestaurantList
 import com.example.feature_restaurant.restaurantlist.component.RestaurantInfo
 import com.example.feature_restaurant.restaurantlist.component.RestaurantItem
@@ -32,7 +34,7 @@ class RestaurantListContentTest {
                 onRetry = {},
                 popBack = {},
                 searchState = SearchState.SUCCESS,
-                shops = sampleRestaurantList,
+                shops = samplePagingRestaurantList.collectAsLazyPagingItems(),
                 onNavigateToDetail = {}
             )
         }
@@ -83,7 +85,7 @@ class RestaurantListContentTest {
     fun testRestaurantList() {
         composeTestRule.setContent {
             RestaurantRow(
-                shops = sampleRestaurantList,
+                shops = samplePagingRestaurantList.collectAsLazyPagingItems(),
                 navigateToDetail = {},
                 listState = rememberLazyListState()
             )

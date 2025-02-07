@@ -1,7 +1,7 @@
 package com.example.feature_restaurant.di
 
-import com.example.core.service.HotPepperGourmetApiService
-import com.example.core.manager.CacheManager
+import com.example.core.api.service.HotPepperGourmetApiService
+import com.example.core.cache.manager.CacheManager
 import com.example.feature_restaurant.repository.RestaurantRepository
 import com.example.feature_restaurant.repository.RestaurantRepositoryImpl
 import dagger.Module

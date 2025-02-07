@@ -1,7 +1,8 @@
 package com.example.feature_keyword
 
+import com.example.feature_keyword.mock.MockKeyword.KEYWORD
 import com.example.feature_keyword.repository.KeyWordHistoryRepository
-import com.example.feature_keyword.usecase.ClearKeyWordHistoryUseCase
+import com.example.feature_keyword.usecase.SaveKeyWordHistoryUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -17,16 +18,15 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
 
-/** ClearKeyWordHistoryUseCaseのユニットテストクラス */
+/** SaveKeyWordHistoryUseCaseのユニットテストクラス */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class ClearKeyWordHistoryUseCaseTest {
+class SaveKeywordHistoryUseCaseTest {
     @Mock
     private lateinit var keyWordHistoryRepository: KeyWordHistoryRepository
 
     @InjectMocks
-    private lateinit var clearKeyWordHistoryUseCase: ClearKeyWordHistoryUseCase
-
+    private lateinit var saveKeyWordHistoryUseCase: SaveKeyWordHistoryUseCase
     private val testDispatcher = UnconfinedTestDispatcher()
 
     /** 各テスト前の準備 */
@@ -43,10 +43,12 @@ class ClearKeyWordHistoryUseCaseTest {
 
     /** invokeが正しく呼び出されるかテスト */
     @Test
-    fun testInvokeCallsClearHistory() =
+    fun testInvokeCallsSaveHistoryItem() =
         runTest {
-            clearKeyWordHistoryUseCase()
+            val keyword = KEYWORD
 
-            verify(keyWordHistoryRepository).clearHistory()
+            saveKeyWordHistoryUseCase(keyword)
+
+            verify(keyWordHistoryRepository).saveHistoryItem(keyword)
         }
 }

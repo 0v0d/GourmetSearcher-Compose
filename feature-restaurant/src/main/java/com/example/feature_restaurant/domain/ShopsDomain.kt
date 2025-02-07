@@ -1,13 +1,13 @@
 package com.example.feature_restaurant.domain
 
-import com.example.core.model.api.BudgetData
-import com.example.core.model.api.GenreData
-import com.example.core.model.api.LargeAreaData
-import com.example.core.model.api.PCData
-import com.example.core.model.api.PhotoData
-import com.example.core.model.api.Shops
-import com.example.core.model.api.SmallAreaData
-import com.example.core.model.api.Urls
+import com.example.core.api.model.client.BudgetData
+import com.example.core.api.model.client.GenreData
+import com.example.core.api.model.client.LargeAreaData
+import com.example.core.api.model.client.PCData
+import com.example.core.api.model.client.PhotoData
+import com.example.core.api.model.client.Shops
+import com.example.core.api.model.client.SmallAreaData
+import com.example.core.api.model.client.Urls
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.net.URLDecoder

@@ -1,8 +1,8 @@
 package com.example.feature_restaurant.repository
 
-import com.example.core.manager.CacheManager
-import com.example.core.model.api.RestaurantList
-import com.example.core.service.HotPepperGourmetApiService
+import com.example.core.cache.manager.CacheManager
+import com.example.core.api.model.client.RestaurantList
+import com.example.core.api.service.HotPepperGourmetApiService
 import com.example.feature_restaurant.BuildConfig
 import com.example.feature_restaurant.model.SearchTerms
 import kotlinx.coroutines.Dispatchers
