@@ -40,11 +40,9 @@ fun NavigationGraph(
     }
 }
 
-/**
- * キーワード入力画面の追加
- * @param navController ナビゲーションコントローラー
- */
-private fun NavGraphBuilder.addInputKeywordScreen(navController: NavHostController) {
+private fun NavGraphBuilder.addInputKeywordScreen(
+    navController: NavHostController
+) {
     composable(AppScreens.InputKeyword.name) {
         InputKeyWordScreen(
             onNavigateToSearchLocation = { inputText, range ->
@@ -57,11 +55,10 @@ private fun NavGraphBuilder.addInputKeywordScreen(navController: NavHostControll
     }
 }
 
-/**
- * 現在位置取得画面の追加
- * @param navController ナビゲーションコントローラー
- */
-private fun NavGraphBuilder.addSearchLocationScreen(navController: NavHostController) {
+private fun NavGraphBuilder.addSearchLocationScreen(
+    navController: NavHostController
+) {
+    // 検索条件をそのままの型で渡す
     composable(
         route = "${AppScreens.SearchLocation.name}/{inputText},{range}",
         arguments = listOf(
@@ -90,11 +87,10 @@ private fun NavGraphBuilder.addSearchLocationScreen(navController: NavHostContro
     }
 }
 
-/**
- * レストラン一覧画面の追加
- * @param navController ナビゲーションコントローラー
- */
-private fun NavGraphBuilder.addRestaurantListScreen(navController: NavHostController) {
+private fun NavGraphBuilder.addRestaurantListScreen(
+    navController: NavHostController
+) {
+    // 検索条件をString型で渡して、Screenに渡す時にデコードする
     composable(
         route = "${AppScreens.RestaurantList.name}/{searchTerms}",
         arguments = listOf(navArgument("searchTerms") { type = NavType.StringType })
@@ -119,10 +115,8 @@ private fun NavGraphBuilder.addRestaurantListScreen(navController: NavHostContro
     }
 }
 
-/**
- * レストラン詳細画面の追加
- */
 private fun NavGraphBuilder.addRestaurantDetailScreen() {
+    // レストラン情報をString型で渡して、Screenに渡す時にデコードする
     composable(
         route = "${AppScreens.RestaurantDetail.name}/{restaurantData}",
         arguments = listOf(
@@ -137,9 +131,12 @@ private fun NavGraphBuilder.addRestaurantDetailScreen() {
     }
 }
 
+
 /**
  * シングルトップでナビゲーションする
  * @param route ルート
+ * @param popUpToRoute バックスタックからポップするルート（オプション）
+ * @param inclusive popUpToRouteを含めるかどうか
  */
 fun NavHostController.navigateSingleTopTo(
     route: String,

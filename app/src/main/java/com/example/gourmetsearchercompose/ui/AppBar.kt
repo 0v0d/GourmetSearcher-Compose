@@ -13,10 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 
 /**
- * アプリバーのコンテンツ
- * @param currentScreen 現在の画面
- * @param canNavigateBack 戻るボタン表示フラグ
- * @param navigateUp 戻るボタンクリック時のコールバック
+ * アプリケーションバー
+ * @param currentScreen 現在表示中の画面
+ * @param canNavigateBack バックナビゲーションが可能かどうか
+ * @param navigateUp バックナビゲーション実行時のコールバック
  * @param modifier Modifier
  */
 @Composable

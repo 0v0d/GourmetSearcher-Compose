@@ -24,11 +24,11 @@ private val LightColorScheme =
     )
 
 /**
- * AppTheme
+ * アプリケーションテーマ
  *
- * @param darkTheme
- * @param dynamicColor
- * @param content
+ * @param darkTheme ダークテーマを使用するかどうか
+ * @param dynamicColor 動的カラースキームを使用するかどうか（Android 12+）
+ * @param content テーマを適用するコンテンツ
  */
 @Composable
 fun AppTheme(

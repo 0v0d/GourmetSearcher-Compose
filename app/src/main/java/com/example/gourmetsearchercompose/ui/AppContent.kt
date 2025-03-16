@@ -13,7 +13,8 @@ import com.example.gourmetsearchercompose.R
 import com.example.gourmetsearchercompose.navigation.NavigationGraph
 
 /**
- * アプリケーションコンテンツ
+ * アプリケーションのルートコンポーネント
+ * ナビゲーションホストとアプリバーを配置する
  * @param modifier Modifier
  * @param navController ナビゲーションコントローラー
  */
@@ -51,10 +52,7 @@ fun AppContent(
     }
 }
 
-/**
- * アプリケーションの画面
- * @param title タイトル
- */
+/** アプリケーションの画面定義 */
 enum class AppScreens(val title: Int) {
     InputKeyword(title = R.string.input_keyword),
     SearchLocation(title = R.string.search_location),

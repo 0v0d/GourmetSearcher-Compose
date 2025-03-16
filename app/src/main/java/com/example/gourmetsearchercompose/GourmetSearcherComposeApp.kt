@@ -6,10 +6,9 @@ import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-/** アプリケーションクラス */
 @HiltAndroidApp
 class GourmetSearcherComposeApp : Application() {
-    // TODO Delete when https://github.com/google/dagger/issues/3601 is resolved.
+    // Workaround for Dagger issue #3601
     @Inject
     @ApplicationContext
     lateinit var context: Context

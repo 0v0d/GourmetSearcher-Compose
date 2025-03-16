@@ -9,7 +9,6 @@ import com.example.gourmetsearchercompose.theme.AppTheme
 import com.example.gourmetsearchercompose.ui.AppContent
 import dagger.hilt.android.AndroidEntryPoint
 
-/** メイン画面 */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
