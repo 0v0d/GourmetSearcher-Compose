@@ -21,8 +21,9 @@ class SearchLocationContentTest {
 
     private val testHelper = UITestHelper(composeTestRule)
 
+    /** ロケーションが取得できなかった場合のエラーテスト */
     @Test
-    fun testSearchLocationContentErrorPermissionGranted() {
+    fun testShowLocationError() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.ERROR,
@@ -45,8 +46,9 @@ class SearchLocationContentTest {
         )
     }
 
+    /** ロケーションパーミッションが拒否された場合のエラーテスト */
     @Test
-    fun testSearchLocationContentErrorPermissionDenied() {
+    fun testShowPermissionDeniedError() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.ERROR,
@@ -60,7 +62,6 @@ class SearchLocationContentTest {
             )
         }
 
-
         val errorMessage = context.getString(R.string.permission_denied_message)
         val retryLabel = context.getString(com.example.shared_ui.R.string.common_retry)
         val settingLabel = context.getString(R.string.setting)
@@ -72,8 +73,9 @@ class SearchLocationContentTest {
         )
     }
 
+    /** ロケーションパーミッションが一度拒否された場合にダイアログが出るかどうかのテスト */
     @Test
-    fun testSearchLocationContentRationalRequired() {
+    fun testShowRationalRequiredDialog() {
         composeTestRule.setContent {
             SearchLocationContent(
                 searchState = LocationSearchState.RATIONAL_REQUIRED,

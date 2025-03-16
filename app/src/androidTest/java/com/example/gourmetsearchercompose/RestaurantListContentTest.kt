@@ -27,8 +27,9 @@ class RestaurantListContentTest {
 
     private val testHelper = UITestHelper(composeTestRule)
 
+    /** レストランリストのコンテンツが正常に表示されることを確認 */
     @Test
-    fun testRestaurantListContentSuccess() {
+    fun testRestaurantListSuccess() {
         composeTestRule.setContent {
             RestaurantListContent(
                 onRetry = {},
@@ -44,6 +45,7 @@ class RestaurantListContentTest {
         }
     }
 
+    /** レストランリストのコンテンツが空の場合の表示を確認 */
     @Test
     fun testRestaurantListContentEmptyResult() {
         composeTestRule.setContent {
@@ -60,6 +62,7 @@ class RestaurantListContentTest {
         testHelper.assertTextsDisplayed(emptyResultMessage)
     }
 
+    /** レストランリストのコンテンツがネットワークエラーの場合の表示を確認 */
     @Test
     fun testRestaurantListContentNetworkError() {
         composeTestRule.setContent {
@@ -81,6 +84,7 @@ class RestaurantListContentTest {
         )
     }
 
+    /** レストランリストの行が正しく表示されているかのテスト */
     @Test
     fun testRestaurantList() {
         composeTestRule.setContent {
@@ -96,6 +100,7 @@ class RestaurantListContentTest {
         }
     }
 
+    /** レストランアイテムが正しく表示されているかのテスト */
     @Test
     fun testRestaurantItem() {
         val clicked = mutableStateOf(false)
@@ -121,6 +126,7 @@ class RestaurantListContentTest {
         assert(clicked.value)
     }
 
+    /** レストラン情報が正しく表示されているかのテスト */
     @Test
     fun testRestaurantInfo() {
         composeTestRule.setContent {

@@ -26,8 +26,9 @@ class InputKeywordContentTest {
     private val mockHistoryList = sampleHistoryList.toPersistentList()
     private val testHelper = UITestHelper(composeTestRule)
 
+    /** キーワード履歴がある場合、履歴リストとクリアボタンが表示されることを確認 */
     @Test
-    fun testInputKeyWordContentEmptyInput() {
+    fun testShowHistoryListAndClearButton() {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "",
@@ -49,8 +50,9 @@ class InputKeywordContentTest {
         testHelper.assertTextsDisplayed(clearLabel)
     }
 
+    /** 入力テキストと範囲選択リストが表示されることを確認 */
     @Test
-    fun testInputKeyWordContentNonEmptyInput() {
+    fun testShowInputTextAndRangeList() {
         composeTestRule.setContent {
             InputKeyWordContent(
                 inputText = "Test",
@@ -67,8 +69,9 @@ class InputKeywordContentTest {
         testHelper.assertTextsDisplayed(rangeLabel)
     }
 
+    /** テキストと検索テキストフィールドが表示されることを確認 */
     @Test
-    fun testSearchTextField() {
+    fun testShowTextAndSearchTextField() {
         val testQuery = "Test Query"
         composeTestRule.setContent {
             SearchTextField(
@@ -79,7 +82,6 @@ class InputKeywordContentTest {
         }
 
         composeTestRule.onNodeWithTag("searchTextField").assertExists()
-        //キーワードを入力
         val hint = context.getString(R.string.search_input_hint)
         testHelper.assertTextsDisplayed(
             testQuery,
@@ -87,8 +89,9 @@ class InputKeywordContentTest {
         )
     }
 
+    /** キーワード履歴リストが表示されることを確認 */
     @Test
-    fun testKeyWordHistoryList() {
+    fun testShowKeyWordHistoryList() {
         composeTestRule.setContent {
             KeyWordHistoryList(
                 historyList = mockHistoryList,
@@ -101,11 +104,11 @@ class InputKeywordContentTest {
             composeTestRule.onNodeWithText(mockHistory).assertExists()
         }
 
-        //キーワードをクリア
         val clearLabel = context.getString(R.string.key_word_clear)
         testHelper.assertTextsDisplayed(clearLabel)
     }
 
+    /** 範囲選択リストが表示されることを確認 */
     @Test
     fun testRangeList() {
         composeTestRule.setContent {
@@ -114,7 +117,6 @@ class InputKeywordContentTest {
             )
         }
 
-        //検索半径を選択して検索
         val rangeLabel = context.getString(R.string.select_range_explanation)
         testHelper.assertTextsDisplayed(rangeLabel)
 

@@ -17,8 +17,9 @@ class RestaurantDetailContentTest {
 
     private val testHelper = UITestHelper(composeTestRule)
 
+    /** レストランの詳細情報が表示されることを確認 */
     @Test
-    fun testRestaurantDetailContent() {
+    fun testShowRestaurantDetail() {
         composeTestRule.setContent {
             RestaurantDetailContent(
                 restaurantData = sampleRestaurantList.first(),
@@ -40,13 +41,12 @@ class RestaurantDetailContentTest {
             )
         }
 
-        // タイトルのテスト
         val addressTitle = context.getString(R.string.restaurant_detail_address)
         val accessTitle = context.getString(R.string.restaurant_detail_access)
         val closedDaysTitle = context.getString(R.string.restaurant_detail_closed_days)
-        // ホットペッパーボタンのテスト
         val hotPepperButton = context.getString(R.string.restaurant_detail_hot_pepper)
 
+        // 住所、アクセス、定休日、ホットペッパーボタンが表示されていることを確認
         testHelper.assertTextsDisplayed(
             addressTitle,
             accessTitle,
