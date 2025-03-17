@@ -131,7 +131,6 @@ private fun NavGraphBuilder.addRestaurantDetailScreen() {
     }
 }
 
-
 /**
  * シングルトップでナビゲーションする
  * @param route ルート
