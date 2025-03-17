@@ -1,6 +1,5 @@
 package com.example.core.api.di
 
-import com.example.core.api.service.HotPepperGourmetApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -11,47 +10,32 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
-/** NetWorkのモジュール */
+/**
+ * ネットワーク接続のための依存性を提供するモジュール
+ * Retrofit、Moshi、APIサービスのインスタンスを生成する
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
-
     private const val BASE_URL = "https://webservice.recruit.co.jp/hotpepper/"
-    /**
-     * Moshiを提供
-     * @return Moshi
-     */
+
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi =
-        Moshi.Builder()
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
+    }
 
-    /**
-     * Retrofitを提供
-     * @param moshi Moshi
-     * @return Retrofit
-     */
     @Provides
     @Singleton
     fun provideRetrofit(
         moshi: Moshi,
-    ): Retrofit =
-        Retrofit
+    ): Retrofit {
+        return Retrofit
             .Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
-
-    /**
-     * HotPepperGourmetApiServiceを提供
-     * @param retrofit Retrofit
-     * @return HotPepperGourmetApiService
-     */
-    @Provides
-    @Singleton
-    fun provideHotPepperService(
-        retrofit: Retrofit
-    ): HotPepperGourmetApiService = retrofit.create(HotPepperGourmetApiService::class.java)
+    }
 }
