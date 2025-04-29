@@ -9,7 +9,7 @@ targetSdk = "35"
 java = "17"
 kotlin-jvm = "17"
 
-accompanistPermissions = "0.37.2"
+accompanistPermissions = "0.37.3"
 agp = "8.8.2"
 coil = "2.7.0"
 coreTesting = "2.2.0"
