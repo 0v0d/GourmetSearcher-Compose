@@ -17,32 +17,32 @@ permissions:
 jobs:
   # ビルドジョブを呼び出し
   build:
-    uses: ./.github/workflows/reusable/build.yml
+    uses: ./.github/workflows/build.yml
     secrets: inherit
 
   # Lintチェックを呼び出し
   lint-check:
     needs: build
-    uses: ./.github/workflows/reusable/lint.yml
+    uses: ./.github/workflows/lint.yml
     secrets: inherit
 
   # Unit Testsを呼び出し
   unit-tests:
     needs: build
-    uses: ./.github/workflows/reusable/unit-tests.yml
+    uses: ./.github/workflows/unit-tests.yml
     secrets: inherit
 
   # Detekt解析を呼び出し
   detekt-analysis:
     needs: build
-    uses: ./.github/workflows/reusable/detekt.yml
+    uses: ./.github/workflows/detekt.yml
     secrets: inherit
 
   # サマリーを呼び出し
   analysis-summary:
     needs: [build, lint-check, unit-tests, detekt-analysis]
     if: always()
-    uses: ./.github/workflows/reusable/summary.yml
+    uses: ./.github/workflows/summary.yml
     with:
       build-result: ${{ needs.build.result }}
       lint-result: ${{ needs.lint-check.result }}
