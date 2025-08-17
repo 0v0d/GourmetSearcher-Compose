@@ -11,7 +11,7 @@ jobs:
   build:
     name: Build & Setup
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # タイムアウトを延長
     outputs:
       cache-key: ${{ steps.cache.outputs.cache-hit }}
     steps:
@@ -26,25 +26,77 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          # Gradle自体のキャッシュ管理を使用
+          cache-read-only: false
+          gradle-home-cache-cleanup: true
 
       - name: Prepare Environment
         run: |
           chmod +x ./gradlew
           echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
 
-      - name: Cache Gradle
-        id: cache
+      # より細かくキャッシュを分割
+      - name: Cache Gradle Dependencies
+        id: cache-deps
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            ~/.gradle/caches/modules-2
+            ~/.gradle/caches/jars-9
+          key: ${{ runner.os }}-gradle-deps-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-deps-
+
+      - name: Cache Gradle Build Cache
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches/build-cache-1
+            .gradle/configuration-cache
+          key: ${{ runner.os }}-gradle-build-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-build-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            ${{ runner.os }}-gradle-build-
+
+      - name: Cache Gradle Wrapper
+        id: cache-wrapper
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle-wrapper.properties') }}
+
+      # ビルドキャッシュのクリーンアップ
+      - name: Clean Gradle Cache
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          ./gradlew clean
+          rm -rf ~/.gradle/caches/build-cache-1/*
+          find ~/.gradle/caches -name "*.lock" -type f -delete
 
       - name: Run Gradle Build
-        run: ./gradlew build --parallel --configure-on-demand
+        run: |
+          ./gradlew build \
+            --parallel \
+            --configure-on-demand \
+            --build-cache \
+            --max-workers=4 \
+            --no-daemon
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError"
+
+      # ビルド後の不要ファイル削除
+      - name: Clean Build Outputs
+        run: |
+          # テストレポートなど大きなファイルを削除
+          find . -type d -name "test-results" -exec rm -rf {} + 2>/dev/null || true
+          find . -type d -name "reports" -exec rm -rf {} + 2>/dev/null || true
+          find . -type f -name "*.hprof" -delete 2>/dev/null || true
+          
+          # Gradleキャッシュのサイズを確認
+          echo "Gradle cache size:"
+          du -sh ~/.gradle/caches/ || true
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -54,3 +106,4 @@ jobs:
             **/build/outputs/
             **/build/libs/
           retention-days: 1
+          compression-level: 9  # 最大圧縮を使用
