@@ -1,0 +1,71 @@
+name: Android Lint Check
+
+on:
+  workflow_call:
+
+jobs:
+  lint:
+    name: Android Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Restore Gradle Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Prepare Environment
+        run: |
+          chmod +x ./gradlew
+          echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-outputs
+
+      - name: Run Lint
+        run: ./gradlew app:lintDebug --continue
+        continue-on-error: true
+
+      - name: Setup Reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+
+      - name: Run Reviewdog for Lint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find . -regex '^.*/build/reports/lint-results.*\.sarif$' -type f | while read file_path; do
+            reviewdog -f=sarif -reporter=github-pr-review < "$file_path"
+          done
+
+      - name: Comment on PR - Lint Results
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## ⚠️ Lint Check Issues Found\n\nAndroid Lintで問題が検出されました。上記のコードレビューコメントで詳細を確認してください。\n\n[ワークフローの詳細を見る](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})'
+            });

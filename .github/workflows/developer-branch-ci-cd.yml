@@ -15,19 +15,56 @@ permissions:
   pull-requests: write
 
 jobs:
-  StaticAnalysis:
-    uses: ./.github/workflows/call-static-analysis.yml
-    secrets:
-      API_KEY: ${{ secrets.API_KEY }}
+  # ビルドジョブを呼び出し
+  build:
+    uses: ./.github/workflows/reusable/build.yml
+    secrets: inherit
 
-  AutoMerge:
-    needs: StaticAnalysis
+  # Lintチェックを呼び出し
+  lint-check:
+    needs: build
+    uses: ./.github/workflows/reusable/lint.yml
+    secrets: inherit
+
+  # Unit Testsを呼び出し
+  unit-tests:
+    needs: build
+    uses: ./.github/workflows/reusable/unit-tests.yml
+    secrets: inherit
+
+  # Detekt解析を呼び出し
+  detekt-analysis:
+    needs: build
+    uses: ./.github/workflows/reusable/detekt.yml
+    secrets: inherit
+
+  # サマリーを呼び出し
+  analysis-summary:
+    needs: [build, lint-check, unit-tests, detekt-analysis]
+    if: always()
+    uses: ./.github/workflows/reusable/summary.yml
+    with:
+      build-result: ${{ needs.build.result }}
+      lint-result: ${{ needs.lint-check.result }}
+      test-result: ${{ needs.unit-tests.result }}
+      detekt-result: ${{ needs.detekt-analysis.result }}
+    secrets: inherit
+
+  # 自動マージ
+  auto-merge:
+    name: Auto Merge
+    needs: [build, lint-check, unit-tests, detekt-analysis]
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: success()
+      pull-requests: write
+    if: always() && needs.build.result == 'success' && needs.unit-tests.result == 'success'
     steps:
       - name: Auto Merge
         uses: pascalgn/automerge-action@v0.16.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_LABELS: ""
+          MERGE_METHOD: "squash"
+          MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
+          MERGE_DELETE_BRANCH: true
