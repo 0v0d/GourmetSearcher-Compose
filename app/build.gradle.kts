@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -123,4 +125,24 @@ detekt {
     buildUponDefaultConfig = true
     autoCorrect = true // 自動でフォーマット
     basePath = rootDir.absolutePath
+}
+
+// Detektタスクの設定
+tasks.withType<Detekt>().configureEach {
+    reports {
+        // XMLレポートを有効化
+        xml.required.set(true)
+        xml.outputLocation.set(layout.buildDirectory.file("reports/detekt/detekt.xml"))
+
+        // HTMLレポートを有効化
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.file("reports/detekt/detekt.html"))
+
+        // TXTレポートを無効化
+        txt.required.set(false)
+
+        // SARIFレポートを有効化（GitHub Code Scanningで使用可能）
+        sarif.required.set(true)
+        sarif.outputLocation.set(layout.buildDirectory.file("reports/detekt/detekt.sarif"))
+    }
 }

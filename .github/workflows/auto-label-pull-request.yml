@@ -27,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{github.event.pull_request.html_url}}
 
-  handle-pull-request:
+  pull-request:
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]'
     steps:

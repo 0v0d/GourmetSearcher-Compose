@@ -1,0 +1,56 @@
+name: Build & Setup
+
+on:
+  workflow_call:
+    outputs:
+      cache-key:
+        description: "Gradle cache key"
+        value: ${{ jobs.build.outputs.cache-key }}
+
+jobs:
+  build:
+    name: Build & Setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      cache-key: ${{ steps.cache.outputs.cache-hit }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Prepare Environment
+        run: |
+          chmod +x ./gradlew
+          echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
+
+      - name: Cache Gradle
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Gradle Build
+        run: ./gradlew build --parallel --configure-on-demand
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-outputs
+          path: |
+            **/build/outputs/
+            **/build/libs/
+          retention-days: 1

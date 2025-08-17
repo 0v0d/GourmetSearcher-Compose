@@ -1,0 +1,68 @@
+name: Analysis Summary
+
+on:
+  workflow_call:
+    inputs:
+      build-result:
+        required: true
+        type: string
+      lint-result:
+        required: true
+        type: string
+      test-result:
+        required: true
+        type: string
+      detekt-result:
+        required: true
+        type: string
+
+jobs:
+  summary:
+    name: Analysis Summary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Results and Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const buildResult = '${{ inputs.build-result }}';
+            const lintResult = '${{ inputs.lint-result }}';
+            const testResult = '${{ inputs.test-result }}';
+            const detektResult = '${{ inputs.detekt-result }}';
+            
+            let emoji = '✅';
+            let title = 'All Checks Passed';
+            let summary = '全ての静的解析チェックが正常に完了しました！';
+            let details = `
+            - ${buildResult === 'success' ? '✅' : '❌'} Build: ${buildResult}
+            - ${lintResult === 'success' ? '✅' : '⚠️'} Android Lint: ${lintResult}
+            - ${testResult === 'success' ? '✅' : '❌'} Unit Tests: ${testResult}
+            - ${detektResult === 'success' ? '✅' : '⚠️'} Detekt: ${detektResult}
+            `;
+            
+            if (buildResult === 'failure' || testResult === 'failure') {
+              emoji = '❌';
+              title = 'Critical Checks Failed';
+              summary = '重要なチェックで失敗しました。修正が必要です。';
+            } else if (lintResult === 'failure' || detektResult === 'failure') {
+              emoji = '⚠️';
+              title = 'Some Issues Found';
+              summary = 'いくつかの問題が見つかりました。確認をお願いします。';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ${emoji} ${title}\n\n${summary}\n\n### チェック結果:\n${details}\n\n[ワークフローの詳細を見る](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n---\n⏱️ 実行時間: 並列実行により大幅短縮されました`
+            });
+
+      - name: Set Final Status
+        run: |
+          if [[ "${{ inputs.build-result }}" == "failure" || "${{ inputs.test-result }}" == "failure" ]]; then
+            echo "Critical checks failed"
+            exit 1
+          else
+            echo "All critical checks passed"
+            exit 0
+          fi
