@@ -99,7 +99,7 @@ jobs:
           du -sh ~/.gradle/caches/ || true
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-outputs
           path: |
