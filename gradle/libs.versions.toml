@@ -48,7 +48,7 @@ lifecycleRuntimeComposeAndroid = "2.9.2"
 appcompat = "1.7.0"
 material = "1.13.0"
 paging = "3.3.6"
-room = "2.8.3"
+room = "2.8.4"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
