@@ -37,7 +37,7 @@ jobs:
           echo "API_KEY=${{ secrets.API_KEY }}" > local.properties
 
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: build-outputs
 
