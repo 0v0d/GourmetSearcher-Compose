@@ -39,7 +39,7 @@ jobs:
       # より細かくキャッシュを分割
       - name: Cache Gradle Dependencies
         id: cache-deps
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches/modules-2
@@ -50,7 +50,7 @@ jobs:
 
       - name: Cache Gradle Build Cache
         id: cache-build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches/build-cache-1
@@ -62,7 +62,7 @@ jobs:
 
       - name: Cache Gradle Wrapper
         id: cache-wrapper
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle-wrapper.properties') }}
