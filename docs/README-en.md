@@ -126,3 +126,8 @@ After registration, an API key will be sent to your email. Set up your API key a
 
 ### Tested Device
 - Redmi 12 (Android 14)  
+
+## Licenses
+
+This project uses third-party open source libraries.
+Each library is distributed under its own license.
